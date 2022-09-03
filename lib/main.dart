@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'BorderBox.dart';
 
 void main() {
   runApp(const MyApp());
@@ -50,14 +51,33 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+    final double padding = 25;
+
     return Scaffold(
-        body: Container(
-            width: double.infinity,
-            margin: const EdgeInsets.all(15.0),
-            decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-            child: const Text(
-              'Workout Log',
-              textAlign: TextAlign.center,
-            )));
+        backgroundColor: Colors.white,
+        body: SafeArea(
+            child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: padding),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const BorderBox(
+                    height: 50,
+                    width: 50,
+                    child: Icon(
+                      Icons.menu,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Text("Workout Log",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24))
+          ],
+        )));
   }
 }
