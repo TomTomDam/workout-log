@@ -19,8 +19,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           primarySwatch: Colors.blue,
           textTheme: const TextTheme(
-              headline1:
-                  TextStyle(fontSize: 36.0, fontWeight: FontWeight.bold))),
+              headline1: TextStyle(fontSize: 40.0, fontWeight: FontWeight.bold),
+              headline2:
+                  TextStyle(fontSize: 31.0, fontWeight: FontWeight.bold))),
       home: const Dashboard(title: 'Workout Log'),
     );
   }
@@ -58,8 +59,8 @@ class _DashboardState extends State<Dashboard> {
               padding: const EdgeInsets.only(
                   top: padding, left: padding, right: padding),
               child: Row(
-                children: const [
-                  Expanded(
+                children: [
+                  const Expanded(
                       flex: 2,
                       child: Align(
                         alignment: Alignment.topLeft,
@@ -67,7 +68,7 @@ class _DashboardState extends State<Dashboard> {
                           height: 50,
                           width: 50,
                           child: Icon(
-                            Icons.menu,
+                            Icons.settings,
                             color: Colors.black,
                           ),
                         ),
@@ -77,10 +78,14 @@ class _DashboardState extends State<Dashboard> {
                     child: Center(
                       child: Text("Dashboard",
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 24)),
+                              fontWeight: FontWeight.bold,
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .headline2
+                                  ?.fontSize)),
                     ),
                   ),
-                  Expanded(
+                  const Expanded(
                     flex: 2,
                     child: Center(),
                   )
