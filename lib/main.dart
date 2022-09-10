@@ -20,8 +20,8 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           textTheme: const TextTheme(
               headline1: TextStyle(fontSize: 40.0, fontWeight: FontWeight.bold),
-              headline2:
-                  TextStyle(fontSize: 31.0, fontWeight: FontWeight.bold))),
+              headline2: TextStyle(fontSize: 31.0, fontWeight: FontWeight.bold),
+              bodyText1: TextStyle(fontSize: 16.0))),
       home: const Dashboard(title: 'Workout Log'),
     );
   }
