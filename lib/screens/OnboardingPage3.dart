@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:workout_log/main.dart';
+
+import '../FilterList.dart';
 
 class OnboardingPage3 extends StatefulWidget {
   const OnboardingPage3({Key? key}) : super(key: key);
@@ -28,7 +31,32 @@ class _OnboardingPage3State extends State<OnboardingPage3> {
             ),
             Padding(
               padding: const EdgeInsets.all(padding),
-            )
+              child: FilterList(),
+            ),
+            Padding(
+                padding: const EdgeInsets.only(
+                    top: padding * 10,
+                    bottom: padding,
+                    left: padding,
+                    right: padding),
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(180, 60),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12))),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const Dashboard(title: 'Workout Log')));
+                    },
+                    child: Text("Continue",
+                        style: TextStyle(
+                            fontSize: Theme.of(context)
+                                .textTheme
+                                .headline2
+                                ?.fontSize))))
           ]),
         )));
   }
