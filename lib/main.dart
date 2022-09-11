@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:workout_log/screens/OnboardingPage1.dart';
+import 'package:workout_log/screens/Settings.dart';
 import 'BorderBox.dart';
 import 'screens/OnboardingPage1.dart';
 import 'screens/OnboardingPage2.dart';
@@ -60,19 +61,25 @@ class _DashboardState extends State<Dashboard> {
                   top: padding, left: padding, right: padding),
               child: Row(
                 children: [
-                  const Expanded(
+                  Expanded(
                       flex: 2,
                       child: Align(
-                        alignment: Alignment.topLeft,
-                        child: BorderBox(
-                          height: 50,
-                          width: 50,
-                          child: Icon(
-                            Icons.settings,
-                            color: Colors.black,
-                          ),
-                        ),
-                      )),
+                          alignment: Alignment.topLeft,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              minimumSize: const Size(40, 40),
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const Settings()));
+                            },
+                            child: const Icon(
+                              Icons.settings,
+                              color: Colors.black,
+                            ),
+                          ))),
                   Expanded(
                     flex: 6,
                     child: Center(
@@ -134,7 +141,7 @@ class _DashboardState extends State<Dashboard> {
                 child: Row(
                   children: [
                     ElevatedButton(
-                      child: const Text("Go to: Onboarding Page 2"),
+                      child: const Text("Go to: Onboarding Page 3"),
                       onPressed: () {
                         Navigator.push(
                             context,
