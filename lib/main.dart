@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:workout_log/screens/OnboardingPage1.dart';
-import 'package:workout_log/screens/Settings.dart';
+import 'package:workout_log/screens/settings/Settings.dart';
 import 'BorderBox.dart';
 import 'screens/OnboardingPage1.dart';
 import 'screens/OnboardingPage2.dart';
@@ -67,8 +67,8 @@ class _DashboardState extends State<Dashboard> {
                           alignment: Alignment.topLeft,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              minimumSize: const Size(40, 40),
-                            ),
+                                minimumSize: const Size(40, 40),
+                                primary: Colors.white),
                             onPressed: () {
                               Navigator.push(
                                   context,

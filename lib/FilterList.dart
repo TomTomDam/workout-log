@@ -6,9 +6,7 @@ List<String> trainingStylesList = [
   'Powerbuilding',
   'Calisthenics',
   'Flexibility',
-  'Endurance',
-  'poosi',
-  'boisufdfj'
+  'Endurance'
 ];
 bool isSelected = false;
 
