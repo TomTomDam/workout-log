@@ -28,7 +28,7 @@ class Settings extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const Dashboard(
+                                    builder: (context) => const Main(
                                           title: 'Workout Log',
                                         )));
                           },
@@ -60,7 +60,7 @@ class Settings extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Divider(
-                  height: 10,
+                  height: 0,
                   thickness: 2,
                   indent: 25,
                   endIndent: 25,
