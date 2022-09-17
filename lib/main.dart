@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:workout_log/screens/OnboardingPage1.dart';
-import 'package:workout_log/screens/settings/Settings.dart';
-import 'BorderBox.dart';
-import 'screens/OnboardingPage1.dart';
-import 'screens/OnboardingPage2.dart';
-import 'screens/OnboardingPage3.dart';
+import 'package:workout_log/screens/Dashboard.dart';
+import 'screens/SelectWorkout.dart';
+import 'screens/Programs.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,16 +17,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           primarySwatch: Colors.blue,
           textTheme: const TextTheme(
-              headline1: TextStyle(fontSize: 40.0, fontWeight: FontWeight.bold),
-              headline2: TextStyle(fontSize: 31.0, fontWeight: FontWeight.bold),
+              headline1: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              headline2: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               bodyText1: TextStyle(fontSize: 16.0))),
-      home: const Dashboard(title: 'Workout Log'),
+      home: const Main(title: 'Workout Log'),
     );
   }
 }
 
-class Dashboard extends StatefulWidget {
-  const Dashboard({Key? key, required this.title}) : super(key: key);
+class Main extends StatefulWidget {
+  const Main({Key? key, required this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -43,115 +40,45 @@ class Dashboard extends StatefulWidget {
   final String title;
 
   @override
-  State<Dashboard> createState() => _DashboardState();
+  State<Main> createState() => _MainState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class _MainState extends State<Main> {
   @override
   Widget build(BuildContext context) {
-    const double padding = 25;
+    int selectedIndex = 0;
+    void _onNavigationItemTapped(int index) {
+      switch (index) {
+        case 0:
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => const Main(title: 'Workout Log')));
+          break;
+        case 1:
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => const SelectWorkout()));
+          break;
+        case 3:
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => const Programs()));
+          break;
+      }
+    }
 
     return Scaffold(
         backgroundColor: Colors.white,
-        body: SafeArea(
-            child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: padding, left: padding, right: padding),
-              child: Row(
-                children: [
-                  Expanded(
-                      flex: 2,
-                      child: Align(
-                          alignment: Alignment.topLeft,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                minimumSize: const Size(40, 40),
-                                primary: Colors.white),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const Settings()));
-                            },
-                            child: const Icon(
-                              Icons.settings,
-                              color: Colors.black,
-                            ),
-                          ))),
-                  Expanded(
-                    flex: 6,
-                    child: Center(
-                      child: Text("Dashboard",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: Theme.of(context)
-                                  .textTheme
-                                  .headline2
-                                  ?.fontSize)),
-                    ),
-                  ),
-                  const Expanded(
-                    flex: 2,
-                    child: Center(),
-                  )
-                ],
-              ),
-            ),
-            Padding(
-                padding: const EdgeInsets.only(
-                    top: padding, left: padding, right: padding),
-                child: Row(
-                  children: const [Text("Welcome back, Tom!")],
-                )),
-            Padding(
-                padding: const EdgeInsets.only(
-                    top: padding, left: padding, right: padding),
-                child: Row(
-                  children: [
-                    ElevatedButton(
-                      child: const Text("Go to: Onboarding Page 1"),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const OnboardingPage1()));
-                      },
-                    )
-                  ],
-                )),
-            Padding(
-                padding: const EdgeInsets.only(left: padding, right: padding),
-                child: Row(
-                  children: [
-                    ElevatedButton(
-                      child: const Text("Go to: Onboarding Page 2"),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const OnboardingPage2()));
-                      },
-                    )
-                  ],
-                )),
-            Padding(
-                padding: const EdgeInsets.only(left: padding, right: padding),
-                child: Row(
-                  children: [
-                    ElevatedButton(
-                      child: const Text("Go to: Onboarding Page 3"),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const OnboardingPage3()));
-                      },
-                    )
-                  ],
-                )),
-          ],
-        )));
+        body: const Dashboard(title: 'Workout Log'),
+        bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.home_rounded), label: "Home"),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.bolt_rounded), label: "Workouts"),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.apps_rounded), label: "Programs"),
+            ],
+            currentIndex: selectedIndex,
+            selectedItemColor: Colors.blue,
+            onTap: _onNavigationItemTapped));
   }
 }

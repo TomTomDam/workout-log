@@ -49,7 +49,7 @@ class _OnboardingPage3State extends State<OnboardingPage3> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  const Dashboard(title: 'Workout Log')));
+                                  const Main(title: 'Workout Log')));
                     },
                     child: Text("Continue",
                         style: TextStyle(
