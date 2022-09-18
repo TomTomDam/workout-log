@@ -38,6 +38,7 @@ class FilterListChip extends StatefulWidget {
 }
 
 class _FilterListChipState extends State<FilterListChip> {
+  @override
   Widget build(BuildContext context) {
     return ChoiceChip(
       labelPadding: const EdgeInsets.all(2.0),

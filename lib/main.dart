@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:workout_log/screens/Dashboard.dart';
-import 'screens/SelectWorkout.dart';
-import 'screens/Programs.dart';
+import 'package:workout_log/screens/dashboard.dart';
+import 'nav_bar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -46,39 +45,9 @@ class Main extends StatefulWidget {
 class _MainState extends State<Main> {
   @override
   Widget build(BuildContext context) {
-    int selectedIndex = 0;
-    void _onNavigationItemTapped(int index) {
-      switch (index) {
-        case 0:
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (context) => const Main(title: 'Workout Log')));
-          break;
-        case 1:
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const SelectWorkout()));
-          break;
-        case 3:
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const Programs()));
-          break;
-      }
-    }
-
-    return Scaffold(
+    return const Scaffold(
         backgroundColor: Colors.white,
-        body: const Dashboard(title: 'Workout Log'),
-        bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.home_rounded), label: "Home"),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.bolt_rounded), label: "Workouts"),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.apps_rounded), label: "Programs"),
-            ],
-            currentIndex: selectedIndex,
-            selectedItemColor: Colors.blue,
-            onTap: _onNavigationItemTapped));
+        body: Dashboard(title: 'Workout Log'),
+        bottomNavigationBar: NavBar(currentPage: 0));
   }
 }

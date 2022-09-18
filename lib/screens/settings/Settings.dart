@@ -80,7 +80,7 @@ class Settings extends StatelessWidget {
                       },
                     )),
                 Padding(
-                    padding: EdgeInsets.only(left: padding),
+                    padding: const EdgeInsets.only(left: padding),
                     child: TextButton(
                       child: const Text(
                         "Workout settings",

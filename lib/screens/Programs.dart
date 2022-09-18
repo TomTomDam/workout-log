@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class Programs extends StatefulWidget {
   const Programs({Key? key}) : super(key: key);
@@ -10,8 +10,6 @@ class Programs extends StatefulWidget {
 class _ProgramsState extends State<Programs> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text("Programs"),
-    );
+    return const Text("Programs");
   }
 }
