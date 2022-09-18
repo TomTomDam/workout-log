@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:workout_log/screens/OnboardingPage3.dart';
+import 'package:workout_log/screens/onboarding_page3.dart';
 
 List<String> genderList = ['Male', 'Female', 'Prefer not to say'];
 String? selectedGender = genderList[0];

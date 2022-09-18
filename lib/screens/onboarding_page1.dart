@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:workout_log/screens/OnboardingPage2.dart';
-import './OnboardingPage2.dart';
+import 'package:workout_log/screens/onboarding_page2.dart';
+import 'onboarding_page2.dart';
 
 class OnboardingPage1 extends StatelessWidget {
   const OnboardingPage1({Key? key}) : super(key: key);

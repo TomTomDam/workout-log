@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:workout_log/screens/OnboardingPage1.dart';
-import 'package:workout_log/screens/settings/Settings.dart';
-import 'OnboardingPage1.dart';
-import 'OnboardingPage2.dart';
-import 'OnboardingPage3.dart';
+import './settings/settings.dart';
+import '../header.dart';
+import 'onboarding_page1.dart';
+import 'onboarding_page2.dart';
+import 'onboarding_page3.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key, required this.title}) : super(key: key);
@@ -23,48 +23,23 @@ class _DashboardState extends State<Dashboard> {
         body: SafeArea(
             child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: padding, left: padding, right: padding),
-              child: Row(
-                children: [
-                  Expanded(
-                      flex: 2,
-                      child: Align(
-                          alignment: Alignment.topLeft,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                minimumSize: const Size(40, 40),
-                                primary: Colors.white),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const Settings()));
-                            },
-                            child: const Icon(
-                              Icons.settings,
-                              color: Colors.black,
-                            ),
-                          ))),
-                  Expanded(
-                    flex: 6,
-                    child: Center(
-                      child: Text("Dashboard",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: Theme.of(context)
-                                  .textTheme
-                                  .headline2
-                                  ?.fontSize)),
-                    ),
-                  ),
-                  const Expanded(
-                    flex: 2,
-                    child: Center(),
-                  )
-                ],
+            Header(
+              title: "Dashboard",
+              navigationButton: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(40, 40), primary: Colors.white),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Settings()));
+                },
+                child: const Icon(
+                  Icons.settings,
+                  color: Colors.black,
+                ),
               ),
+              secondaryButton: null,
             ),
             Padding(
                 padding: const EdgeInsets.only(
