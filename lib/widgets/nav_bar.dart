@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../main.dart';
-import 'screens/select_workout.dart';
-import 'screens/programs.dart';
+import '../screens/main.dart';
+import '../screens/select_workout.dart';
+import '../screens/programs.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({Key? key, required this.currentPage}) : super(key: key);

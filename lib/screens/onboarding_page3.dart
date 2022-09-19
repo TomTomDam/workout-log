@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:workout_log/main.dart';
-
-import '../filter_list.dart';
+import 'package:workout_log/screens/main.dart';
+import '../widgets/filter_list.dart';
 
 class OnboardingPage3 extends StatefulWidget {
   const OnboardingPage3({Key? key}) : super(key: key);
