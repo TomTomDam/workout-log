@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:workout_log/main.dart';
+import 'package:workout_log/screens/main.dart';
 
 class Settings extends StatelessWidget {
   const Settings({Key? key}) : super(key: key);
