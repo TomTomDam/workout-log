@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:workout_log/screens/main.dart';
+import '../../widgets/header.dart';
 
 class Settings extends StatelessWidget {
   const Settings({Key? key}) : super(key: key);
@@ -13,54 +14,32 @@ class Settings extends StatelessWidget {
         backgroundColor: Colors.white,
         body: SafeArea(
           child: Column(children: [
-            Padding(
-              padding: const EdgeInsets.all(padding),
-              child: Row(children: [
-                Expanded(
-                    flex: 2,
-                    child: Align(
-                        alignment: Alignment.topLeft,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              minimumSize: const Size(40, 40),
-                              primary: Colors.white),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const Main(
-                                          title: 'Workout Log',
-                                        )));
-                          },
-                          child: const Icon(
-                            Icons.navigate_before_rounded,
-                            color: Colors.black,
-                          ),
-                        ))),
-                Expanded(
-                  flex: 6,
-                  child: Center(
-                    child: Text("Settings",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: Theme.of(context)
-                                .textTheme
-                                .headline2
-                                ?.fontSize)),
-                  ),
+            Header(
+              title: "Settings",
+              navigationButton: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(40, 40), primary: Colors.white),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Main(
+                                title: 'Workout Log',
+                              )));
+                },
+                child: const Icon(
+                  Icons.navigate_before_rounded,
+                  color: Colors.black,
                 ),
-                const Expanded(
-                  flex: 2,
-                  child: Center(),
-                )
-              ]),
+              ),
+              secondaryButton: null,
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Divider(
-                  height: 0,
+                  height: 25,
                   thickness: 2,
                   indent: 25,
                   endIndent: 25,
@@ -80,7 +59,7 @@ class Settings extends StatelessWidget {
                       },
                     )),
                 Padding(
-                    padding: const EdgeInsets.only(left: padding),
+                    padding: settingsPadding,
                     child: TextButton(
                       child: const Text(
                         "Workout settings",
