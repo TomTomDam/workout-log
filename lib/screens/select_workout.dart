@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/sub_header.dart';
 import '../widgets/header.dart';
 import '../widgets/nav_bar.dart';
+import 'log_workout.dart';
 
 class SelectWorkout extends StatefulWidget {
   const SelectWorkout({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class _SelectWorkoutState extends State<SelectWorkout> {
   Widget build(BuildContext context) {
     const double margin = 25;
     const EdgeInsets containerMargin =
-        EdgeInsets.only(top: 10, left: margin, right: margin);
+        EdgeInsets.only(top: 5, bottom: 5, left: margin, right: margin);
 
     final double width = MediaQuery.of(context).size.width;
 
@@ -74,18 +75,26 @@ class _SelectWorkoutState extends State<SelectWorkout> {
                     )),
               ),
               const SubHeader(title: "Quick start"),
-              Container(
-                margin: containerMargin,
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LogWorkout()));
+                },
                 child: Container(
-                  width: width - margin,
-                  height: 70,
-                  padding: const EdgeInsets.all(8.0),
-                  decoration: const BoxDecoration(
-                    color: Colors.grey,
+                  margin: containerMargin,
+                  child: Container(
+                    width: width - margin,
+                    height: 70,
+                    padding: const EdgeInsets.all(8.0),
+                    decoration: const BoxDecoration(
+                      color: Colors.grey,
+                    ),
+                    child: const Align(
+                        alignment: Alignment.center,
+                        child: Text("Start an empty workout")),
                   ),
-                  child: const Align(
-                      alignment: Alignment.center,
-                      child: Text("Start an empty workout")),
                 ),
               ),
               const SubHeader(title: "Workouts"),
