@@ -12,6 +12,8 @@ class LogWorkout extends StatefulWidget {
 class _LogWorkoutState extends State<LogWorkout> {
   @override
   Widget build(BuildContext context) {
+    Widget pageSection = OverviewPage();
+
     return Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
@@ -97,44 +99,78 @@ class _LogWorkoutState extends State<LogWorkout> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  PageButton(
-                      title: "Overview", navigationDestination: Container()),
-                  PageButton(
-                      title: "Exercises", navigationDestination: Container()),
-                  PageButton(
-                      title: "Muscles", navigationDestination: Container()),
+                  InkWell(
+                    onTap: () =>
+                        {setState(() => pageSection = const OverviewPage())},
+                    child: const PageButton(title: "Overview"),
+                  ),
+                  InkWell(
+                      onTap: () =>
+                          {setState(() => pageSection = const ExercisesPage())},
+                      child: const PageButton(title: "Exercises")),
+                  InkWell(
+                      onTap: () =>
+                          {setState(() => pageSection = const MusclesPage())},
+                      child: const PageButton(title: "Muscles")),
                 ],
               ),
-              Container()
+              pageSection
             ]),
           )),
         ));
   }
 }
 
+class OverviewPage extends StatelessWidget {
+  const OverviewPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Text("Hello"),
+    );
+  }
+}
+
+class ExercisesPage extends StatelessWidget {
+  const ExercisesPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Text("Hello"),
+    );
+  }
+}
+
+class MusclesPage extends StatelessWidget {
+  const MusclesPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Text("Hello"),
+    );
+  }
+}
+
 class PageButton extends StatelessWidget {
-  const PageButton(
-      {Key? key, required this.title, required this.navigationDestination})
-      : super(key: key);
+  const PageButton({Key? key, required this.title}) : super(key: key);
   final String title;
-  final Widget navigationDestination;
 
   @override
   Widget build(BuildContext context) {
     return Container(
         margin: const EdgeInsets.symmetric(horizontal: 15),
-        child: InkWell(
-            onTap: null,
-            child: Container(
-                padding: const EdgeInsets.all(5),
-                decoration: const BoxDecoration(
-                    border: Border(
-                        bottom: BorderSide(width: 4, color: Colors.black))),
-                child: Text(
-                  title,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 16),
-                ))));
+        child: Container(
+            padding: const EdgeInsets.all(5),
+            decoration: const BoxDecoration(
+                border:
+                    Border(bottom: BorderSide(width: 4, color: Colors.black))),
+            child: Text(
+              title,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            )));
   }
 }
 
