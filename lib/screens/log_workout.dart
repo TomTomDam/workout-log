@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:workout_log/screens/select_workout.dart';
 import 'package:workout_log/screens/settings/settings.dart';
 
+Widget pageSection = const OverviewPage();
+
 class LogWorkout extends StatefulWidget {
   const LogWorkout({Key? key}) : super(key: key);
 
@@ -12,7 +14,7 @@ class LogWorkout extends StatefulWidget {
 class _LogWorkoutState extends State<LogWorkout> {
   @override
   Widget build(BuildContext context) {
-    Widget pageSection = OverviewPage();
+    const EdgeInsets padding = EdgeInsets.all(25);
 
     return Scaffold(
         backgroundColor: Colors.white,
@@ -114,7 +116,7 @@ class _LogWorkoutState extends State<LogWorkout> {
                       child: const PageButton(title: "Muscles")),
                 ],
               ),
-              pageSection
+              Padding(padding: padding, child: pageSection),
             ]),
           )),
         ));
@@ -126,9 +128,50 @@ class OverviewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text("Hello"),
-    );
+    return Column(children: [
+      Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Container(
+            margin: const EdgeInsets.only(top: 8.0, left: 24.0, right: 24.0),
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+                color: Colors.white,
+                shape: BoxShape.circle),
+            child: const Icon(Icons.fitness_center)),
+        Container(
+            margin: const EdgeInsets.only(top: 8.0, left: 24.0, right: 24.0),
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+                color: Colors.white,
+                shape: BoxShape.circle),
+            child: const Icon(Icons.timer)),
+      ]),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+              margin: const EdgeInsets.only(top: 8.0, left: 24.0, right: 24.0),
+              child: Text("3240 kg")),
+          Container(
+              margin: const EdgeInsets.only(top: 8.0, left: 24.0, right: 24.0),
+              child: Text("1 hr 30 mins"))
+        ],
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+              margin: const EdgeInsets.only(top: 8.0, left: 24.0, right: 24.0),
+              child: Text("Total volume")),
+          Container(
+              margin: const EdgeInsets.only(top: 8.0, left: 24.0, right: 24.0),
+              child: Text("Duration"))
+        ],
+      )
+    ]);
   }
 }
 
@@ -138,7 +181,7 @@ class ExercisesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text("Hello"),
+      child: Text("Exercise"),
     );
   }
 }
@@ -149,7 +192,7 @@ class MusclesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text("Hello"),
+      child: Text("Muscles"),
     );
   }
 }
