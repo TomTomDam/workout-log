@@ -54,6 +54,7 @@ class _SelectWorkoutState extends State<SelectWorkout> {
                         Expanded(
                           child: GridView.count(
                             primary: false,
+                            shrinkWrap: true,
                             padding: const EdgeInsets.only(top: 8.0),
                             crossAxisSpacing: 0,
                             mainAxisSpacing: 0,
