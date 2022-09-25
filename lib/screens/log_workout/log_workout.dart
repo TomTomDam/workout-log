@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:workout_log/screens/select_workout.dart';
 import 'package:workout_log/screens/settings/settings.dart';
 
+import 'exercises_page.dart';
+import 'muscles_page.dart';
+import 'overview_page.dart';
+
 Widget pageSection = const OverviewPage();
 
 class LogWorkout extends StatefulWidget {
@@ -80,7 +84,8 @@ class _LogWorkoutState extends State<LogWorkout> {
                     ),
                   )),
               Container(
-                margin: const EdgeInsets.all(25.0),
+                margin:
+                    const EdgeInsets.only(top: 24.0, left: 24.0, right: 24.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -98,6 +103,20 @@ class _LogWorkoutState extends State<LogWorkout> {
                   ],
                 ),
               ),
+              Container(
+                  width: 250,
+                  height: 50,
+                  margin: const EdgeInsets.only(top: 16.0, bottom: 16.0),
+                  alignment: Alignment.center,
+                  child: ElevatedButton(
+                      onPressed: () => null,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Icon(Icons.electric_bolt),
+                          Text("Start workout"),
+                        ],
+                      ))),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -123,80 +142,6 @@ class _LogWorkoutState extends State<LogWorkout> {
   }
 }
 
-class OverviewPage extends StatelessWidget {
-  const OverviewPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(children: [
-      Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Container(
-            margin: const EdgeInsets.only(top: 8.0, left: 24.0, right: 24.0),
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-                color: Colors.white,
-                shape: BoxShape.circle),
-            child: const Icon(Icons.fitness_center)),
-        Container(
-            margin: const EdgeInsets.only(top: 8.0, left: 24.0, right: 24.0),
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-                color: Colors.white,
-                shape: BoxShape.circle),
-            child: const Icon(Icons.timer)),
-      ]),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-              margin: const EdgeInsets.only(top: 8.0, left: 24.0, right: 24.0),
-              child: Text("3240 kg")),
-          Container(
-              margin: const EdgeInsets.only(top: 8.0, left: 24.0, right: 24.0),
-              child: Text("1 hr 30 mins"))
-        ],
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-              margin: const EdgeInsets.only(top: 8.0, left: 24.0, right: 24.0),
-              child: Text("Total volume")),
-          Container(
-              margin: const EdgeInsets.only(top: 8.0, left: 24.0, right: 24.0),
-              child: Text("Duration"))
-        ],
-      )
-    ]);
-  }
-}
-
-class ExercisesPage extends StatelessWidget {
-  const ExercisesPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Text("Exercise"),
-    );
-  }
-}
-
-class MusclesPage extends StatelessWidget {
-  const MusclesPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Text("Muscles"),
-    );
-  }
-}
-
 class PageButton extends StatelessWidget {
   const PageButton({Key? key, required this.title}) : super(key: key);
   final String title;
@@ -204,9 +149,9 @@ class PageButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 15),
+        margin: const EdgeInsets.symmetric(horizontal: 16),
         child: Container(
-            padding: const EdgeInsets.all(5),
+            padding: const EdgeInsets.all(4),
             decoration: const BoxDecoration(
                 border:
                     Border(bottom: BorderSide(width: 4, color: Colors.black))),
