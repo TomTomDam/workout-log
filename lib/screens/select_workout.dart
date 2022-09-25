@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/sub_header.dart';
 import '../widgets/header.dart';
 import '../widgets/nav_bar.dart';
-import 'log_workout.dart';
+import 'log_workout/log_workout.dart';
 
 class SelectWorkout extends StatefulWidget {
   const SelectWorkout({Key? key}) : super(key: key);
