@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:workout_log/screens/select_workout.dart';
 import 'package:workout_log/screens/settings/settings.dart';
-
 import 'exercises_page.dart';
 import 'muscles_page.dart';
 import 'overview_page.dart';
