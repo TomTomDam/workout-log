@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 
+import '../../widgets/add_exercise_button.dart';
+
 class ExercisesPage extends StatelessWidget {
   const ExercisesPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> exerciseItems = [
-      const ExerciseItem(
-        isCollapsed: true,
-      ),
-      const ExerciseItem(isCollapsed: false)
-    ];
+    List<Widget> exerciseItems = [const ExerciseItem(), const ExerciseItem()];
 
-    return ListView(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        children: exerciseItems);
+    return Column(
+      children: [
+        ListView(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            children: exerciseItems),
+        AddExerciseButton()
+      ],
+    );
   }
 }
 
 class ExerciseItem extends StatefulWidget {
-  const ExerciseItem({Key? key, required this.isCollapsed}) : super(key: key);
-
-  final bool isCollapsed;
+  const ExerciseItem({Key? key}) : super(key: key);
 
   @override
   State<ExerciseItem> createState() => _ExerciseItemState();
@@ -148,7 +148,23 @@ class _ExerciseItemState extends State<ExerciseItem> {
                         )),
                       ],
                     ),
-                  )
+                  ),
+                  Container(
+                      margin: const EdgeInsets.only(top: 8.0, bottom: 24.0),
+                      child: Row(children: [
+                        Expanded(
+                          child: Column(children: [
+                            Container(
+                              margin: const EdgeInsets.symmetric(vertical: 8.0),
+                              child: const Text(
+                                "Total volume (sets x reps x weight)",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            const Text("1680.3")
+                          ]),
+                        )
+                      ]))
                 ],
               )
             ],
