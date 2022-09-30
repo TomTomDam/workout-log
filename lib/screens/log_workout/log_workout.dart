@@ -103,9 +103,10 @@ class _LogWorkoutState extends State<LogWorkout> {
                 ),
               ),
               Container(
-                  width: 250,
+                  width: double.infinity,
                   height: 50,
-                  margin: const EdgeInsets.only(top: 16.0, bottom: 16.0),
+                  margin: const EdgeInsets.symmetric(
+                      vertical: 16.0, horizontal: 25.0),
                   alignment: Alignment.center,
                   child: ElevatedButton(
                       onPressed: () => null,
