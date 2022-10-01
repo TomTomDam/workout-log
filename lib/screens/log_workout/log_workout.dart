@@ -36,7 +36,7 @@ class _LogWorkoutState extends State<LogWorkout> {
                               builder: (context) => const SelectWorkout()));
                     },
                     child: const Icon(
-                      Icons.navigate_before_rounded,
+                      Icons.navigate_before,
                       color: Colors.black,
                     ),
                   ),
@@ -44,10 +44,7 @@ class _LogWorkoutState extends State<LogWorkout> {
                     style: ElevatedButton.styleFrom(
                         minimumSize: const Size(40, 40), primary: Colors.white),
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const SelectWorkout()));
+                      Navigator.pop(context);
                     },
                     child: const Icon(
                       Icons.timer,

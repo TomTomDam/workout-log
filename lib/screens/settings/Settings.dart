@@ -28,7 +28,7 @@ class Settings extends StatelessWidget {
                               )));
                 },
                 child: const Icon(
-                  Icons.navigate_before_rounded,
+                  Icons.navigate_before,
                   color: Colors.black,
                 ),
               ),
