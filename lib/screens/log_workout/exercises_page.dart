@@ -15,7 +15,7 @@ class ExercisesPage extends StatelessWidget {
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
             children: exerciseItems),
-        AddExerciseButton()
+        const AddExerciseButton()
       ],
     );
   }
@@ -91,16 +91,29 @@ class _ExerciseItemState extends State<ExerciseItem> {
                       DataColumn(label: LogTableHeaderCell(value: "Weight")),
                       DataColumn(label: LogTableHeaderCell(value: "Reps")),
                     ],
-                    rows: const <DataRow>[
+                    rows: <DataRow>[
                       DataRow(cells: <DataCell>[
                         DataCell(Center(
-                            child: Text("W",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20)))),
-                        DataCell(LogTableDataCell(value: "20 x 8")),
-                        DataCell(LogTableDataCell(value: "20kg")),
-                        DataCell(LogTableDataCell(value: "8")),
+                            child: InkWell(
+                          onTap: () {
+                            AlertDialog(
+                                title: Text("Wassup"),
+                                content: Text("This is a dialog"),
+                                actions: [
+                                  OutlinedButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text("Close"))
+                                ]);
+                          },
+                          child: const Text("W",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20)),
+                        ))),
+                        const DataCell(LogTableDataCell(value: "20 x 8")),
+                        const DataCell(LogTableDataCell(value: "20kg")),
+                        const DataCell(LogTableDataCell(value: "8")),
                       ])
                     ],
                   ),

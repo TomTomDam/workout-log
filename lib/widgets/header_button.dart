@@ -14,7 +14,7 @@ class HeaderButton extends StatelessWidget {
             context, MaterialPageRoute(builder: (context) => buttonAction));
       },
       child: const Icon(
-        Icons.navigate_before_rounded,
+        Icons.navigate_before,
         color: Colors.black,
       ),
     );
