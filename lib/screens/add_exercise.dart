@@ -35,8 +35,8 @@ class _AddExerciseState extends State<AddExercise> {
                     minimumSize: const Size(40, 40), primary: Colors.white),
                 onPressed: () {},
                 child: const Text(
-                  "Add",
-                  style: TextStyle(color: Colors.black),
+                  "Create",
+                  style: TextStyle(color: Colors.black, fontSize: 12),
                 ),
               ),
             ),

@@ -20,12 +20,7 @@ class Settings extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                     minimumSize: const Size(40, 40), primary: Colors.white),
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const Main(
-                                title: 'Workout Log',
-                              )));
+                  Navigator.pop(context);
                 },
                 child: const Icon(
                   Icons.navigate_before,
