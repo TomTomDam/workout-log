@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:workout_log/screens/exercise_information/exercise_information.dart';
 import '../../widgets/add_exercise_button.dart';
 
 class ExercisesPage extends StatelessWidget {
@@ -89,23 +89,50 @@ class _ExerciseItemState extends State<ExerciseItem> {
                       DataColumn(label: LogTableHeaderCell(value: "Set")),
                       DataColumn(label: LogTableHeaderCell(value: "Previous")),
                       DataColumn(label: LogTableHeaderCell(value: "Weight")),
-                      DataColumn(label: LogTableHeaderCell(value: "Reps")),
+                      DataColumn(label: LogTableHeaderCell(value: "Reps"))
                     ],
                     rows: <DataRow>[
                       DataRow(cells: <DataCell>[
                         DataCell(Center(
                             child: InkWell(
                           onTap: () {
-                            AlertDialog(
-                                title: Text("Wassup"),
-                                content: Text("This is a dialog"),
-                                actions: [
-                                  OutlinedButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Text("Close"))
-                                ]);
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                  return Wrap(
+                                    children: [
+                                      InkWell(
+                                        onTap: () {},
+                                        child: const ListTile(
+                                          leading:
+                                              Icon(Icons.local_fire_department),
+                                          title: Text('Warmup'),
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {},
+                                        child: const ListTile(
+                                          leading: Icon(Icons.looks_one),
+                                          title: Text('Normal'),
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {},
+                                        child: const ListTile(
+                                          leading: Icon(Icons.warning),
+                                          title: Text('Failure'),
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {},
+                                        child: const ListTile(
+                                          leading: Icon(Icons.delete),
+                                          title: Text('Remove set'),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                });
                           },
                           child: const Text("W",
                               style: TextStyle(
@@ -234,13 +261,59 @@ class _ExerciseItemHeaderState extends State<ExerciseItemHeader> {
       ),
       const Spacer(),
       InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const ExerciseInformation(
+                        exerciseId: 0,
+                      )));
+        },
         child: const Icon(
           Icons.help_outline,
           size: 30,
         ),
       ),
-      InkWell(onTap: () {}, child: const Icon(Icons.more_vert, size: 30))
+      InkWell(
+          onTap: () {
+            showModalBottomSheet(
+                context: context,
+                builder: (context) {
+                  return Wrap(
+                    children: [
+                      InkWell(
+                        onTap: () {},
+                        child: const ListTile(
+                          leading: Icon(Icons.electric_bolt),
+                          title: Text('Change exercise'),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {},
+                        child: const ListTile(
+                          leading: Icon(Icons.loop),
+                          title: Text('Reset sets and weight'),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {},
+                        child: const ListTile(
+                          leading: Icon(Icons.menu),
+                          title: Text('Reorder exercise'),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {},
+                        child: const ListTile(
+                          leading: Icon(Icons.close),
+                          title: Text('Delete exercise'),
+                        ),
+                      ),
+                    ],
+                  );
+                });
+          },
+          child: const Icon(Icons.more_vert, size: 30))
     ]);
   }
 }
