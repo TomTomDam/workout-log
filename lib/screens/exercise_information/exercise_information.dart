@@ -19,8 +19,7 @@ class ExerciseInformation extends StatelessWidget {
             style: ElevatedButton.styleFrom(
                 minimumSize: const Size(40, 40), primary: Colors.white),
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const Settings()));
+              Navigator.pop(context);
             },
             child: InkWell(
               onTap: () {

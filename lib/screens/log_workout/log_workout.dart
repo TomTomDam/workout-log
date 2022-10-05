@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:workout_log/screens/select_workout.dart';
 import 'package:workout_log/screens/settings/settings.dart';
+import '../../widgets/pane_button.dart';
 import 'exercises_pane.dart';
 import 'muscles_pane.dart';
 import 'overview_pane.dart';
@@ -15,8 +16,6 @@ class LogWorkout extends StatefulWidget {
 }
 
 class _LogWorkoutState extends State<LogWorkout> {
-  var exercisesIsActive;
-
   @override
   Widget build(BuildContext context) {
     const EdgeInsets padding = EdgeInsets.all(25);
@@ -58,7 +57,7 @@ class _LogWorkoutState extends State<LogWorkout> {
                       vertical: 16.0, horizontal: 25.0),
                   alignment: Alignment.center,
                   child: ElevatedButton(
-                      onPressed: () => null,
+                      onPressed: () {},
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: const [
@@ -78,7 +77,7 @@ class _LogWorkoutState extends State<LogWorkout> {
                         musclesIsActive = false;
                       })
                     },
-                    child: PageButton(
+                    child: PaneButton(
                         title: "Overview", isActive: overviewIsActive),
                   ),
                   InkWell(
@@ -90,7 +89,7 @@ class _LogWorkoutState extends State<LogWorkout> {
                               musclesIsActive = false;
                             })
                           },
-                      child: PageButton(
+                      child: PaneButton(
                           title: "Exercises", isActive: exercisesIsActive)),
                   InkWell(
                       onTap: () => {
@@ -101,7 +100,7 @@ class _LogWorkoutState extends State<LogWorkout> {
                               overviewIsActive = false;
                             })
                           },
-                      child: PageButton(
+                      child: PaneButton(
                           title: "Muscles", isActive: musclesIsActive)),
                 ],
               ),
@@ -109,33 +108,6 @@ class _LogWorkoutState extends State<LogWorkout> {
             ]),
           )),
         ));
-  }
-}
-
-class PageButton extends StatelessWidget {
-  const PageButton({Key? key, required this.title, required this.isActive})
-      : super(key: key);
-  final String title;
-  final bool isActive;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16),
-        child: Container(
-            padding: const EdgeInsets.all(4),
-            decoration: BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(
-                        width: 4,
-                        color: isActive ? Colors.blue : Colors.black))),
-            child: Text(
-              title,
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                  color: isActive ? Colors.blue : Colors.black),
-            )));
   }
 }
 
@@ -179,7 +151,13 @@ class LogWorkoutHeader extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                         minimumSize: const Size(40, 40), primary: Colors.white),
                     onPressed: () {
-                      Navigator.pop(context);
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return const AlertDialog(
+                              content: Text("This is a timer"),
+                            );
+                          });
                     },
                     child: const Icon(
                       Icons.timer,
@@ -210,8 +188,7 @@ class LogWorkoutHeader extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                   minimumSize: const Size(40, 40), primary: Colors.white),
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Settings()));
+                Navigator.pop(context);
               },
               child: const Icon(
                 Icons.check,
