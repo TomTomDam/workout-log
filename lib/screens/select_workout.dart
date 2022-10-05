@@ -89,7 +89,8 @@ class _SelectWorkoutState extends State<SelectWorkout> {
                     width: width - margin,
                     height: 70,
                     padding: const EdgeInsets.all(8.0),
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black),
                       color: Colors.grey,
                     ),
                     child: const Align(

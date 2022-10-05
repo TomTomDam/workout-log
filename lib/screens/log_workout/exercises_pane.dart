@@ -7,7 +7,7 @@ class ExercisesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> exerciseItems = [const ExerciseItem(), const ExerciseItem()];
+    List<Widget> exerciseItems = [const ExerciseItem()];
 
     return Column(
       children: [
@@ -48,23 +48,7 @@ class _ExerciseItemState extends State<ExerciseItem> {
                     decoration: BoxDecoration(
                         color: Colors.white,
                         border: Border.all(color: Colors.black)),
-                    child: Container(
-                      margin: const EdgeInsets.all(8.0),
-                      child: Row(children: [
-                        Container(
-                            margin: const EdgeInsets.only(right: 8.0),
-                            child: const Icon(Icons.star, size: 30)),
-                        Container(
-                            margin: const EdgeInsets.only(right: 16.0),
-                            child: const Text("Best Set Volume")),
-                        Container(
-                            margin: const EdgeInsets.only(right: 16.0),
-                            child: Text(
-                              "28kg x 12",
-                              style: TextStyle(color: Colors.grey.shade600),
-                            ))
-                      ]),
-                    ),
+                    child: const PersonalRecord(),
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
@@ -211,6 +195,38 @@ class _ExerciseItemState extends State<ExerciseItem> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class PersonalRecord extends StatelessWidget {
+  const PersonalRecord({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    const String text = "Best Set Volume";
+    const String weight = "28";
+    const String weightUnit = "kg";
+    const String reps = "12";
+
+    return Container(
+      margin: const EdgeInsets.all(8.0),
+      child: Row(children: [
+        Container(
+            margin: const EdgeInsets.only(right: 8.0),
+            child: const Icon(Icons.star, size: 30)),
+        Container(
+            margin: const EdgeInsets.only(right: 16.0),
+            child: const Text(text)),
+        Container(
+            margin: const EdgeInsets.only(right: 16.0),
+            child: Text(
+              "$weight$weightUnit x $reps",
+              style: TextStyle(color: Colors.grey.shade600),
+            ))
+      ]),
     );
   }
 }
