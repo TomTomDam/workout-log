@@ -7,11 +7,11 @@ class SubHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const double padding = 20;
-    const EdgeInsets sectionPadding =
+    const EdgeInsets rowPadding =
         EdgeInsets.only(top: padding, left: padding, right: padding);
 
     return Padding(
-      padding: sectionPadding,
+      padding: rowPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

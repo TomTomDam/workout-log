@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../widgets/header.dart';
-import '../settings/settings.dart';
+import '../../widgets/header/header.dart';
 
 class ExerciseInformation extends StatelessWidget {
   const ExerciseInformation({Key? key, required this.exerciseId})

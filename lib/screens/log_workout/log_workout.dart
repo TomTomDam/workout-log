@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:workout_log/screens/select_workout.dart';
 import 'package:workout_log/screens/settings/settings.dart';
-import '../../widgets/pane_button.dart';
+import '../../widgets/page/pane_button.dart';
 import 'exercises_pane.dart';
 import 'muscles_pane.dart';
 import 'overview_pane.dart';
@@ -117,11 +117,11 @@ class LogWorkoutHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const double padding = 25;
-    const EdgeInsets sectionPadding =
+    const EdgeInsets rowPadding =
         EdgeInsets.only(top: padding, left: padding, right: padding);
 
     return Padding(
-      padding: sectionPadding,
+      padding: rowPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

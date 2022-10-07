@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:workout_log/screens/dashboard.dart';
-import '../widgets/nav_bar.dart';
+import '../widgets/page/nav_bar.dart';
 
 void main() {
   runApp(const MyApp());
