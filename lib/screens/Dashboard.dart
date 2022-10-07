@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import './settings/settings.dart';
-import '../widgets/header.dart';
+import '../widgets/header/header.dart';
 import 'onboarding_page1.dart';
 import 'onboarding_page2.dart';
 import 'onboarding_page3.dart';

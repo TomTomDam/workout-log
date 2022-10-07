@@ -8,17 +8,17 @@ class Header extends StatelessWidget {
       required this.secondaryButton})
       : super(key: key);
   final String title;
-  final ElevatedButton? navigationButton;
-  final ElevatedButton? secondaryButton;
+  final Widget? navigationButton;
+  final Widget? secondaryButton;
 
   @override
   Widget build(BuildContext context) {
     const double padding = 25;
-    const EdgeInsets sectionPadding =
+    const EdgeInsets rowPadding =
         EdgeInsets.only(top: padding, left: padding, right: padding);
 
     return Padding(
-      padding: sectionPadding,
+      padding: rowPadding,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

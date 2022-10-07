@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../widgets/sub_header.dart';
-import '../widgets/header.dart';
-import '../widgets/nav_bar.dart';
+import '../widgets/page/sub_header.dart';
+import '../widgets/header/header.dart';
+import '../widgets/page/nav_bar.dart';
 import 'log_workout/log_workout.dart';
 
 class SelectWorkout extends StatefulWidget {

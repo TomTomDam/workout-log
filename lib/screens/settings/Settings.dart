@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:workout_log/screens/main.dart';
-import '../../widgets/header.dart';
+import '../../widgets/header/header.dart';
 
 class Settings extends StatelessWidget {
   const Settings({Key? key}) : super(key: key);
