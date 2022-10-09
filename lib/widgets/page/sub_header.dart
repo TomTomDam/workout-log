@@ -6,7 +6,7 @@ class SubHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double padding = 20;
+    const double padding = 25;
     const EdgeInsets rowPadding =
         EdgeInsets.only(top: padding, left: padding, right: padding);
 
