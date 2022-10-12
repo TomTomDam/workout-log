@@ -10,6 +10,7 @@ class CreateExercise extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         body: SafeArea(
             child: Column(
@@ -26,17 +27,25 @@ class CreateExercise extends StatelessWidget {
                   child: const Text("Save",
                       style: TextStyle(color: Colors.black))),
             ),
-            Container(
-              margin: const EdgeInsets.fromLTRB(25.0, 25.0, 25.0, 15.0),
-              height: 100,
-              width: 100,
-              decoration: BoxDecoration(
-                  color: Colors.grey.shade400, shape: BoxShape.circle),
-              child:
-                  const Icon(Icons.camera_alt, color: Colors.black, size: 50),
+            InkWell(
+              onTap: () {},
+              child: Container(
+                margin: const EdgeInsets.fromLTRB(25.0, 25.0, 25.0, 15.0),
+                height: 100,
+                width: 100,
+                decoration: BoxDecoration(
+                    color: Colors.grey.shade400, shape: BoxShape.circle),
+                child:
+                    const Icon(Icons.camera_alt, color: Colors.black, size: 50),
+              ),
             ),
             const Text("Add image"),
-            const SubHeader(title: "Name of Exercise"),
+            Container(
+              margin: const EdgeInsets.only(top: 25, left: 25, right: 25),
+              child: TextFormField(
+                  decoration:
+                      const InputDecoration(labelText: "Name of Exercise")),
+            ),
             const ExerciseDetail(title: "Exercise Type"),
             const ExerciseDetail(title: "Equipment"),
             const ExerciseDetail(title: "Primary Muscle Group"),
