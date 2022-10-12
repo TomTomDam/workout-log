@@ -49,9 +49,7 @@ class _AddExercisesState extends State<AddExercises> {
               ),
             ),
             InkWell(
-              onTap: () {
-                showSearch(context: context, delegate: SearchBehaviour());
-              },
+              onTap: () {},
               child: Container(
                   margin: rowMargin,
                   padding: const EdgeInsets.all(10.0),
@@ -164,59 +162,5 @@ class _AddExercisesState extends State<AddExercises> {
             )
           ],
         )));
-  }
-}
-
-class SearchBehaviour extends SearchDelegate {
-  List<String> searchResults = ["Pull Up", "Seated Row Machine"];
-
-  @override
-  List<Widget>? buildActions(BuildContext context) => [
-        IconButton(
-            icon: const Icon(Icons.clear),
-            onPressed: () {
-              if (query.isEmpty) {
-                close(context, null);
-              } else {
-                query = '';
-              }
-            })
-      ];
-
-  @override
-  Widget? buildLeading(BuildContext context) {
-    return IconButton(
-      icon: const Icon(Icons.arrow_back),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    );
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    return Center(child: Text(query));
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    List<String> suggestions = searchResults.where((searchResult) {
-      final result = searchResult.toLowerCase();
-      final input = query.toLowerCase();
-
-      return result.contains(input);
-    }).toList();
-
-    return ListView.builder(
-        itemCount: suggestions.length,
-        itemBuilder: (context, index) {
-          final suggestion = suggestions[index];
-
-          return ListTile(
-              title: Text(suggestion),
-              onTap: () {
-                query = suggestion;
-              });
-        });
   }
 }

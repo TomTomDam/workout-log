@@ -145,7 +145,41 @@ class _SelectWorkoutState extends State<SelectWorkout> {
                                         .textTheme
                                         .headline2
                                         ?.fontSize)),
-                            const Icon(Icons.more_vert, color: Colors.black)
+                            InkWell(
+                                onTap: () {
+                                  showModalBottomSheet(
+                                      context: context,
+                                      builder: (context) {
+                                        return Wrap(
+                                          children: [
+                                            InkWell(
+                                              onTap: () {},
+                                              child: const ListTile(
+                                                leading:
+                                                    Icon(Icons.electric_bolt),
+                                                title: Text('Start workout'),
+                                              ),
+                                            ),
+                                            InkWell(
+                                              onTap: () {},
+                                              child: const ListTile(
+                                                leading: Icon(Icons.edit),
+                                                title: Text('Edit workout'),
+                                              ),
+                                            ),
+                                            InkWell(
+                                              onTap: () {},
+                                              child: const ListTile(
+                                                leading: Icon(Icons.close),
+                                                title: Text('Delete workout'),
+                                              ),
+                                            )
+                                          ],
+                                        );
+                                      });
+                                },
+                                child: const Icon(Icons.more_vert,
+                                    color: Colors.black))
                           ],
                         ),
                         Container(
