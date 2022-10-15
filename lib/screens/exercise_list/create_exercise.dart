@@ -42,9 +42,8 @@ class CreateExercise extends StatelessWidget {
             const Text("Add image"),
             Container(
               margin: const EdgeInsets.only(top: 25, left: 25, right: 25),
-              child: TextFormField(
-                  decoration:
-                      const InputDecoration(labelText: "Name of Exercise")),
+              child: const TextField(
+                  decoration: InputDecoration(labelText: "Name of Exercise")),
             ),
             const ExerciseDetail(title: "Exercise Type"),
             const ExerciseDetail(title: "Equipment"),
