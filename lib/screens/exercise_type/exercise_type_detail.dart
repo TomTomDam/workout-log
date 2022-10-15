@@ -16,7 +16,7 @@ class ExerciseTypeDetail extends StatelessWidget {
                 title: "Exercise Type",
                 navigationButton: NavigateBeforeButton(),
                 secondaryButton: null),
-            SizedBox(height: 15),
+            SizedBox(height: 25),
             ExerciseTypeItem(
                 title: "Weight and Reps",
                 exampleExercise: "Bench Press",
