@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:workout_log/widgets/page/sub_header.dart';
 import '../../widgets/header/header.dart';
 import '../../widgets/header/navigate_before_button.dart';
 import '../exercise_type/exercise_type_detail.dart';

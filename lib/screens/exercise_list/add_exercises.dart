@@ -12,18 +12,12 @@ class AddExercises extends StatefulWidget {
 }
 
 class _AddExercisesState extends State<AddExercises> {
+  EdgeInsets rowMargin =
+      const EdgeInsets.only(left: 25.0, right: 25.0, top: 15.0);
+  List<ExerciseModel> resultsList = exerciseList;
+
   @override
   Widget build(BuildContext context) {
-    const EdgeInsets rowMargin =
-        EdgeInsets.only(left: 25.0, right: 25.0, top: 15.0);
-
-    List<ExerciseModel> exerciseList = [
-      ExerciseModel("Arnold Press", "Front Delts, Triceps"),
-      ExerciseModel("Ab Wheel", "Abdominals"),
-      ExerciseModel("Bench Press (Barbell)", "Chest, Front Delts, Triceps")
-    ];
-    List<ExerciseModel> resultsList = exerciseList;
-
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -82,20 +76,7 @@ class _AddExercisesState extends State<AddExercises> {
                               margin:
                                   const EdgeInsets.symmetric(horizontal: 5.0),
                               child: TextField(
-                                  onChanged: (query) {
-                                    final searchResults =
-                                        exerciseList.where((exercise) {
-                                      final exerciseName =
-                                          exercise.name.toLowerCase();
-                                      final searchInput = query.toLowerCase();
-
-                                      return exerciseName.contains(searchInput);
-                                    }).toList();
-
-                                    setState(() => resultsList = searchResults);
-
-                                    print(resultsList.length.toString());
-                                  },
+                                  onChanged: searchExercise,
                                   decoration: const InputDecoration(
                                       labelText: "Search exercises",
                                       floatingLabelBehavior:
@@ -203,21 +184,26 @@ class _AddExercisesState extends State<AddExercises> {
                   child: ListView.builder(
                       itemCount: resultsList.length,
                       itemBuilder: (context, index) {
-                        return Column(
-                          children: [
-                            ListTile(
-                              onTap: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ExerciseInformation(
-                                            exerciseId: 0,
-                                          ))),
-                              title: Text(resultsList[index].name),
-                              subtitle: Text(resultsList[index].muscleWorked),
-                            ),
-                            const Divider(thickness: 2)
-                          ],
+                        return ListTile(
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ExerciseInformation(
+                                        exerciseId: 0,
+                                      ))),
+                          leading: Container(
+                            margin: const EdgeInsets.all(5.0),
+                            height: 50,
+                            width: 50,
+                            decoration: BoxDecoration(
+                                color: Colors.grey.shade400,
+                                shape: BoxShape.circle),
+                            child: const Icon(Icons.fitness_center,
+                                color: Colors.black, size: 25),
+                          ),
+                          title: Text(resultsList[index].name),
+                          subtitle: Text(resultsList[index].musclesWorked),
                         );
                       }),
                 )
@@ -225,5 +211,16 @@ class _AddExercisesState extends State<AddExercises> {
             )),
           )),
     );
+  }
+
+  void searchExercise(String query) {
+    final searchResults = exerciseList.where((exercise) {
+      final exerciseName = exercise.name.toLowerCase();
+      final searchInput = query.toLowerCase();
+
+      return exerciseName.contains(searchInput);
+    }).toList();
+
+    setState(() => resultsList = searchResults);
   }
 }
