@@ -107,6 +107,12 @@ class _AddExercisesState extends State<AddExercises> {
                                       InkWell(
                                         onTap: () {},
                                         child: const ListTile(
+                                          title: Text('Any equipment'),
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {},
+                                        child: const ListTile(
                                           title: Text('Dumbbell'),
                                         ),
                                       ),
@@ -151,6 +157,12 @@ class _AddExercisesState extends State<AddExercises> {
                                       InkWell(
                                         onTap: () {},
                                         child: const ListTile(
+                                          title: Text('All muscles'),
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {},
+                                        child: const ListTile(
                                           title: Text('Chest'),
                                         ),
                                       ),
@@ -184,26 +196,31 @@ class _AddExercisesState extends State<AddExercises> {
                   child: ListView.builder(
                       itemCount: resultsList.length,
                       itemBuilder: (context, index) {
-                        return ListTile(
-                          onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ExerciseInformation(
-                                        exerciseId: 0,
-                                      ))),
-                          leading: Container(
-                            margin: const EdgeInsets.all(5.0),
-                            height: 50,
-                            width: 50,
-                            decoration: BoxDecoration(
-                                color: Colors.grey.shade400,
-                                shape: BoxShape.circle),
-                            child: const Icon(Icons.fitness_center,
-                                color: Colors.black, size: 25),
-                          ),
-                          title: Text(resultsList[index].name),
-                          subtitle: Text(resultsList[index].musclesWorked),
+                        return Column(
+                          children: [
+                            ListTile(
+                              onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ExerciseInformation(
+                                            exerciseId: 0,
+                                          ))),
+                              leading: Container(
+                                margin: const EdgeInsets.all(5.0),
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                    color: Colors.grey.shade400,
+                                    shape: BoxShape.circle),
+                                child: const Icon(Icons.fitness_center,
+                                    color: Colors.black, size: 25),
+                              ),
+                              title: Text(resultsList[index].name),
+                              subtitle: Text(resultsList[index].musclesWorked),
+                            ),
+                            const Divider(thickness: 2)
+                          ],
                         );
                       }),
                 )
