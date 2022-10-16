@@ -17,12 +17,15 @@ class PaneButton extends StatelessWidget {
                     bottom: BorderSide(
                         width: 4,
                         color: isActive ? Colors.blue : Colors.black))),
-            child: Text(
-              title,
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                  color: isActive ? Colors.blue : Colors.black),
+            child: Center(
+              child: Text(
+                textAlign: TextAlign.center,
+                title,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: isActive ? Colors.blue : Colors.black),
+              ),
             )));
   }
 }

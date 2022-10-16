@@ -16,13 +16,13 @@ class LogWorkout extends StatefulWidget {
 }
 
 class _LogWorkoutState extends State<LogWorkout> {
+  EdgeInsets padding = const EdgeInsets.all(25);
+  bool overviewIsActive = false;
+  bool exercisesIsActive = false;
+  bool musclesIsActive = false;
+
   @override
   Widget build(BuildContext context) {
-    const EdgeInsets padding = EdgeInsets.all(25);
-    bool overviewIsActive = false;
-    bool exercisesIsActive = false;
-    bool musclesIsActive = false;
-
     return Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(

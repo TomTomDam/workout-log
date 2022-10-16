@@ -104,7 +104,6 @@ class _SelectWorkoutState extends State<SelectWorkout> {
                 margin:
                     const EdgeInsets.only(top: 10, left: margin, right: margin),
                 child: Row(children: const [
-                  GridButton(text: "New workout", icon: Icons.add),
                   GridButton(text: "Search workouts", icon: Icons.search),
                   GridButton(text: "Favourites", icon: Icons.star),
                 ]),
