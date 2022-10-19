@@ -103,9 +103,23 @@ class _SelectWorkoutState extends State<SelectWorkout> {
               Container(
                 margin:
                     const EdgeInsets.only(top: 10, left: margin, right: margin),
-                child: Row(children: const [
-                  GridButton(text: "Search workouts", icon: Icons.search),
-                  GridButton(text: "Favourites", icon: Icons.star),
+                child: Row(children: [
+                  Expanded(
+                    child: InkWell(
+                        onTap: () {
+                          showSearch(
+                              context: context,
+                              delegate: SearchWorkoutDelegate());
+                        },
+                        child: const GridButton(
+                            text: "Search workouts", icon: Icons.search)),
+                  ),
+                  Expanded(
+                    child: InkWell(
+                        onTap: () {},
+                        child: const GridButton(
+                            text: "Favourites", icon: Icons.star)),
+                  ),
                 ]),
               ),
               Row(
@@ -257,31 +271,28 @@ class GridButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      flex: 2,
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: Container(
-          padding: const EdgeInsets.only(top: 10),
-          alignment: Alignment.center,
-          height: 80,
-          decoration: const BoxDecoration(
-            color: Colors.grey,
-          ),
-          child: Column(children: [
-            Icon(
-              icon,
-              color: Colors.black,
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 8.0),
-              child: Text(
-                text,
-                textAlign: TextAlign.center,
-              ),
-            )
-          ]),
+        padding: const EdgeInsets.only(top: 10),
+        alignment: Alignment.center,
+        height: 80,
+        decoration: const BoxDecoration(
+          color: Colors.grey,
         ),
+        child: Column(children: [
+          Icon(
+            icon,
+            color: Colors.black,
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 8.0),
+            child: Text(
+              text,
+              textAlign: TextAlign.center,
+            ),
+          )
+        ]),
       ),
     );
   }
@@ -311,5 +322,68 @@ class ExerciseText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         margin: const EdgeInsets.only(top: 8.0, left: 4.0), child: Text(text));
+  }
+}
+
+class SearchWorkoutDelegate extends SearchDelegate {
+  List<String> searchResults = [
+    "Push Hypertrophy",
+    "Pull Hypertrophy",
+    "Legs Hypertrophy"
+  ];
+
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: const Icon(Icons.clear),
+        onPressed: () {
+          if (query.isEmpty) {
+            close(context, null);
+          } else {
+            query = '';
+          }
+        },
+      ),
+    ];
+  }
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(
+      icon: const Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, null);
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) => Center(
+      child: Text(query,
+          style: TextStyle(
+              fontSize: Theme.of(context).textTheme.bodyText1?.fontSize)));
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    List<String> suggestions = searchResults.where((searchResult) {
+      final result = searchResult.toLowerCase();
+      final input = query.toLowerCase();
+
+      return result.contains(input);
+    }).toList();
+
+    return ListView.builder(
+        itemCount: suggestions.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+              title: Text(suggestions[index]),
+              onTap: () {
+                //query = suggestions[index];
+                //showResults(context);
+
+                Navigator.pop(context);
+              });
+        });
   }
 }
