@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:workout_log/screens/dashboard.dart';
+import 'package:workout_log/screens/dashboard/dashboard.dart';
 import '../widgets/page/nav_bar.dart';
 
 void main() {
