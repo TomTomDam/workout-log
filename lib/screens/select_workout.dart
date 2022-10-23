@@ -14,10 +14,9 @@ class SelectWorkout extends StatefulWidget {
 class _SelectWorkoutState extends State<SelectWorkout> {
   @override
   Widget build(BuildContext context) {
-    const double margin = 25;
+    const double sideMargin = 20;
     const EdgeInsets containerMargin =
-        EdgeInsets.only(top: 5, bottom: 5, left: margin, right: margin);
-
+        EdgeInsets.fromLTRB(sideMargin, 10, sideMargin, 0);
     final double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -35,9 +34,9 @@ class _SelectWorkoutState extends State<SelectWorkout> {
               Container(
                 margin: containerMargin,
                 child: Container(
-                    width: width - margin,
-                    height: 90,
-                    padding: const EdgeInsets.all(8.0),
+                    width: width - sideMargin,
+                    height: 95,
+                    padding: const EdgeInsets.all(10),
                     decoration: const BoxDecoration(
                       color: Colors.grey,
                     ),
@@ -51,11 +50,12 @@ class _SelectWorkoutState extends State<SelectWorkout> {
                                     .textTheme
                                     .headline2
                                     ?.fontSize)),
-                        Expanded(
+                        SizedBox(
+                          height: 50,
                           child: GridView.count(
                             primary: false,
                             shrinkWrap: true,
-                            padding: const EdgeInsets.only(top: 8.0),
+                            padding: const EdgeInsets.only(top: 10),
                             crossAxisSpacing: 0,
                             mainAxisSpacing: 0,
                             crossAxisCount: 2,
@@ -85,24 +85,21 @@ class _SelectWorkoutState extends State<SelectWorkout> {
                 },
                 child: Container(
                   margin: containerMargin,
-                  child: Container(
-                    width: width - margin,
-                    height: 70,
-                    padding: const EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black),
-                      color: Colors.grey,
-                    ),
-                    child: const Align(
-                        alignment: Alignment.center,
-                        child: Text("Start an empty workout")),
+                  width: double.infinity,
+                  height: 70,
+                  padding: const EdgeInsets.all(10.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black),
+                    color: Colors.grey,
                   ),
+                  child: const Align(
+                      alignment: Alignment.center,
+                      child: Text("Start an empty workout")),
                 ),
               ),
               const SubHeader(title: "Workouts"),
               Container(
-                margin:
-                    const EdgeInsets.only(top: 10, left: margin, right: margin),
+                margin: containerMargin,
                 child: Row(children: [
                   Expanded(
                     child: InkWell(
@@ -128,7 +125,7 @@ class _SelectWorkoutState extends State<SelectWorkout> {
                   const SubHeader(title: "Workout history"),
                   Container(
                     margin: const EdgeInsets.only(
-                        top: margin, left: margin, right: margin),
+                        top: 10, left: sideMargin, right: sideMargin),
                     child: const Icon(Icons.keyboard_arrow_down,
                         color: Colors.black),
                   )
@@ -136,11 +133,11 @@ class _SelectWorkoutState extends State<SelectWorkout> {
               ),
               Container(
                 margin: const EdgeInsets.only(
-                    top: 10, bottom: 25, left: margin, right: margin),
+                    top: 10, bottom: 25, left: sideMargin, right: sideMargin),
                 child: Container(
-                  width: width - margin,
-                  height: 270,
-                  padding: const EdgeInsets.all(8.0),
+                  width: width - sideMargin,
+                  height: 275,
+                  padding: const EdgeInsets.all(10),
                   decoration: const BoxDecoration(
                     color: Colors.grey,
                   ),
@@ -196,16 +193,17 @@ class _SelectWorkoutState extends State<SelectWorkout> {
                           ],
                         ),
                         Container(
-                          margin: const EdgeInsets.only(top: 4.0),
+                          margin: const EdgeInsets.only(top: 5.0),
                           child: Text(
                             "Yesterday (18/09/2022)",
                             style: TextStyle(color: Colors.grey.shade200),
                           ),
                         ),
-                        Expanded(
+                        SizedBox(
+                          height: 50,
                           child: GridView.count(
                             primary: false,
-                            padding: const EdgeInsets.only(top: 8.0),
+                            padding: const EdgeInsets.only(top: 10.0),
                             crossAxisSpacing: 0,
                             mainAxisSpacing: 0,
                             crossAxisCount: 2,
@@ -226,16 +224,13 @@ class _SelectWorkoutState extends State<SelectWorkout> {
                           color: Colors.black,
                           thickness: 1,
                         ),
-                        Container(
-                          margin: const EdgeInsets.only(top: 4.0),
-                          child: Text(
-                            "Exercises",
-                            style: TextStyle(color: Colors.grey.shade200),
-                          ),
+                        Text(
+                          "Exercises",
+                          style: TextStyle(color: Colors.grey.shade200),
                         ),
                         Container(
-                          margin: const EdgeInsets.only(
-                              top: 4.0, bottom: 4.0, left: 4.0),
+                          margin:
+                              const EdgeInsets.only(top: 5, bottom: 5, left: 5),
                           child: Row(
                             children: const [
                               ExerciseImage(),
@@ -244,8 +239,8 @@ class _SelectWorkoutState extends State<SelectWorkout> {
                           ),
                         ),
                         Container(
-                          margin: const EdgeInsets.only(
-                              top: 4.0, bottom: 4.0, left: 4.0),
+                          margin:
+                              const EdgeInsets.only(top: 5, bottom: 5, left: 5),
                           child: Row(
                             children: const [
                               ExerciseImage(),
@@ -272,25 +267,22 @@ class GridButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8.0),
+      margin: const EdgeInsets.symmetric(horizontal: 5),
       child: Container(
-        padding: const EdgeInsets.only(top: 10),
         alignment: Alignment.center,
         height: 80,
         decoration: const BoxDecoration(
           color: Colors.grey,
         ),
-        child: Column(children: [
+        child:
+            Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           Icon(
             icon,
             color: Colors.black,
           ),
-          Container(
-            margin: const EdgeInsets.only(top: 8.0),
-            child: Text(
-              text,
-              textAlign: TextAlign.center,
-            ),
+          Text(
+            text,
+            textAlign: TextAlign.center,
           )
         ]),
       ),

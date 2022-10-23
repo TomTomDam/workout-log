@@ -33,18 +33,18 @@ class _ExerciseItemState extends State<ExerciseItem> {
   Widget build(BuildContext context) {
     return Card(
       color: Colors.grey,
-      margin: const EdgeInsets.only(bottom: 16.0),
+      margin: const EdgeInsets.only(bottom: 10),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(10),
         child: ListTileTheme(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 10),
           child: ExpansionTile(
             title: const ExerciseItemHeader(),
             children: [
               Column(
                 children: [
                   Container(
-                    margin: const EdgeInsets.all(8.0),
+                    margin: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                         color: Colors.white,
                         border: Border.all(color: Colors.black)),
@@ -52,20 +52,10 @@ class _ExerciseItemState extends State<ExerciseItem> {
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
-                    margin: const EdgeInsets.only(
-                        bottom: 8.0, left: 8.0, right: 8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                            margin: const EdgeInsets.symmetric(vertical: 4.0),
-                            child: const Text("Notes",
-                                style: TextStyle(color: Colors.white))),
-                        Container(
-                            margin: const EdgeInsets.only(bottom: 4.0),
-                            child: const Text("Lightweight baby!"))
-                      ],
-                    ),
+                    margin:
+                        const EdgeInsets.only(bottom: 10, left: 5, right: 5),
+                    child: const TextField(
+                        decoration: InputDecoration(labelText: "Notes")),
                   ),
                   DataTable(
                     columnSpacing: 35,
@@ -107,6 +97,7 @@ class _ExerciseItemState extends State<ExerciseItem> {
                                           title: Text('Failure'),
                                         ),
                                       ),
+                                      const Divider(),
                                       InkWell(
                                         onTap: () {},
                                         child: const ListTile(
@@ -130,7 +121,7 @@ class _ExerciseItemState extends State<ExerciseItem> {
                   ),
                   const Divider(thickness: 2),
                   Container(
-                    margin: const EdgeInsets.symmetric(vertical: 8.0),
+                    margin: const EdgeInsets.symmetric(vertical: 10),
                     child: Row(
                       children: [
                         Expanded(
@@ -138,7 +129,7 @@ class _ExerciseItemState extends State<ExerciseItem> {
                           children: [
                             Container(
                                 margin:
-                                    const EdgeInsets.symmetric(vertical: 8.0),
+                                    const EdgeInsets.symmetric(vertical: 10),
                                 child: const Text(
                                   "Total sets",
                                   style: TextStyle(fontWeight: FontWeight.bold),
@@ -151,7 +142,7 @@ class _ExerciseItemState extends State<ExerciseItem> {
                           children: [
                             Container(
                                 margin:
-                                    const EdgeInsets.symmetric(vertical: 8.0),
+                                    const EdgeInsets.symmetric(vertical: 10),
                                 child: const Text("Average weight",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold))),
@@ -163,7 +154,7 @@ class _ExerciseItemState extends State<ExerciseItem> {
                           children: [
                             Container(
                                 margin:
-                                    const EdgeInsets.symmetric(vertical: 8.0),
+                                    const EdgeInsets.symmetric(vertical: 10),
                                 child: const Text("Total reps",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold))),
@@ -174,12 +165,12 @@ class _ExerciseItemState extends State<ExerciseItem> {
                     ),
                   ),
                   Container(
-                      margin: const EdgeInsets.only(top: 8.0, bottom: 24.0),
+                      margin: const EdgeInsets.only(top: 10, bottom: 20),
                       child: Row(children: [
                         Expanded(
                           child: Column(children: [
                             Container(
-                              margin: const EdgeInsets.symmetric(vertical: 8.0),
+                              margin: const EdgeInsets.symmetric(vertical: 10),
                               child: const Text(
                                 "Total volume (sets x reps x weight)",
                                 style: TextStyle(fontWeight: FontWeight.bold),

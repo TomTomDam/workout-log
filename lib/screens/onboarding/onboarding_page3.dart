@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:workout_log/screens/main.dart';
-import '../widgets/filter_list.dart';
+import '../../widgets/filter_list/filter_list.dart';
 
 class OnboardingPage3 extends StatefulWidget {
   const OnboardingPage3({Key? key}) : super(key: key);
@@ -12,7 +12,7 @@ class OnboardingPage3 extends StatefulWidget {
 class _OnboardingPage3State extends State<OnboardingPage3> {
   @override
   Widget build(BuildContext context) {
-    const double padding = 25;
+    const double padding = 20;
 
     return Scaffold(
         backgroundColor: Colors.white,

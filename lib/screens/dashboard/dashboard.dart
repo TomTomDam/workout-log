@@ -3,11 +3,12 @@ import 'package:workout_log/screens/dashboard/calendar.dart';
 import 'package:workout_log/screens/dashboard/exercises.dart';
 import 'package:workout_log/screens/dashboard/goals.dart';
 import 'package:workout_log/screens/dashboard/statistics.dart';
+import '../../widgets/filter_list/static_filter_list.dart';
 import '../settings/settings.dart';
 import '../../widgets/header/header.dart';
-import '../onboarding_page1.dart';
-import '../onboarding_page2.dart';
-import '../onboarding_page3.dart';
+import '../onboarding/onboarding_page1.dart';
+import '../onboarding/onboarding_page2.dart';
+import '../onboarding/onboarding_page3.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key, required this.title}) : super(key: key);
@@ -20,7 +21,7 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
-    const double sectionPadding = 25;
+    const double sectionPadding = 20;
 
     return Scaffold(
         backgroundColor: Colors.white,
@@ -33,12 +34,10 @@ class _DashboardState extends State<Dashboard> {
                 navigationButton: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       minimumSize: const Size(40, 40), primary: Colors.white),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Settings()));
-                  },
+                  onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Settings())),
                   child: const Icon(
                     Icons.settings,
                     color: Colors.black,
@@ -62,7 +61,7 @@ class _DashboardState extends State<Dashboard> {
                       decoration: const BoxDecoration(
                         color: Colors.grey,
                       ),
-                      margin: const EdgeInsets.fromLTRB(25, 15, 5, 0),
+                      margin: const EdgeInsets.fromLTRB(20, 20, 5, 0),
                       padding: const EdgeInsets.all(10),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -89,7 +88,7 @@ class _DashboardState extends State<Dashboard> {
                           decoration: const BoxDecoration(
                             color: Colors.grey,
                           ),
-                          margin: const EdgeInsets.fromLTRB(5, 15, 25, 0),
+                          margin: const EdgeInsets.fromLTRB(5, 20, 20, 0),
                           padding: const EdgeInsets.all(10),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -113,10 +112,10 @@ class _DashboardState extends State<Dashboard> {
                 ],
               ),
               Container(
-                height: 140,
+                height: 146,
                 width: double.infinity,
                 decoration: const BoxDecoration(color: Colors.grey),
-                margin: const EdgeInsets.fromLTRB(25, 15, 25, 0),
+                margin: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                 padding: const EdgeInsets.all(10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -135,11 +134,12 @@ class _DashboardState extends State<Dashboard> {
                       ),
                     ),
                     Container(
-                      margin: const EdgeInsets.only(top: 2.5),
+                      margin: const EdgeInsets.only(top: 5),
                       child: Text("Yesterday (21/07/2022)",
                           style: TextStyle(color: Colors.grey.shade200)),
                     ),
-                    Expanded(
+                    SizedBox(
+                      height: 50,
                       child: GridView.count(
                         primary: false,
                         shrinkWrap: true,
@@ -162,7 +162,7 @@ class _DashboardState extends State<Dashboard> {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.fromLTRB(25, 5, 25, 25),
+                margin: const EdgeInsets.fromLTRB(20, 5, 20, 0),
                 child: Expanded(
                   child: GridView.count(
                     primary: false,
@@ -247,7 +247,7 @@ class _DashboardState extends State<Dashboard> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 25),
+                  margin: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                   child: Text(
                     "Training styles",
                     style: TextStyle(
@@ -257,6 +257,7 @@ class _DashboardState extends State<Dashboard> {
                   ),
                 ),
               ),
+              StaticFilterList(),
               Padding(
                   padding: const EdgeInsets.only(
                       top: sectionPadding,
@@ -266,13 +267,10 @@ class _DashboardState extends State<Dashboard> {
                     children: [
                       ElevatedButton(
                         child: const Text("Go to: Onboarding Page 1"),
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const OnboardingPage1()));
-                        },
+                        onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const OnboardingPage1())),
                       )
                     ],
                   )),
@@ -283,13 +281,10 @@ class _DashboardState extends State<Dashboard> {
                     children: [
                       ElevatedButton(
                         child: const Text("Go to: Onboarding Page 2"),
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const OnboardingPage2()));
-                        },
+                        onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const OnboardingPage2())),
                       )
                     ],
                   )),
@@ -300,13 +295,10 @@ class _DashboardState extends State<Dashboard> {
                     children: [
                       ElevatedButton(
                         child: const Text("Go to: Onboarding Page 3"),
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const OnboardingPage3()));
-                        },
+                        onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const OnboardingPage3())),
                       )
                     ],
                   )),

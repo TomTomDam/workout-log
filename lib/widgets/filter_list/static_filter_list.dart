@@ -1,17 +1,10 @@
 import 'package:flutter/material.dart';
 
-List<String> trainingStylesList = [
-  'Strength',
-  'Hypertrophy',
-  'Powerbuilding',
-  'Calisthenics',
-  'Flexibility',
-  'Endurance'
-];
+List<String> trainingStylesList = ['Strength', 'Hypertrophy', 'Powerbuilding'];
 bool isSelected = false;
 
-class FilterList extends StatelessWidget {
-  FilterList({Key? key}) : super(key: key);
+class StaticFilterList extends StatelessWidget {
+  StaticFilterList({Key? key}) : super(key: key);
 
   final ButtonStyle buttonStyle =
       ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 16));
@@ -27,11 +20,10 @@ class FilterList extends StatelessWidget {
 }
 
 class FilterListChip extends StatefulWidget {
-  final String data;
-  final int index;
-
   const FilterListChip({Key? key, required this.data, required this.index})
       : super(key: key);
+  final String data;
+  final int index;
 
   @override
   State<FilterListChip> createState() => _FilterListChipState();
@@ -40,7 +32,7 @@ class FilterListChip extends StatefulWidget {
 class _FilterListChipState extends State<FilterListChip> {
   @override
   Widget build(BuildContext context) {
-    return ChoiceChip(
+    return Chip(
       labelPadding: const EdgeInsets.all(2.0),
       label: Text(
         widget.data,
@@ -49,13 +41,6 @@ class _FilterListChipState extends State<FilterListChip> {
             .bodyText2!
             .copyWith(color: Colors.white, fontSize: 16),
       ),
-      selected: isSelected,
-      selectedColor: Colors.blue,
-      onSelected: (value) {
-        setState(() {
-          isSelected = value;
-        });
-      },
       elevation: 1,
       padding: const EdgeInsets.symmetric(horizontal: 10),
     );

@@ -12,8 +12,7 @@ class AddExercises extends StatefulWidget {
 }
 
 class _AddExercisesState extends State<AddExercises> {
-  EdgeInsets rowMargin =
-      const EdgeInsets.only(left: 25.0, right: 25.0, top: 15.0);
+  EdgeInsets rowMargin = const EdgeInsets.fromLTRB(20, 20, 20, 0);
   List<ExerciseModel> resultsList = exerciseList;
 
   @override

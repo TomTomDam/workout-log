@@ -23,91 +23,94 @@ class _LogWorkoutState extends State<LogWorkout> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: SafeArea(
-              child: Center(
-            child: Column(children: [
-              const LogWorkoutHeader(),
-              Container(
-                margin:
-                    const EdgeInsets.only(top: 24.0, left: 24.0, right: 24.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+          backgroundColor: Colors.white,
+          body: SingleChildScrollView(
+            child: SafeArea(
+                child: Center(
+              child: Column(children: [
+                const LogWorkoutHeader(),
+                Container(
+                  margin:
+                      const EdgeInsets.only(top: 24.0, left: 24.0, right: 24.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Pull Hypertrophy",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .headline2
+                                  ?.fontSize)),
+                      Container(
+                          margin: const EdgeInsets.only(top: 5),
+                          child: const Text("21 October 2022 - 5:30PM"))
+                    ],
+                  ),
+                ),
+                Container(
+                    width: double.infinity,
+                    height: 50,
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 16.0, horizontal: 25.0),
+                    alignment: Alignment.center,
+                    child: ElevatedButton(
+                        onPressed: () {},
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Icon(Icons.electric_bolt),
+                            Text("Start workout"),
+                          ],
+                        ))),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Pull Hypertrophy",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: Theme.of(context)
-                                .textTheme
-                                .headline2
-                                ?.fontSize)),
-                    Container(
-                        margin: const EdgeInsets.only(top: 5),
-                        child: const Text("21 October 2022 - 5:30PM"))
+                    InkWell(
+                      onTap: () => {
+                        setState(() {
+                          pageSection = const OverviewPage();
+                          overviewIsActive = true;
+                          exercisesIsActive = false;
+                          musclesIsActive = false;
+                        })
+                      },
+                      child: PaneButton(
+                          title: "Overview", isActive: overviewIsActive),
+                    ),
+                    InkWell(
+                        onTap: () => {
+                              setState(() {
+                                pageSection = const ExercisesPage();
+                                exercisesIsActive = true;
+                                overviewIsActive = false;
+                                musclesIsActive = false;
+                              })
+                            },
+                        child: PaneButton(
+                            title: "Exercises", isActive: exercisesIsActive)),
+                    InkWell(
+                        onTap: () => {
+                              setState(() {
+                                pageSection = const MusclesPage();
+                                musclesIsActive = true;
+                                exercisesIsActive = false;
+                                overviewIsActive = false;
+                              })
+                            },
+                        child: PaneButton(
+                            title: "Muscles", isActive: musclesIsActive)),
                   ],
                 ),
-              ),
-              Container(
-                  width: double.infinity,
-                  height: 50,
-                  margin: const EdgeInsets.symmetric(
-                      vertical: 16.0, horizontal: 25.0),
-                  alignment: Alignment.center,
-                  child: ElevatedButton(
-                      onPressed: () {},
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Icon(Icons.electric_bolt),
-                          Text("Start workout"),
-                        ],
-                      ))),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  InkWell(
-                    onTap: () => {
-                      setState(() {
-                        pageSection = const OverviewPage();
-                        overviewIsActive = true;
-                        exercisesIsActive = false;
-                        musclesIsActive = false;
-                      })
-                    },
-                    child: PaneButton(
-                        title: "Overview", isActive: overviewIsActive),
-                  ),
-                  InkWell(
-                      onTap: () => {
-                            setState(() {
-                              pageSection = const ExercisesPage();
-                              exercisesIsActive = true;
-                              overviewIsActive = false;
-                              musclesIsActive = false;
-                            })
-                          },
-                      child: PaneButton(
-                          title: "Exercises", isActive: exercisesIsActive)),
-                  InkWell(
-                      onTap: () => {
-                            setState(() {
-                              pageSection = const MusclesPage();
-                              musclesIsActive = true;
-                              exercisesIsActive = false;
-                              overviewIsActive = false;
-                            })
-                          },
-                      child: PaneButton(
-                          title: "Muscles", isActive: musclesIsActive)),
-                ],
-              ),
-              Padding(padding: padding, child: pageSection),
-            ]),
+                Padding(padding: padding, child: pageSection),
+              ]),
+            )),
           )),
-        ));
+    );
   }
 }
 
@@ -116,7 +119,7 @@ class LogWorkoutHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double padding = 25;
+    const double padding = 20;
     const EdgeInsets rowPadding =
         EdgeInsets.only(top: padding, left: padding, right: padding);
 

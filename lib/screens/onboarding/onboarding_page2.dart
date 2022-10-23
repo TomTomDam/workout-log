@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:workout_log/screens/onboarding_page3.dart';
+import 'package:workout_log/screens/onboarding/onboarding_page3.dart';
 
 List<String> genderList = ['Male', 'Female', 'Prefer not to say'];
 String? selectedGender = genderList[0];
@@ -18,7 +18,7 @@ class OnboardingPage2 extends StatefulWidget {
 class _OnboardingPage2State extends State<OnboardingPage2> {
   @override
   Widget build(BuildContext context) {
-    const double padding = 25;
+    const double padding = 20;
 
     return Scaffold(
         backgroundColor: Colors.white,
