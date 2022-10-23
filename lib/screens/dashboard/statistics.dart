@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:workout_log/widgets/header/header.dart';
-import '../settings/Settings.dart';
 
 class Statistics extends StatelessWidget {
   const Statistics({Key? key}) : super(key: key);
@@ -18,13 +17,10 @@ class Statistics extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                     minimumSize: const Size(40, 40), primary: Colors.white),
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const Settings()));
+                  Navigator.pop(context);
                 },
                 child: const Icon(
-                  Icons.settings,
+                  Icons.navigate_before,
                   color: Colors.black,
                 ),
               ),

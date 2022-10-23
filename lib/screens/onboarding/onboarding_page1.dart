@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:workout_log/screens/onboarding_page2.dart';
+import 'package:workout_log/screens/onboarding/onboarding_page2.dart';
 import 'onboarding_page2.dart';
 
 class OnboardingPage1 extends StatelessWidget {
@@ -7,7 +7,7 @@ class OnboardingPage1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double padding = 25;
+    const double padding = 20;
 
     return Scaffold(
         backgroundColor: Colors.white,

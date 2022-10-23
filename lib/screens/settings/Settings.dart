@@ -6,7 +6,7 @@ class Settings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double padding = 25;
+    const double padding = 20;
     const EdgeInsets settingsPadding = EdgeInsets.only(left: padding);
 
     return Scaffold(

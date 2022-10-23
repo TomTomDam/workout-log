@@ -5,7 +5,7 @@ class SectionBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double padding = 25;
+    const double padding = 20;
     const EdgeInsets containerPadding =
         EdgeInsets.only(top: 10, left: padding, right: padding);
     final double width = MediaQuery.of(context).size.width;
