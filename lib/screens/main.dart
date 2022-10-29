@@ -14,10 +14,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Workout Log',
       theme: ThemeData(
-          primarySwatch: Colors.blue,
+          //scaffoldBackgroundColor: const Color(0xff191923),
+          //backgroundColor: const Color(0xff191923),
           textTheme: const TextTheme(
-              headline1: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-              headline2: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              headline1: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
+              headline2: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
               bodyText1: TextStyle(fontSize: 16.0))),
       home: const Main(title: 'Workout Log'),
     );

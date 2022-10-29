@@ -18,10 +18,7 @@ class OnboardingPage1 extends StatelessWidget {
               padding: const EdgeInsets.only(
                   top: padding, left: padding, right: padding),
               child: Text("Workout Log",
-                  style: TextStyle(
-                      fontSize: Theme.of(context).textTheme.headline1?.fontSize,
-                      fontWeight:
-                          Theme.of(context).textTheme.headline1?.fontWeight)),
+                  style: Theme.of(context).textTheme.headline1),
             ),
             Padding(
                 padding: const EdgeInsets.only(
