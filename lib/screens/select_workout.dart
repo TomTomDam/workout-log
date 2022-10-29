@@ -44,12 +44,7 @@ class _SelectWorkoutState extends State<SelectWorkout> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text("Pull Hypertrophy",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: Theme.of(context)
-                                    .textTheme
-                                    .headline2
-                                    ?.fontSize)),
+                            style: Theme.of(context).textTheme.headline2),
                         SizedBox(
                           height: 50,
                           child: GridView.count(
@@ -351,10 +346,8 @@ class SearchWorkoutDelegate extends SearchDelegate {
   }
 
   @override
-  Widget buildResults(BuildContext context) => Center(
-      child: Text(query,
-          style: TextStyle(
-              fontSize: Theme.of(context).textTheme.bodyText1?.fontSize)));
+  Widget buildResults(BuildContext context) =>
+      Center(child: Text(query, style: Theme.of(context).textTheme.bodyText1));
 
   @override
   Widget buildSuggestions(BuildContext context) {

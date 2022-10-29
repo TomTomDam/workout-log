@@ -30,11 +30,7 @@ class Header extends StatelessWidget {
           Expanded(
             flex: 6,
             child: Center(
-              child: Text(title,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize:
-                          Theme.of(context).textTheme.headline1?.fontSize)),
+              child: Text(title, style: Theme.of(context).textTheme.headline1),
             ),
           ),
           Expanded(

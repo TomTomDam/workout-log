@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:workout_log/screens/settings/personal_settings.dart';
 import '../../widgets/header/header.dart';
 
 class Settings extends StatelessWidget {
@@ -29,15 +30,10 @@ class Settings extends StatelessWidget {
               secondaryButton: null,
             ),
             Column(
-              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Divider(
-                  height: 25,
-                  thickness: 2,
-                  indent: 25,
-                  endIndent: 25,
-                ),
+                    height: 20, thickness: 2, indent: 20, endIndent: 20),
                 Padding(
                     padding: settingsPadding,
                     child: TextButton(
@@ -46,10 +42,10 @@ class Settings extends StatelessWidget {
                         style: TextStyle(color: Colors.black),
                       ),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Settings()));
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => const Settings()));
                       },
                     )),
                 Padding(
@@ -60,10 +56,10 @@ class Settings extends StatelessWidget {
                         style: TextStyle(color: Colors.black),
                       ),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Settings()));
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => const Settings()));
                       },
                     )),
                 Padding(
@@ -77,7 +73,8 @@ class Settings extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const Settings()));
+                                builder: (context) =>
+                                    const PersonalSettings()));
                       },
                     )),
                 Padding(
@@ -88,10 +85,10 @@ class Settings extends StatelessWidget {
                         style: TextStyle(color: Colors.black),
                       ),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Settings()));
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => const Settings()));
                       },
                     )),
                 Padding(
@@ -102,10 +99,10 @@ class Settings extends StatelessWidget {
                         style: TextStyle(color: Colors.black),
                       ),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Settings()));
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => const Settings()));
                       },
                     )),
                 Padding(
@@ -116,10 +113,10 @@ class Settings extends StatelessWidget {
                         style: TextStyle(color: Colors.black),
                       ),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Settings()));
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => const Settings()));
                       },
                     )),
                 Padding(
@@ -130,10 +127,10 @@ class Settings extends StatelessWidget {
                         style: TextStyle(color: Colors.black),
                       ),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Settings()));
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => const Settings()));
                       },
                     )),
                 Padding(
@@ -144,10 +141,10 @@ class Settings extends StatelessWidget {
                         style: TextStyle(color: Colors.black),
                       ),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Settings()));
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => const Settings()));
                       },
                     )),
               ],

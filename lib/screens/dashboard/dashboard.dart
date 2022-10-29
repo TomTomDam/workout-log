@@ -24,7 +24,7 @@ class _DashboardState extends State<Dashboard> {
     const double sectionPadding = 20;
 
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).backgroundColor,
         body: SingleChildScrollView(
           child: SafeArea(
               child: Column(
@@ -163,7 +163,7 @@ class _DashboardState extends State<Dashboard> {
               ),
               Container(
                 margin: const EdgeInsets.fromLTRB(20, 5, 20, 0),
-                child: Expanded(
+                child: SizedBox(
                   child: GridView.count(
                     primary: false,
                     shrinkWrap: true,
@@ -250,10 +250,7 @@ class _DashboardState extends State<Dashboard> {
                   margin: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                   child: Text(
                     "Training styles",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize:
-                            Theme.of(context).textTheme.headline1?.fontSize),
+                    style: Theme.of(context).textTheme.headline1,
                   ),
                 ),
               ),
