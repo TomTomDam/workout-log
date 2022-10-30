@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:workout_log/screens/dashboard/dashboard.dart';
+import 'package:workout_log/themes/theme_constants.dart';
+import '../themes/theme_manager.dart';
 import '../widgets/page/nav_bar.dart';
 
 void main() {
   runApp(const MyApp());
 }
+
+ThemeManager _themeManager = ThemeManager();
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -14,8 +18,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Workout Log',
       theme: ThemeData(
+          primarySwatch: Colors.blue,
           //scaffoldBackgroundColor: const Color(0xff191923),
-          //backgroundColor: const Color(0xff191923),
           textTheme: const TextTheme(
               headline1: TextStyle(
                   fontSize: 25,
@@ -25,7 +29,11 @@ class MyApp extends StatelessWidget {
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Colors.black),
-              bodyText1: TextStyle(fontSize: 16.0))),
+              bodyText1: TextStyle(fontSize: 16.0))
+          //.apply(bodyColor: Colors.white, displayColor: Colors.white)
+          ),
+      darkTheme: darkTheme,
+      themeMode: _themeManager.themeMode,
       home: const Main(title: 'Workout Log'),
     );
   }
@@ -53,7 +61,6 @@ class _MainState extends State<Main> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-        backgroundColor: Colors.white,
         body: Dashboard(title: 'Workout Log'),
         bottomNavigationBar: NavBar(currentPage: 0));
   }

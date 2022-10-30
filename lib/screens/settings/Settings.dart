@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:workout_log/screens/settings/personal_settings.dart';
+import 'package:workout_log/widgets/header/navigate_before_button.dart';
 import '../../widgets/header/header.dart';
+import 'app_settings.dart';
 
 class Settings extends StatelessWidget {
   const Settings({Key? key}) : super(key: key);
@@ -14,19 +16,9 @@ class Settings extends StatelessWidget {
         backgroundColor: Colors.white,
         body: SafeArea(
           child: Column(children: [
-            Header(
+            const Header(
               title: "Settings",
-              navigationButton: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(40, 40), primary: Colors.white),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Icon(
-                  Icons.navigate_before,
-                  color: Colors.black,
-                ),
-              ),
+              navigationButton: NavigateBeforeButton(),
               secondaryButton: null,
             ),
             Column(
@@ -42,10 +34,10 @@ class Settings extends StatelessWidget {
                         style: TextStyle(color: Colors.black),
                       ),
                       onPressed: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => const Settings()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const AppSettings()));
                       },
                     )),
                 Padding(
