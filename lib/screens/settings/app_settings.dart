@@ -33,7 +33,9 @@ class _AppSettingsState extends State<AppSettings> {
                   DropdownMenuItem(value: true, child: Text("Dark"))
                 ],
                 onChanged: (bool? newValue) {
-                  _themeManager.toggleTheme(newValue);
+                  setState(() {
+                    _themeManager.toggleTheme(newValue);
+                  });
                 },
               ))
         ],

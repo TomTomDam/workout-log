@@ -59,6 +59,24 @@ class Main extends StatefulWidget {
 
 class _MainState extends State<Main> {
   @override
+  void dispose() {
+    _themeManager.removeListener(themeListener);
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    _themeManager.addListener(themeListener);
+    super.initState();
+  }
+
+  themeListener() {
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return const Scaffold(
         body: Dashboard(title: 'Workout Log'),

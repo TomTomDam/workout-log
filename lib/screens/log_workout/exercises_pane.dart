@@ -9,15 +9,46 @@ class ExercisesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> exerciseItems = [const ExerciseItem()];
 
-    return Column(
-      children: [
-        ListView(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            children: exerciseItems),
-        const AddExerciseButton()
-      ],
-    );
+    return Column(children: [
+      (() {
+        if (exerciseItems.isNotEmpty) {
+          return Column(
+            children: [
+              ListView(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  children: exerciseItems),
+              const AddExerciseButton(width: double.infinity)
+            ],
+          );
+        }
+
+        return Column(
+          children: [
+            const EmptyExercisePage(),
+            Container(
+                margin: const EdgeInsets.fromLTRB(10, 20, 10, 0),
+                child: const AddExerciseButton(width: 150))
+          ],
+        );
+      }())
+    ]);
+  }
+}
+
+class EmptyExercisePage extends StatelessWidget {
+  const EmptyExercisePage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: [
+      Container(
+          margin: const EdgeInsets.fromLTRB(10, 40, 10, 0),
+          child: const Icon(Icons.fitness_center, size: 60)),
+      Container(
+          margin: const EdgeInsets.fromLTRB(10, 20, 10, 0),
+          child: const Text("Add an exercise to start your workout"))
+    ]);
   }
 }
 
@@ -73,40 +104,7 @@ class _ExerciseItemState extends State<ExerciseItem> {
                             showModalBottomSheet(
                                 context: context,
                                 builder: (context) {
-                                  return Wrap(
-                                    children: [
-                                      InkWell(
-                                        onTap: () {},
-                                        child: const ListTile(
-                                          leading:
-                                              Icon(Icons.local_fire_department),
-                                          title: Text('Warmup'),
-                                        ),
-                                      ),
-                                      InkWell(
-                                        onTap: () {},
-                                        child: const ListTile(
-                                          leading: Icon(Icons.looks_one),
-                                          title: Text('Normal'),
-                                        ),
-                                      ),
-                                      InkWell(
-                                        onTap: () {},
-                                        child: const ListTile(
-                                          leading: Icon(Icons.warning),
-                                          title: Text('Failure'),
-                                        ),
-                                      ),
-                                      const Divider(),
-                                      InkWell(
-                                        onTap: () {},
-                                        child: const ListTile(
-                                          leading: Icon(Icons.delete),
-                                          title: Text('Remove set'),
-                                        ),
-                                      ),
-                                    ],
-                                  );
+                                  return const ExerciseSetMenuModal();
                                 });
                           },
                           child: const Text("W",
@@ -186,6 +184,49 @@ class _ExerciseItemState extends State<ExerciseItem> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class ExerciseSetMenuModal extends StatelessWidget {
+  const ExerciseSetMenuModal({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      children: [
+        InkWell(
+          onTap: () {},
+          child: const ListTile(
+            leading: Icon(Icons.local_fire_department),
+            title: Text('Warmup'),
+          ),
+        ),
+        InkWell(
+          onTap: () {},
+          child: const ListTile(
+            leading: Icon(Icons.looks_one),
+            title: Text('Normal'),
+          ),
+        ),
+        InkWell(
+          onTap: () {},
+          child: const ListTile(
+            leading: Icon(Icons.warning),
+            title: Text('Failure'),
+          ),
+        ),
+        const Divider(),
+        InkWell(
+          onTap: () {},
+          child: const ListTile(
+            leading: Icon(Icons.delete),
+            title: Text('Remove set'),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -286,41 +327,52 @@ class _ExerciseItemHeaderState extends State<ExerciseItemHeader> {
             showModalBottomSheet(
                 context: context,
                 builder: (context) {
-                  return Wrap(
-                    children: [
-                      InkWell(
-                        onTap: () {},
-                        child: const ListTile(
-                          leading: Icon(Icons.electric_bolt),
-                          title: Text('Change exercise'),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: const ListTile(
-                          leading: Icon(Icons.loop),
-                          title: Text('Reset sets and weight'),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: const ListTile(
-                          leading: Icon(Icons.menu),
-                          title: Text('Reorder exercise'),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: const ListTile(
-                          leading: Icon(Icons.close),
-                          title: Text('Delete exercise'),
-                        ),
-                      ),
-                    ],
-                  );
+                  return const ExerciseMenuModal();
                 });
           },
           child: const Icon(Icons.more_vert, size: 30))
     ]);
+  }
+}
+
+class ExerciseMenuModal extends StatelessWidget {
+  const ExerciseMenuModal({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      children: [
+        InkWell(
+          onTap: () {},
+          child: const ListTile(
+            leading: Icon(Icons.electric_bolt),
+            title: Text('Change exercise'),
+          ),
+        ),
+        InkWell(
+          onTap: () {},
+          child: const ListTile(
+            leading: Icon(Icons.loop),
+            title: Text('Reset sets and weight'),
+          ),
+        ),
+        InkWell(
+          onTap: () {},
+          child: const ListTile(
+            leading: Icon(Icons.menu),
+            title: Text('Reorder exercise'),
+          ),
+        ),
+        InkWell(
+          onTap: () {},
+          child: const ListTile(
+            leading: Icon(Icons.close),
+            title: Text('Delete exercise'),
+          ),
+        ),
+      ],
+    );
   }
 }
