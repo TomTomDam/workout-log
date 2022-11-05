@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:workout_log/screens/workout_details.dart';
 import '../widgets/page/sub_header.dart';
 import '../widgets/header/header.dart';
 import '../widgets/page/nav_bar.dart';
@@ -31,44 +32,50 @@ class _SelectWorkoutState extends State<SelectWorkout> {
                   navigationButton: null,
                   secondaryButton: null),
               const SubHeader(title: "Your next scheduled workout"),
-              Container(
-                margin: containerMargin,
+              InkWell(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const WorkoutDetails())),
                 child: Container(
-                    width: width - sideMargin,
-                    height: 95,
-                    padding: const EdgeInsets.all(10),
-                    decoration: const BoxDecoration(
-                      color: Colors.grey,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Pull Hypertrophy",
-                            style: Theme.of(context).textTheme.headline2),
-                        SizedBox(
-                          height: 50,
-                          child: GridView.count(
-                            primary: false,
-                            shrinkWrap: true,
-                            padding: const EdgeInsets.only(top: 10),
-                            crossAxisSpacing: 0,
-                            mainAxisSpacing: 0,
-                            crossAxisCount: 2,
-                            childAspectRatio: (1 / .12),
-                            children: <Widget>[
-                              Text("Duration",
-                                  style:
-                                      TextStyle(color: Colors.grey.shade200)),
-                              Text("Volume",
-                                  style:
-                                      TextStyle(color: Colors.grey.shade200)),
-                              const Text("1 hr 30 mins"),
-                              const Text("1000kg")
-                            ],
-                          ),
-                        )
-                      ],
-                    )),
+                  margin: containerMargin,
+                  child: Container(
+                      width: width - sideMargin,
+                      height: 95,
+                      padding: const EdgeInsets.all(10),
+                      decoration: const BoxDecoration(
+                        color: Colors.grey,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Pull Hypertrophy",
+                              style: Theme.of(context).textTheme.headline2),
+                          SizedBox(
+                            height: 50,
+                            child: GridView.count(
+                              primary: false,
+                              shrinkWrap: true,
+                              padding: const EdgeInsets.only(top: 10),
+                              crossAxisSpacing: 0,
+                              mainAxisSpacing: 0,
+                              crossAxisCount: 2,
+                              childAspectRatio: (1 / .12),
+                              children: <Widget>[
+                                Text("Duration",
+                                    style:
+                                        TextStyle(color: Colors.grey.shade200)),
+                                Text("Volume",
+                                    style:
+                                        TextStyle(color: Colors.grey.shade200)),
+                                const Text("1 hr 30 mins"),
+                                const Text("1000kg")
+                              ],
+                            ),
+                          )
+                        ],
+                      )),
+                ),
               ),
               const SubHeader(title: "Quick start"),
               InkWell(
