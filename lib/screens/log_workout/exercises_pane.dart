@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:workout_log/screens/exercise_information/exercise_information.dart';
 import '../../widgets/add_exercise_button.dart';
+import '../../widgets/table/table_data_cell.dart';
+import '../../widgets/table/table_header_cell.dart';
 
 class ExercisesPage extends StatelessWidget {
   const ExercisesPage({Key? key}) : super(key: key);
@@ -91,10 +93,10 @@ class _ExerciseItemState extends State<ExerciseItem> {
                   DataTable(
                     columnSpacing: 35,
                     columns: const <DataColumn>[
-                      DataColumn(label: LogTableHeaderCell(value: "Set")),
-                      DataColumn(label: LogTableHeaderCell(value: "Previous")),
-                      DataColumn(label: LogTableHeaderCell(value: "Weight")),
-                      DataColumn(label: LogTableHeaderCell(value: "Reps"))
+                      DataColumn(label: TableHeaderCell(value: "Set")),
+                      DataColumn(label: TableHeaderCell(value: "Previous")),
+                      DataColumn(label: TableHeaderCell(value: "Weight")),
+                      DataColumn(label: TableHeaderCell(value: "Reps"))
                     ],
                     rows: <DataRow>[
                       DataRow(cells: <DataCell>[
@@ -111,9 +113,9 @@ class _ExerciseItemState extends State<ExerciseItem> {
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 20)),
                         ))),
-                        const DataCell(LogTableDataCell(value: "20 x 8")),
-                        const DataCell(LogTableDataCell(value: "20kg")),
-                        const DataCell(LogTableDataCell(value: "8")),
+                        const DataCell(TableDataCell(value: "20 x 8")),
+                        const DataCell(TableDataCell(value: "20kg")),
+                        const DataCell(TableDataCell(value: "8")),
                       ])
                     ],
                   ),
@@ -260,30 +262,6 @@ class PersonalRecord extends StatelessWidget {
             ))
       ]),
     );
-  }
-}
-
-class LogTableHeaderCell extends StatelessWidget {
-  const LogTableHeaderCell({Key? key, required this.value}) : super(key: key);
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-        child: Text(
-      value.toUpperCase(),
-      style: TextStyle(color: Colors.grey.shade700),
-    ));
-  }
-}
-
-class LogTableDataCell extends StatelessWidget {
-  const LogTableDataCell({Key? key, required this.value}) : super(key: key);
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text(value));
   }
 }
 
