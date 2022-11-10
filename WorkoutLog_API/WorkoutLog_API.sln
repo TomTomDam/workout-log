@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32602.215
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkoutLog_API", "WorkoutLog_API\WorkoutLog_API.csproj", "{2CB3FD2A-19AC-440F-8233-DB8D64E122CF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2CB3FD2A-19AC-440F-8233-DB8D64E122CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CB3FD2A-19AC-440F-8233-DB8D64E122CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CB3FD2A-19AC-440F-8233-DB8D64E122CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CB3FD2A-19AC-440F-8233-DB8D64E122CF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EB36D0B3-E6C6-429A-AE72-7584C5100161}
+	EndGlobalSection
+EndGlobal
