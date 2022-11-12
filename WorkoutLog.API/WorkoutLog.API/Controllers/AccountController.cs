@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using WorkoutLog_API.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using WorkoutLog.API.Models;
 
-namespace WorkoutLog_API.Controllers
+namespace WorkoutLog.API.Controllers
 {
     public class AccountController : ControllerBase
     {
@@ -11,28 +10,19 @@ namespace WorkoutLog_API.Controllers
 
         }
 
-        // GET: AccountController
-        public ActionResult GetAll()
+        public IActionResult GetAll()
         {
             return Ok();
         }
 
-        // GET: AccountController/Details/5
-        public ActionResult GetById(int id)
+        public IActionResult GetById(int id)
         {
             return Ok();
         }
 
-        // GET: AccountController/Create
-        public ActionResult Create()
-        {
-            return Ok();
-        }
-
-        // POST: AccountController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(User user)
+        public IActionResult Create(User user)
         {
             try
             {
@@ -44,10 +34,9 @@ namespace WorkoutLog_API.Controllers
             }
         }
 
-        // POST: AccountController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, User user)
+        public IActionResult Update(int id, User user)
         {
             try
             {
@@ -59,10 +48,9 @@ namespace WorkoutLog_API.Controllers
             }
         }
 
-        // POST: AccountController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id)
+        public IActionResult Delete(int id)
         {
             try
             {

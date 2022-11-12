@@ -1,4 +1,4 @@
-﻿namespace WorkoutLog_API.Models
+﻿namespace WorkoutLog.API.Models
 {
     public class Preference
     {

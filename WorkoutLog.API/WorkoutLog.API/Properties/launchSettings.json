@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "WorkoutLog_API": {
+    "WorkoutLog.API": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
