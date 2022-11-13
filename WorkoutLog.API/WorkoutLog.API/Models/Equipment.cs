@@ -6,5 +6,6 @@
         public string Name { get; set; } = "";
         public string EquipmentType { get; set; } = "";
         public int UserId { get; set; }
+        public User User { get; set; } = new User();
     }
 }

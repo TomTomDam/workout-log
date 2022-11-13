@@ -7,8 +7,11 @@
         public int GoalValue { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime Deadline { get; set; }
-        public int GoalTypeId { get; set; }
+        public string GoalType { get; set; } = "";
+
         public int ExerciseId { get; set; }
+        public Exercise Exercise { get; set; } = new Exercise();
         public int UserId { get; set; }
+        public User User { get; set; } = new User();
     }
 }

@@ -8,10 +8,16 @@
         public string? Instructions { get; set; }
         //public string? Images { get; set; }
         //public string PortraitImage { get; set; }
+
         public int ExerciseTypeId { get; set; }
+        public ExerciseType ExerciseType { get; set; } = new ExerciseType();
         public int EquipmentId { get; set; }
-        public int PrimaryMusclesWorked { get; set; }
-        public int? OtherMusclesWorked { get; set; }
+        public Equipment Equipment { get; set; } = new Equipment();
+        public int PrimaryMusclesWorkedId { get; set; }
+        public MuscleGroup PrimaryMusclesWorked { get; set; } = new MuscleGroup();
+        public int? OtherMusclesWorkedId { get; set; }
+        public MuscleGroup OtherMusclesWorked { get; set; } = new MuscleGroup();
         public int? UserId { get; set; }
+        public User User { get; set; } = new User();
     }
 }

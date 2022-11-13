@@ -11,6 +11,8 @@
         public bool ShowExerciseSummary { get; set; } = true;
         public bool LogRPE { get; set; }
         public bool ShowExerciseInformation { get; set; } = true;
+
         public int UserId { get; set; }
+        public User User { get; set; } = new User();
     }
 }
