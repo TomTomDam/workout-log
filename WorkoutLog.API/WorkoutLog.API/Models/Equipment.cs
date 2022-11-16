@@ -5,7 +5,7 @@
         public int EquipmentId { get; set; }
         public string Name { get; set; } = "";
         public string EquipmentType { get; set; } = "";
-        public int UserId { get; set; }
-        public User User { get; set; } = new User();
+
+        public Exercise Exercise { get; set; } = new Exercise();
     }
 }

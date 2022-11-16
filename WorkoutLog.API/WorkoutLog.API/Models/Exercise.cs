@@ -15,9 +15,6 @@
         public Equipment Equipment { get; set; } = new Equipment();
         public int PrimaryMusclesWorkedId { get; set; }
         public MuscleGroup PrimaryMusclesWorked { get; set; } = new MuscleGroup();
-        public int? OtherMusclesWorkedId { get; set; }
-        public MuscleGroup OtherMusclesWorked { get; set; } = new MuscleGroup();
-        public int? UserId { get; set; }
-        public User User { get; set; } = new User();
+        public ICollection<MuscleGroup> OtherMusclesWorked { get; set; } = new List<MuscleGroup>();
     }
 }

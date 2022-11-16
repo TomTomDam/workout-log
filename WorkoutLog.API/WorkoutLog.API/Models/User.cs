@@ -13,5 +13,6 @@
         public Preference Preference { get; set; } = new Preference();
         public ICollection<Workout> Workouts { get; set; } = new List<Workout>();
         public ICollection<Goal> Goals { get; set; } = new List<Goal>();
+        public UserWorkout UserWorkoutId { get; set; } = new UserWorkout();
     }
 }
