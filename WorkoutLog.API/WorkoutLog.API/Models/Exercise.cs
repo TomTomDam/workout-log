@@ -16,5 +16,7 @@
         public int PrimaryMusclesWorkedId { get; set; }
         public MuscleGroup PrimaryMusclesWorked { get; set; } = new MuscleGroup();
         public ICollection<MuscleGroup> OtherMusclesWorked { get; set; } = new List<MuscleGroup>();
+        public WorkoutExercise WorkoutExercise { get; set; } = new WorkoutExercise();
+        public Goal Goal { get; set; } = new Goal();
     }
 }

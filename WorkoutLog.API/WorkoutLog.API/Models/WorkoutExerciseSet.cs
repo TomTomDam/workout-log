@@ -9,5 +9,7 @@
         public int? RateOfPerceivedExertionRating { get; set; }
         public int? RepsInReserveRating { get; set; }
         public string WorkoutExerciseSetType { get; set; } = "";
+
+        public WorkoutExercise WorkoutExercise { get; set; } = new WorkoutExercise();
     }
 }

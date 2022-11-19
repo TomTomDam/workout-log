@@ -5,6 +5,10 @@ namespace WorkoutLog.API.Data
 {
     public class WorkoutLogDBContext : DbContext
     {
+        public WorkoutLogDBContext(DbContextOptions options) : base(options)
+        {
+        }
+
         public DbSet<User> Users { get; set; }
         public DbSet<Equipment> Equipment { get; set; }
         public DbSet<Exercise> Exercises { get; set; }

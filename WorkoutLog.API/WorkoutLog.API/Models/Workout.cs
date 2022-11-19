@@ -11,6 +11,7 @@
         public bool IsFavourited { get; set; }
 
         public ICollection<WorkoutExercise> WorkoutExercises { get; set; } = new List<WorkoutExercise>();
+        public ICollection<WorkoutRecord> WorkoutRecords { get; set; } = new List<WorkoutRecord>();
         public int UserId { get; set; }
         public User User { get; set; } = new User();
     }
