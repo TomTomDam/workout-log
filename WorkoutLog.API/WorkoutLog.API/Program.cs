@@ -1,7 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+using WorkoutLog.API.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDbContext<WorkoutLogDBContext>(options => options.UseSqlServer(builder.Configuration["ConnectionString"]));
+
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
