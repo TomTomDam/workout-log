@@ -2,7 +2,7 @@
 {
     public class WorkoutExercise
     {
-        public int WorkoutExerciseId { get; set; }
+        public int Id { get; set; }
         public string? Notes { get; set; }
         public int Order { get; set; }
 

@@ -2,7 +2,7 @@
 {
     public class Workout
     {
-        public int WorkoutId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; } = "";
         public int TotalVolume { get; set; }
         public int Duration { get; set; }

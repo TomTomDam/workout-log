@@ -2,7 +2,7 @@
 {
     public class Preference
     {
-        public int PreferenceId { get; set; }
+        public int Id { get; set; }
         public string WeightUnit { get; set; } = "";
         public string DistanceUnit { get; set; } = "";
         public string BodyMeasurementUnit { get; set; } = "";

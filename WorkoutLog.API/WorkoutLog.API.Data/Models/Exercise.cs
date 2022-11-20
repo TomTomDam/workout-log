@@ -2,12 +2,12 @@
 {
     public class Exercise
     {
-        public int ExerciseId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; } = "";
         public bool IsCustom { get; set; }
         public string? Instructions { get; set; }
         //public string? Images { get; set; }
-        //public string PortraitImage { get; set; }
+        //public string? PortraitImage { get; set; }
 
         public int ExerciseTypeId { get; set; }
         public ExerciseType ExerciseType { get; set; } = new ExerciseType();
