@@ -2,7 +2,7 @@
 {
     public class Goal
     {
-        public int GoalId { get; set; }
+        public int Id { get; set; }
         public int CurrentValue { get; set; }
         public int GoalValue { get; set; }
         public DateTime DateCreated { get; set; }

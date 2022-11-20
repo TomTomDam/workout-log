@@ -5,10 +5,6 @@ namespace WorkoutLog.API.Data
 {
     public class WorkoutLogDBContext : DbContext
     {
-        public WorkoutLogDBContext(DbContextOptions options) : base(options)
-        {
-        }
-
         public DbSet<User> Users { get; set; }
         public DbSet<Equipment> Equipment { get; set; }
         public DbSet<Exercise> Exercises { get; set; }
@@ -23,5 +19,21 @@ namespace WorkoutLog.API.Data
         public DbSet<WorkoutExercise> WorkoutExercises { get; set; }
         public DbSet<WorkoutExerciseSet> WorkoutExerciseSets { get; set; }
         public DbSet<WorkoutRecord> WorkoutRecords { get; set; }
+
+        public WorkoutLogDBContext(DbContextOptions options) : base(options)
+        {
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<MuscleGroup>()
+                .HasOne(mg => mg.Exercise)
+                .WithOne(e => e.PrimaryMusclesWorked)
+                .HasForeignKey<Exercise>(e => e.ExerciseId);
+
+            modelBuilder.Entity<Exercise>()
+                .HasMany(e => e.OtherMusclesWorked)
+                .WithMany(mg => mg.Exercises);
+        }
     }
 }
