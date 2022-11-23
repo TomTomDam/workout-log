@@ -1,4 +1,4 @@
-﻿namespace WorkoutLog.API.Models
+﻿namespace WorkoutLog.API.Data.Models
 {
     public class Exercise
     {
@@ -15,7 +15,7 @@
         public Equipment Equipment { get; set; } = new Equipment();
         public int PrimaryMusclesWorkedId { get; set; }
         public MuscleGroup PrimaryMusclesWorked { get; set; } = new MuscleGroup();
-        public ICollection<MuscleGroup> OtherMusclesWorked { get; set; } = new List<MuscleGroup>();
+        public ICollection<ExerciseOtherMusclesWorked> OtherMusclesWorked { get; set; } = new List<ExerciseOtherMusclesWorked>();
         public WorkoutExercise WorkoutExercise { get; set; } = new WorkoutExercise();
         public Goal Goal { get; set; } = new Goal();
     }

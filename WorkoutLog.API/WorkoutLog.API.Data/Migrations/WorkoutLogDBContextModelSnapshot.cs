@@ -17,24 +17,9 @@ namespace WorkoutLog.API.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
 
-            modelBuilder.Entity("ExerciseMuscleGroup", b =>
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.Equipment", b =>
                 {
-                    b.Property<int>("ExercisesExerciseId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("OtherMusclesWorkedMuscleGroupId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ExercisesExerciseId", "OtherMusclesWorkedMuscleGroupId");
-
-                    b.HasIndex("OtherMusclesWorkedMuscleGroupId");
-
-                    b.ToTable("ExerciseMuscleGroup");
-                });
-
-            modelBuilder.Entity("WorkoutLog.API.Models.Equipment", b =>
-                {
-                    b.Property<int>("EquipmentId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -46,14 +31,15 @@ namespace WorkoutLog.API.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("EquipmentId");
+                    b.HasKey("Id");
 
                     b.ToTable("Equipment");
                 });
 
-            modelBuilder.Entity("WorkoutLog.API.Models.Exercise", b =>
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.Exercise", b =>
                 {
-                    b.Property<int>("ExerciseId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("EquipmentId")
@@ -75,7 +61,7 @@ namespace WorkoutLog.API.Data.Migrations
                     b.Property<int>("PrimaryMusclesWorkedId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("ExerciseId");
+                    b.HasKey("Id");
 
                     b.HasIndex("EquipmentId")
                         .IsUnique();
@@ -83,12 +69,30 @@ namespace WorkoutLog.API.Data.Migrations
                     b.HasIndex("ExerciseTypeId")
                         .IsUnique();
 
-                    b.ToTable("Exercises");
+                    b.HasIndex("PrimaryMusclesWorkedId")
+                        .IsUnique();
+
+                    b.ToTable("Exercise");
                 });
 
-            modelBuilder.Entity("WorkoutLog.API.Models.ExerciseType", b =>
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.ExerciseOtherMusclesWorked", b =>
                 {
-                    b.Property<int>("ExerciseTypeId")
+                    b.Property<int>("ExerciseId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("OtherMusclesWorkedId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ExerciseId", "OtherMusclesWorkedId");
+
+                    b.HasIndex("OtherMusclesWorkedId");
+
+                    b.ToTable("ExerciseOtherMusclesWorked");
+                });
+
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.ExerciseType", b =>
+                {
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -99,14 +103,14 @@ namespace WorkoutLog.API.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("ExerciseTypeId");
+                    b.HasKey("Id");
 
-                    b.ToTable("ExerciseTypes");
+                    b.ToTable("ExerciseType");
                 });
 
-            modelBuilder.Entity("WorkoutLog.API.Models.Goal", b =>
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.Goal", b =>
                 {
-                    b.Property<int>("GoalId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -132,19 +136,19 @@ namespace WorkoutLog.API.Data.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("GoalId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ExerciseId")
                         .IsUnique();
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Goals");
+                    b.ToTable("Goal");
                 });
 
-            modelBuilder.Entity("WorkoutLog.API.Models.Muscle", b =>
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.Muscle", b =>
                 {
-                    b.Property<int>("MuscleId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -158,16 +162,16 @@ namespace WorkoutLog.API.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("MuscleId");
+                    b.HasKey("Id");
 
                     b.HasIndex("MuscleGroupId");
 
-                    b.ToTable("Muscles");
+                    b.ToTable("Muscle");
                 });
 
-            modelBuilder.Entity("WorkoutLog.API.Models.MuscleGroup", b =>
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.MuscleGroup", b =>
                 {
-                    b.Property<int>("MuscleGroupId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -175,14 +179,14 @@ namespace WorkoutLog.API.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("MuscleGroupId");
+                    b.HasKey("Id");
 
-                    b.ToTable("MuscleGroups");
+                    b.ToTable("MuscleGroup");
                 });
 
-            modelBuilder.Entity("WorkoutLog.API.Models.OptimalVolume", b =>
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.OptimalVolume", b =>
                 {
-                    b.Property<int>("OptimalVolumeId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -192,17 +196,17 @@ namespace WorkoutLog.API.Data.Migrations
                     b.Property<int>("Volume")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("OptimalVolumeId");
+                    b.HasKey("Id");
 
                     b.HasIndex("MuscleGroupId")
                         .IsUnique();
 
-                    b.ToTable("OptimalVolumes");
+                    b.ToTable("OptimalVolume");
                 });
 
-            modelBuilder.Entity("WorkoutLog.API.Models.Preference", b =>
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.Preference", b =>
                 {
-                    b.Property<int>("PreferenceId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -236,17 +240,17 @@ namespace WorkoutLog.API.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("PreferenceId");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Preferences");
+                    b.ToTable("Preference");
                 });
 
-            modelBuilder.Entity("WorkoutLog.API.Models.User", b =>
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.User", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -271,14 +275,14 @@ namespace WorkoutLog.API.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("User");
                 });
 
-            modelBuilder.Entity("WorkoutLog.API.Models.UserWorkout", b =>
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.UserWorkout", b =>
                 {
-                    b.Property<int>("UserWorkoutId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -288,19 +292,19 @@ namespace WorkoutLog.API.Data.Migrations
                     b.Property<int>("WorkoutId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("UserWorkoutId");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId")
                         .IsUnique();
 
                     b.HasIndex("WorkoutId");
 
-                    b.ToTable("UserWorkouts");
+                    b.ToTable("UserWorkout");
                 });
 
-            modelBuilder.Entity("WorkoutLog.API.Models.Workout", b =>
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.Workout", b =>
                 {
-                    b.Property<int>("WorkoutId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -326,16 +330,16 @@ namespace WorkoutLog.API.Data.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("WorkoutId");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Workouts");
+                    b.ToTable("Workout");
                 });
 
-            modelBuilder.Entity("WorkoutLog.API.Models.WorkoutExercise", b =>
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.WorkoutExercise", b =>
                 {
-                    b.Property<int>("WorkoutExerciseId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -351,19 +355,19 @@ namespace WorkoutLog.API.Data.Migrations
                     b.Property<int>("WorkoutId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("WorkoutExerciseId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ExerciseId")
                         .IsUnique();
 
                     b.HasIndex("WorkoutId");
 
-                    b.ToTable("WorkoutExercises");
+                    b.ToTable("WorkoutExercise");
                 });
 
-            modelBuilder.Entity("WorkoutLog.API.Models.WorkoutExerciseSet", b =>
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.WorkoutExerciseSet", b =>
                 {
-                    b.Property<int>("WorkoutExerciseSetId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -389,16 +393,16 @@ namespace WorkoutLog.API.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("WorkoutExerciseSetId");
+                    b.HasKey("Id");
 
                     b.HasIndex("WorkoutExerciseId");
 
-                    b.ToTable("WorkoutExerciseSets");
+                    b.ToTable("WorkoutExerciseSet");
                 });
 
-            modelBuilder.Entity("WorkoutLog.API.Models.WorkoutRecord", b =>
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.WorkoutRecord", b =>
                 {
-                    b.Property<int>("WorkoutRecordId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -412,48 +416,33 @@ namespace WorkoutLog.API.Data.Migrations
                     b.Property<int>("WorkoutId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("WorkoutRecordId");
+                    b.HasKey("Id");
 
                     b.HasIndex("WorkoutExerciseId")
                         .IsUnique();
 
                     b.HasIndex("WorkoutId");
 
-                    b.ToTable("WorkoutRecords");
+                    b.ToTable("WorkoutRecord");
                 });
 
-            modelBuilder.Entity("ExerciseMuscleGroup", b =>
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.Exercise", b =>
                 {
-                    b.HasOne("WorkoutLog.API.Models.Exercise", null)
-                        .WithMany()
-                        .HasForeignKey("ExercisesExerciseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WorkoutLog.API.Models.MuscleGroup", null)
-                        .WithMany()
-                        .HasForeignKey("OtherMusclesWorkedMuscleGroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("WorkoutLog.API.Models.Exercise", b =>
-                {
-                    b.HasOne("WorkoutLog.API.Models.Equipment", "Equipment")
+                    b.HasOne("WorkoutLog.API.Data.Models.Equipment", "Equipment")
                         .WithOne("Exercise")
-                        .HasForeignKey("WorkoutLog.API.Models.Exercise", "EquipmentId")
+                        .HasForeignKey("WorkoutLog.API.Data.Models.Exercise", "EquipmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WorkoutLog.API.Models.MuscleGroup", "PrimaryMusclesWorked")
+                    b.HasOne("WorkoutLog.API.Data.Models.ExerciseType", "ExerciseType")
                         .WithOne("Exercise")
-                        .HasForeignKey("WorkoutLog.API.Models.Exercise", "ExerciseId")
+                        .HasForeignKey("WorkoutLog.API.Data.Models.Exercise", "ExerciseTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WorkoutLog.API.Models.ExerciseType", "ExerciseType")
+                    b.HasOne("WorkoutLog.API.Data.Models.MuscleGroup", "PrimaryMusclesWorked")
                         .WithOne("Exercise")
-                        .HasForeignKey("WorkoutLog.API.Models.Exercise", "ExerciseTypeId")
+                        .HasForeignKey("WorkoutLog.API.Data.Models.Exercise", "PrimaryMusclesWorkedId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -464,15 +453,34 @@ namespace WorkoutLog.API.Data.Migrations
                     b.Navigation("PrimaryMusclesWorked");
                 });
 
-            modelBuilder.Entity("WorkoutLog.API.Models.Goal", b =>
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.ExerciseOtherMusclesWorked", b =>
                 {
-                    b.HasOne("WorkoutLog.API.Models.Exercise", "Exercise")
-                        .WithOne("Goal")
-                        .HasForeignKey("WorkoutLog.API.Models.Goal", "ExerciseId")
+                    b.HasOne("WorkoutLog.API.Data.Models.Exercise", "Exercise")
+                        .WithMany("OtherMusclesWorked")
+                        .HasForeignKey("ExerciseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WorkoutLog.API.Models.User", "User")
+                    b.HasOne("WorkoutLog.API.Data.Models.MuscleGroup", "OtherMusclesWorked")
+                        .WithMany("Exercises")
+                        .HasForeignKey("OtherMusclesWorkedId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Exercise");
+
+                    b.Navigation("OtherMusclesWorked");
+                });
+
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.Goal", b =>
+                {
+                    b.HasOne("WorkoutLog.API.Data.Models.Exercise", "Exercise")
+                        .WithOne("Goal")
+                        .HasForeignKey("WorkoutLog.API.Data.Models.Goal", "ExerciseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WorkoutLog.API.Data.Models.User", "User")
                         .WithMany("Goals")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -483,9 +491,9 @@ namespace WorkoutLog.API.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("WorkoutLog.API.Models.Muscle", b =>
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.Muscle", b =>
                 {
-                    b.HasOne("WorkoutLog.API.Models.MuscleGroup", "MuscleGroup")
+                    b.HasOne("WorkoutLog.API.Data.Models.MuscleGroup", "MuscleGroup")
                         .WithMany("Muscles")
                         .HasForeignKey("MuscleGroupId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -494,37 +502,37 @@ namespace WorkoutLog.API.Data.Migrations
                     b.Navigation("MuscleGroup");
                 });
 
-            modelBuilder.Entity("WorkoutLog.API.Models.OptimalVolume", b =>
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.OptimalVolume", b =>
                 {
-                    b.HasOne("WorkoutLog.API.Models.MuscleGroup", "MuscleGroup")
+                    b.HasOne("WorkoutLog.API.Data.Models.MuscleGroup", "MuscleGroup")
                         .WithOne("OptimalVolume")
-                        .HasForeignKey("WorkoutLog.API.Models.OptimalVolume", "MuscleGroupId")
+                        .HasForeignKey("WorkoutLog.API.Data.Models.OptimalVolume", "MuscleGroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("MuscleGroup");
                 });
 
-            modelBuilder.Entity("WorkoutLog.API.Models.Preference", b =>
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.Preference", b =>
                 {
-                    b.HasOne("WorkoutLog.API.Models.User", "User")
+                    b.HasOne("WorkoutLog.API.Data.Models.User", "User")
                         .WithOne("Preference")
-                        .HasForeignKey("WorkoutLog.API.Models.Preference", "UserId")
+                        .HasForeignKey("WorkoutLog.API.Data.Models.Preference", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("WorkoutLog.API.Models.UserWorkout", b =>
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.UserWorkout", b =>
                 {
-                    b.HasOne("WorkoutLog.API.Models.User", "User")
+                    b.HasOne("WorkoutLog.API.Data.Models.User", "User")
                         .WithOne("UserWorkoutId")
-                        .HasForeignKey("WorkoutLog.API.Models.UserWorkout", "UserId")
+                        .HasForeignKey("WorkoutLog.API.Data.Models.UserWorkout", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WorkoutLog.API.Models.Workout", "Workout")
+                    b.HasOne("WorkoutLog.API.Data.Models.Workout", "Workout")
                         .WithMany()
                         .HasForeignKey("WorkoutId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -535,9 +543,9 @@ namespace WorkoutLog.API.Data.Migrations
                     b.Navigation("Workout");
                 });
 
-            modelBuilder.Entity("WorkoutLog.API.Models.Workout", b =>
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.Workout", b =>
                 {
-                    b.HasOne("WorkoutLog.API.Models.User", "User")
+                    b.HasOne("WorkoutLog.API.Data.Models.User", "User")
                         .WithMany("Workouts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -546,15 +554,15 @@ namespace WorkoutLog.API.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("WorkoutLog.API.Models.WorkoutExercise", b =>
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.WorkoutExercise", b =>
                 {
-                    b.HasOne("WorkoutLog.API.Models.Exercise", "Exercise")
+                    b.HasOne("WorkoutLog.API.Data.Models.Exercise", "Exercise")
                         .WithOne("WorkoutExercise")
-                        .HasForeignKey("WorkoutLog.API.Models.WorkoutExercise", "ExerciseId")
+                        .HasForeignKey("WorkoutLog.API.Data.Models.WorkoutExercise", "ExerciseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WorkoutLog.API.Models.Workout", "Workout")
+                    b.HasOne("WorkoutLog.API.Data.Models.Workout", "Workout")
                         .WithMany("WorkoutExercises")
                         .HasForeignKey("WorkoutId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -565,9 +573,9 @@ namespace WorkoutLog.API.Data.Migrations
                     b.Navigation("Workout");
                 });
 
-            modelBuilder.Entity("WorkoutLog.API.Models.WorkoutExerciseSet", b =>
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.WorkoutExerciseSet", b =>
                 {
-                    b.HasOne("WorkoutLog.API.Models.WorkoutExercise", "WorkoutExercise")
+                    b.HasOne("WorkoutLog.API.Data.Models.WorkoutExercise", "WorkoutExercise")
                         .WithMany("WorkoutExerciseSets")
                         .HasForeignKey("WorkoutExerciseId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -576,15 +584,15 @@ namespace WorkoutLog.API.Data.Migrations
                     b.Navigation("WorkoutExercise");
                 });
 
-            modelBuilder.Entity("WorkoutLog.API.Models.WorkoutRecord", b =>
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.WorkoutRecord", b =>
                 {
-                    b.HasOne("WorkoutLog.API.Models.WorkoutExercise", "WorkoutExercise")
+                    b.HasOne("WorkoutLog.API.Data.Models.WorkoutExercise", "WorkoutExercise")
                         .WithOne("WorkoutRecord")
-                        .HasForeignKey("WorkoutLog.API.Models.WorkoutRecord", "WorkoutExerciseId")
+                        .HasForeignKey("WorkoutLog.API.Data.Models.WorkoutRecord", "WorkoutExerciseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WorkoutLog.API.Models.Workout", "Workout")
+                    b.HasOne("WorkoutLog.API.Data.Models.Workout", "Workout")
                         .WithMany("WorkoutRecords")
                         .HasForeignKey("WorkoutId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -595,31 +603,35 @@ namespace WorkoutLog.API.Data.Migrations
                     b.Navigation("WorkoutExercise");
                 });
 
-            modelBuilder.Entity("WorkoutLog.API.Models.Equipment", b =>
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.Equipment", b =>
                 {
                     b.Navigation("Exercise")
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WorkoutLog.API.Models.Exercise", b =>
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.Exercise", b =>
                 {
                     b.Navigation("Goal")
                         .IsRequired();
+
+                    b.Navigation("OtherMusclesWorked");
 
                     b.Navigation("WorkoutExercise")
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WorkoutLog.API.Models.ExerciseType", b =>
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.ExerciseType", b =>
                 {
                     b.Navigation("Exercise")
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WorkoutLog.API.Models.MuscleGroup", b =>
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.MuscleGroup", b =>
                 {
                     b.Navigation("Exercise")
                         .IsRequired();
+
+                    b.Navigation("Exercises");
 
                     b.Navigation("Muscles");
 
@@ -627,7 +639,7 @@ namespace WorkoutLog.API.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WorkoutLog.API.Models.User", b =>
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.User", b =>
                 {
                     b.Navigation("Goals");
 
@@ -640,14 +652,14 @@ namespace WorkoutLog.API.Data.Migrations
                     b.Navigation("Workouts");
                 });
 
-            modelBuilder.Entity("WorkoutLog.API.Models.Workout", b =>
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.Workout", b =>
                 {
                     b.Navigation("WorkoutExercises");
 
                     b.Navigation("WorkoutRecords");
                 });
 
-            modelBuilder.Entity("WorkoutLog.API.Models.WorkoutExercise", b =>
+            modelBuilder.Entity("WorkoutLog.API.Data.Models.WorkoutExercise", b =>
                 {
                     b.Navigation("WorkoutExerciseSets");
 

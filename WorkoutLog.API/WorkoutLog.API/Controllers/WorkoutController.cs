@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WorkoutLog.API.Models;
+using WorkoutLog.API.Data.Models;
 
 namespace WorkoutLog.API.Controllers
 {

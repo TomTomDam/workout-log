@@ -1,4 +1,4 @@
-﻿namespace WorkoutLog.API.Models
+﻿namespace WorkoutLog.API.Data.Models
 {
     public class WorkoutExerciseSet
     {
