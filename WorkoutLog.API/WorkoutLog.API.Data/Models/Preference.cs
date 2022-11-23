@@ -1,4 +1,6 @@
-﻿namespace WorkoutLog.API.Models
+﻿using WorkoutLog.API.Data.Models;
+
+namespace WorkoutLog.API.Data.Models
 {
     public class Preference
     {
