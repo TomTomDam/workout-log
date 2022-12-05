@@ -1,13 +1,11 @@
-using Microsoft.EntityFrameworkCore;
 using WorkoutLog.API.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<WorkoutLogDBContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"),
-                                                                                opt => opt.MigrationsAssembly("WorkoutLog.API.Data")));
-
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.Configure<DatabaseSettings>(options => builder.Configuration.GetSection("ConnectionStrings:DefaultConnection").Bind(options));
 
 var app = builder.Build();
 
