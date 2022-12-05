@@ -1,28 +1,27 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using WorkoutLog.API.Data;
 using WorkoutLog.API.Data.Models;
+using WorkoutLog.API.Data.Repositories;
 
 namespace WorkoutLog.API.Controllers
 {
     public class AccountController : ControllerBase
     {
-        private readonly WorkoutLogDBContext _context;
+        private readonly UserRepository _userRepository;
 
-        public AccountController(WorkoutLogDBContext context)
+        public AccountController(UserRepository userRepository)
         {
-            _context = context;
+            _userRepository = userRepository;
         }
 
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _context.User.ToListAsync());
+            return Ok(await _userRepository.GetAll());
         }
 
         public async Task<IActionResult> GetById(int id)
         {
-            var user = await _context.User.FindAsync(id);
+            var user = await _userRepository.GetById(id);
             if (user == null) return NotFound();
 
             return Ok(user);
@@ -33,8 +32,7 @@ namespace WorkoutLog.API.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(User user)
         {
-            await _context.User.AddAsync(user);
-            await _context.SaveChangesAsync();
+            await _userRepository.Insert(user);
 
             return Ok();
         }
@@ -43,17 +41,10 @@ namespace WorkoutLog.API.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(int id, User user)
         {
-            var existingUser = await _context.User.FindAsync(id);
+            var existingUser = await _userRepository.GetById(id);
             if (existingUser == null) return NotFound();
 
-            existingUser.Name = user.Name;
-            existingUser.Age = user.Age;
-            existingUser.Bodyweight = user.Bodyweight;
-            existingUser.Gender = user.Gender;
-            existingUser.TrainingStyles = user.TrainingStyles;
-
-            _context.Update(existingUser);
-            await _context.SaveChangesAsync();
+            await _userRepository.Update(user);
 
             return Ok();
         }
@@ -62,11 +53,10 @@ namespace WorkoutLog.API.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            var user = await _context.User.FindAsync(id);
+            var user = await _userRepository.GetById(id);
             if (user == null) return NotFound();
 
-            _context.User.Remove(user);
-            _context.SaveChanges();
+            await _userRepository.Delete(user.Id);
 
             return Ok();
         }
