@@ -1,11 +1,16 @@
-using WorkoutLog.API.Data;
+using Microsoft.Data.SqlClient;
+using WorkoutLog.API.Data.Repositories;
+using WorkoutLog.API.Data.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddTransient((sc) => new SqlConnection(connectionString));
+
+builder.Services.AddTransient<IUserRepository, UserRepository>();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-
-builder.Services.Configure<DatabaseSettings>(options => builder.Configuration.GetSection("ConnectionStrings:DefaultConnection").Bind(options));
 
 var app = builder.Build();
 
