@@ -1,23 +1,31 @@
 ﻿using Dapper;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using System.Data;
+using System.Linq.Expressions;
 using System.Reflection;
 using WorkoutLog.API.Data.Models;
+using WorkoutLog.API.Data.Providers;
 using WorkoutLog.API.Data.Repositories.Interfaces;
 
 namespace WorkoutLog.API.Data.Repositories
 {
-    public class BaseRepository<T> : IBaseRepository<T> where T : TEntity
+    public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
     {
-        protected SqlTransaction Transaction { get; private set; }
-        protected SqlConnection Connection { get { return Transaction.Connection; } }
-        private string _tableName = typeof(T).Name;
-        private const string _insertQuery = "INSERT INTO [{0}]({1}) OUTPUT INSERTED.Id VALUES(@{2})";
-        private const string _updateQuery = "UPDATE [{0}] SET {1} WHERE [{0}].[Id] = @Id";
+        private readonly IProvider _provider;
+        private readonly SqlConnection _connection;
 
-        public BaseRepository(SqlTransaction transaction)
+        public BaseRepository(IOptions<DatabaseSettings> options)
         {
-            Transaction = transaction;
+            if (string.IsNullOrEmpty(options.Value.ConnectionString) 
+                || string.IsNullOrWhiteSpace(options.Value.ConnectionString) 
+                || string.IsNullOrEmpty(options.Value.ProviderName) 
+                || string.IsNullOrWhiteSpace(options.Value.ProviderName))
+                throw new ArgumentException("ConnectionString or Provider cannot be empty.");
+
+            _provider = ProviderHelper.GetProvider(options.Value.ConnectionString);
+            _connection = _provider.CreateConnection(options.Value.ProviderName);
         }
 
         protected virtual IDictionary<string, object> GetParameters<TItem>(IEnumerable<TItem> items)
@@ -39,37 +47,22 @@ namespace WorkoutLog.API.Data.Repositories
             return parameters;
         }
 
-        protected virtual IEnumerable<string> GetColumns(Type entityType)
+        public virtual async Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>> expression)
         {
-            PropertyInfo[] props = entityType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            string commandText = await _provider.SelectQuery(expression, typeof(T).Name);
+            var parameters = ExpressionHelper.GetWhereParameters(expression);
 
-            return props.Select(p => p.Name);
+            return _connection.Query<T>(commandText, parameters);
         }
 
-        protected virtual IEnumerable<string> GetColumnsWithoutIdentity(Type entityType)
+        public virtual async Task<T> GetById(int id)
         {
-            PropertyInfo[] props = entityType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            string commandText = await _provider.SelectSingleQuery<T>(t => t.Id == id, typeof(T).Name);
 
-            return props.Where(p => p.Name != "Id").Select(p => p.Name);
+            return await _connection.QueryFirstAsync<T>(commandText, new { id });
         }
 
-        public async Task<IEnumerable<T>> GetAll()
-        {
-            return await Connection.QueryAsync<T>(
-                $"SELECT * FROM {_tableName}",
-                transaction: Transaction
-            );
-        }
-
-        public async Task<T> GetById(int id)
-        {
-            return await Connection.QuerySingleOrDefaultAsync<T>(
-                $"SELECT * FROM {_tableName} WHERE Id = @Id",
-                param: new { Id = id },
-                transaction: Transaction);
-        }
-
-        public async Task Insert(T entity)
+        public virtual async Task Insert(T entity, IDbTransaction transaction)
         {
             if (entity == null)
             {
@@ -77,39 +70,37 @@ namespace WorkoutLog.API.Data.Repositories
                 return;
             }
 
-            var columns = GetColumnsWithoutIdentity(entity.GetType());
-            var commandText = string.Format(_insertQuery,
-                     _tableName,
-                     string.Join(", ", columns.Select(p => string.Format("[{0}].[{1}]", _tableName, p))),
-                     string.Join(", @", columns));
+            string commandText = await _provider.InsertQuery(typeof(T).Name, entity);
 
-            await Connection.ExecuteScalarAsync<int>(commandText, entity, Transaction);
+            entity.Id = await _connection.ExecuteScalarAsync<int>(commandText, entity, transaction);
         }
 
-        public async Task Update(T entity)
+        public virtual async Task<bool> Update(T entity, IDbTransaction transaction)
         {
             if (entity == null)
             {
                 await Task.CompletedTask;
-                return;
+                return false;
             }
 
-            IEnumerable<string> columns = GetColumnsWithoutIdentity(entity.GetType());
-            string formattedColumns = string.Join(", ", columns.Select(p => string.Format("[{0}].[{1}] = @{1}", _tableName, p)));
-            var commandText = string.Format(_updateQuery,
-                                 _tableName,
-                                 formattedColumns);
+            string commandText = await _provider.UpdateQuery(typeof(T).Name, entity);
 
-            await Connection.ExecuteAsync(commandText, entity, Transaction);
+            int rows = await _connection.ExecuteAsync(commandText, entity, transaction);
+            return true ? rows > 0 : rows == 0;
         }
 
-        public async Task Delete(int id)
+        public virtual async Task<bool> Delete(T entity, IDbTransaction transaction)
         {
-            await Connection.ExecuteAsync(
-                $"DELETE FROM {_tableName} WHERE Id = @Id",
-                param: new { Id = id },
-                transaction: Transaction
-            );
+            if (entity == null)
+            {
+                await Task.CompletedTask;
+                return false;
+            }
+
+            string commandText = await _provider.DeleteQuery(typeof(T).Name);
+
+            int rows = await _connection.ExecuteAsync(commandText, new { entity.Id }, transaction);
+            return true ? rows > 0 : rows == 0;
         }
     }
 }

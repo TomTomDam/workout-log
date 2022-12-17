@@ -1,8 +1,7 @@
 ﻿namespace WorkoutLog.API.Data.Models
 {
-    public class User : TEntity
+    public class User : BaseEntity
     {
-        public int Id { get; set; }
         public string Name { get; set; } = "";
         public int Age { get; set; }
         public int Bodyweight { get; set; }
