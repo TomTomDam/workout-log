@@ -1,24 +1,26 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WorkoutLog.API.Data.Models;
-using WorkoutLog.API.Data.Repositories;
+using WorkoutLog.API.Data.Repositories.Interfaces;
 
 namespace WorkoutLog.API.Controllers
 {
+    [Route("account")]
     public class AccountController : ControllerBase
     {
-        private readonly UserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
 
-        public AccountController(UserRepository userRepository)
+        public AccountController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
 
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _userRepository.GetAll());
+            return Ok(await _userRepository.GetAll(x => x.Id != 0));
         }
 
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var user = await _userRepository.GetById(id);
@@ -44,9 +46,9 @@ namespace WorkoutLog.API.Controllers
             var existingUser = await _userRepository.GetById(id);
             if (existingUser == null) return NotFound();
 
-            await _userRepository.Update(user);
+            var updated = await _userRepository.Update(user);
 
-            return Ok();
+            return updated ? Ok() : NotFound();
         }
 
         [HttpPost]
@@ -55,10 +57,10 @@ namespace WorkoutLog.API.Controllers
         {
             var user = await _userRepository.GetById(id);
             if (user == null) return NotFound();
+            
+            var deleted = await _userRepository.Delete(user);
 
-            await _userRepository.Delete(user.Id);
-
-            return Ok();
+            return deleted ? Ok() : NotFound();
         }
     }
 }

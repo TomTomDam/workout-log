@@ -1,5 +1,4 @@
-﻿using System.Data;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using WorkoutLog.API.Data.Models;
 
 namespace WorkoutLog.API.Data.Repositories.Interfaces
@@ -8,8 +7,8 @@ namespace WorkoutLog.API.Data.Repositories.Interfaces
     {
         Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>> expression);
         Task<T> GetById(int id);
-        Task Insert(T entity, IDbTransaction transaction);
-        Task<bool> Update(T entity, IDbTransaction transaction);
-        Task<bool> Delete(T entity, IDbTransaction transaction);
+        Task Insert(T entity);
+        Task<bool> Update(T entity);
+        Task<bool> Delete(T entity);
     }
 }

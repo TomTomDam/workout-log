@@ -6,7 +6,7 @@ using System.Text;
 
 namespace WorkoutLog.API.Data.Providers
 {
-    public class DapperProvider : IProvider
+    public class SqlServerProvider : IProvider
     {
         private const string _insertQuery = "INSERT INTO [{0}]({1}) OUTPUT INSERTED.Id VALUES(@{2})";
         private const string _insertBulkQuery = "INSERT INTO [{0}]({1}) VALUES ({2})\r\n";
