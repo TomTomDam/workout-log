@@ -1,6 +1,8 @@
-﻿namespace WorkoutLog.API.Data.Repositories.Interfaces
+﻿using WorkoutLog.API.Data.Models;
+
+namespace WorkoutLog.API.Data.Repositories.Interfaces
 {
-    public interface IUserRepository
+    public interface IUserRepository : IBaseRepository<User>
     {
     }
 }
