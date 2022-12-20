@@ -17,7 +17,7 @@ namespace WorkoutLog.API.Controllers
 
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _userRepository.GetAll(x => x.Id != 0));
+            return Ok(await _userRepository.GetAll());
         }
 
         [HttpGet("{id}")]
@@ -39,7 +39,7 @@ namespace WorkoutLog.API.Controllers
             return Ok();
         }
 
-        [HttpPost]
+        [HttpPost("{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(int id, User user)
         {
@@ -51,7 +51,7 @@ namespace WorkoutLog.API.Controllers
             return updated ? Ok() : NotFound();
         }
 
-        [HttpPost]
+        [HttpPost("{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {

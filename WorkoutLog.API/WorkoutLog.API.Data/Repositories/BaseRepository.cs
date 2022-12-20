@@ -1,9 +1,6 @@
 ﻿using Dapper;
-using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using System.Data;
-using System.Linq.Expressions;
 using System.Reflection;
 using WorkoutLog.API.Data.Models;
 using WorkoutLog.API.Data.Providers;
@@ -11,10 +8,10 @@ using WorkoutLog.API.Data.Repositories.Interfaces;
 
 namespace WorkoutLog.API.Data.Repositories
 {
-    public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
+    public class BaseRepository<T> : IBaseRepository<T> where T : Entity
     {
         private readonly IProvider _provider;
-        private readonly SqlConnection _connection;
+        private readonly IDbConnection _connection;
 
         public BaseRepository(IOptions<DatabaseSettings> options)
         {
@@ -26,14 +23,14 @@ namespace WorkoutLog.API.Data.Repositories
 
             _provider = ProviderHelper.GetProvider(options.Value.ProviderName);
             if (_provider == null)
-                throw new ArgumentException("A valid provider must be specified.");
+                throw new ArgumentException("A valid Provider must be specified.");
 
             _connection = _provider.CreateConnection(options.Value.ConnectionStrings.DefaultConnection);
         }
 
         protected virtual IDictionary<string, object> GetParameters<TItem>(IEnumerable<TItem> items)
         {
-            if (items.IsNullOrEmpty()) return null;
+            if (items == null || !items.Any()) return null;
 
             var parameters = new Dictionary<string, object>();
             var entityArray = items.ToArray();
@@ -50,17 +47,16 @@ namespace WorkoutLog.API.Data.Repositories
             return parameters;
         }
 
-        public virtual async Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>> expression)
+        public virtual async Task<IEnumerable<T>> GetAll()
         {
-            string commandText = await _provider.SelectQuery(expression, typeof(T).Name);
-            var parameters = ExpressionHelper.GetWhereParameters(expression);
+            string commandText = _provider.SelectQuery<T>(typeof(T).Name);
 
-            return _connection.Query<T>(commandText, parameters);
+            return await _connection.QueryAsync<T>(commandText);
         }
 
         public virtual async Task<T> GetById(int id)
         {
-            string commandText = await _provider.SelectSingleQuery<T>(t => t.Id == id, typeof(T).Name);
+            string commandText = _provider.SelectSingleQuery<T>(typeof(T).Name);
 
             return await _connection.QueryFirstAsync<T>(commandText, new { id });
         }
@@ -74,7 +70,8 @@ namespace WorkoutLog.API.Data.Repositories
             }
 
             using var transaction = _connection.BeginTransaction();
-            string commandText = await _provider.InsertQuery(typeof(T).Name, entity);
+            string commandText = _provider.InsertQuery(typeof(T).Name, entity);
+
             entity.Id = await _connection.ExecuteScalarAsync<int>(commandText, entity, transaction);
         }
 
@@ -87,11 +84,10 @@ namespace WorkoutLog.API.Data.Repositories
             }
 
             using var transaction = _connection.BeginTransaction();
-            string commandText = await _provider.UpdateQuery(typeof(T).Name, entity);
+            string commandText = _provider.UpdateQuery(typeof(T).Name, entity);
             int rows = await _connection.ExecuteAsync(commandText, entity, transaction);
 
             return true ? rows > 0 : rows == 0;
-
         }
 
         public virtual async Task<bool> Delete(T entity)
@@ -103,7 +99,7 @@ namespace WorkoutLog.API.Data.Repositories
             }
 
             using var transaction = _connection.BeginTransaction();
-            string commandText = await _provider.DeleteQuery(typeof(T).Name);
+            string commandText = _provider.DeleteQuery(typeof(T).Name);
             int rows = await _connection.ExecuteAsync(commandText, new { entity.Id }, transaction);
 
             return true ? rows > 0 : rows == 0;

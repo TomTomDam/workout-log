@@ -1,4 +1,4 @@
-using Microsoft.Data.SqlClient;
+using Microsoft.Data.Sqlite;
 using WorkoutLog.API.Data;
 using WorkoutLog.API.Data.Repositories;
 using WorkoutLog.API.Data.Repositories.Interfaces;
@@ -9,7 +9,7 @@ var databaseSettings = builder.Configuration.GetSection("DatabaseSettings");
 builder.Services.Configure<DatabaseSettings>(databaseSettings);
 
 var connectionString = databaseSettings.GetConnectionString("DefaultConnection");
-builder.Services.AddTransient((sc) => new SqlConnection(connectionString));
+builder.Services.AddTransient((sp) => new SqliteConnection(connectionString));
 
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 

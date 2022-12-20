@@ -1,11 +1,10 @@
-﻿using System.Linq.Expressions;
-using WorkoutLog.API.Data.Models;
+﻿using WorkoutLog.API.Data.Models;
 
 namespace WorkoutLog.API.Data.Repositories.Interfaces
 {
-    public interface IBaseRepository<T> where T : BaseEntity
+    public interface IBaseRepository<T> where T : Entity
     {
-        Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>> expression);
+        Task<IEnumerable<T>> GetAll();
         Task<T> GetById(int id);
         Task Insert(T entity);
         Task<bool> Update(T entity);
