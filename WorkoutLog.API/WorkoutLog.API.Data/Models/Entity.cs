@@ -1,6 +1,6 @@
 ﻿namespace WorkoutLog.API.Data.Models
 {
-    public class BaseEntity
+    public class Entity
     {
         public int Id { get; set; }
     }

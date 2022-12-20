@@ -1,10 +1,7 @@
-﻿using WorkoutLog.API.Data.Models;
-
-namespace WorkoutLog.API.Data.Models
+﻿namespace WorkoutLog.API.Data.Models
 {
-    public class Goal
+    public class Goal : Entity
     {
-        public int Id { get; set; }
         public int CurrentValue { get; set; }
         public int GoalValue { get; set; }
         public DateTime DateCreated { get; set; }
@@ -12,8 +9,6 @@ namespace WorkoutLog.API.Data.Models
         public string GoalType { get; set; } = "";
 
         public int ExerciseId { get; set; }
-        public Exercise Exercise { get; set; } = new Exercise();
         public int UserId { get; set; }
-        public User User { get; set; } = new User();
     }
 }
