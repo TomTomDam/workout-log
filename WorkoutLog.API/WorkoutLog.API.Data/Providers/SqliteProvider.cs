@@ -7,14 +7,14 @@ namespace WorkoutLog.API.Data.Providers
 {
     internal class SqliteProvider : IProvider
     {
-        private const string _insertQuery = "INSERT INTO [{0}]({1}) OUTPUT INSERTED.Id VALUES(@{2})";
+        private const string _insertQuery = "INSERT INTO [{0}]({1}) VALUES(@{2}) RETURNING Id";
         private const string _insertBulkQuery = "INSERT INTO [{0}]({1}) VALUES ({2})\r\n";
         private const string _updateQuery = "UPDATE [{0}] SET {1} WHERE [{0}].[Id] = @Id";
         private const string _updateBulkQuery = "UPDATE [{0}] SET {1} WHERE [{0}].[Id] = @Id\r\n";
         private const string _deleteQuery = "DELETE FROM [{0}] WHERE [{0}].[Id] = @Id";
         private const string _deleteBulkQuery = "DELETE FROM [{0}] WHERE [{0}].[Id] IN(@Ids)";
         private const string _selectQuery = "SELECT\r\n {1} FROM [{0}]";
-        private const string _selectSingleQuery = "SELECT TOP(1)\r\n{1} FROM [{0}]";
+        private const string _selectSingleQuery = "SELECT\r\n {1} FROM [{0}] LIMIT 1";
 
         private SqliteConnection _connection = new SqliteConnection();
 
@@ -63,7 +63,7 @@ namespace WorkoutLog.API.Data.Providers
 
             return string.Format(_insertQuery,
                                  tableName,
-                                 string.Join(", ", columns.Select(p => string.Format("[{0}].[{1}]", tableName, p))),
+                                 string.Join(", ", columns.Select(p => string.Format("[{0}]", p))),
                                  string.Join(", @", columns));
         }
 
@@ -74,7 +74,7 @@ namespace WorkoutLog.API.Data.Providers
 
             var stringBuilder = new StringBuilder();
             var columns = GetColumnsWithoutIdentity(entities.First().GetType());
-            string formattedColumns = string.Join(", ", columns.Select(p => string.Format("[{0}].[{1}]", tableName, p)));
+            string formattedColumns = string.Join(", ", columns.Select(p => string.Format("[{0}]", p)));
 
             for (int i = 0; i < entities.Count(); i++)
             {

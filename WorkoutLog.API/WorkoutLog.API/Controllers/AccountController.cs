@@ -31,7 +31,6 @@ namespace WorkoutLog.API.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(User user)
         {
             await _userRepository.Insert(user);
@@ -40,7 +39,6 @@ namespace WorkoutLog.API.Controllers
         }
 
         [HttpPost("{id}")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(int id, User user)
         {
             var existingUser = await _userRepository.GetById(id);
@@ -52,7 +50,6 @@ namespace WorkoutLog.API.Controllers
         }
 
         [HttpPost("{id}")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
             var user = await _userRepository.GetById(id);

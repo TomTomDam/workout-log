@@ -22,21 +22,18 @@ namespace WorkoutLog.API.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Goal goal)
         {
             return Ok();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(int id, Goal goal)
         {
             return Ok();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
             return Ok();
