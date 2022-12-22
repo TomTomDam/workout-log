@@ -69,10 +69,11 @@ namespace WorkoutLog.API.Data.Repositories
                 return;
             }
 
+            _connection.Open();
             using var transaction = _connection.BeginTransaction();
             string commandText = _provider.InsertQuery(typeof(T).Name, entity);
 
-            entity.Id = await _connection.ExecuteScalarAsync<int>(commandText, entity, transaction);
+            entity.Id = await _connection.ExecuteAsync(commandText, entity, transaction);
         }
 
         public virtual async Task<bool> Update(T entity)
@@ -83,6 +84,7 @@ namespace WorkoutLog.API.Data.Repositories
                 return false;
             }
 
+            _connection.Open();
             using var transaction = _connection.BeginTransaction();
             string commandText = _provider.UpdateQuery(typeof(T).Name, entity);
             int rows = await _connection.ExecuteAsync(commandText, entity, transaction);
@@ -98,6 +100,7 @@ namespace WorkoutLog.API.Data.Repositories
                 return false;
             }
 
+            _connection.Open();
             using var transaction = _connection.BeginTransaction();
             string commandText = _provider.DeleteQuery(typeof(T).Name);
             int rows = await _connection.ExecuteAsync(commandText, new { entity.Id }, transaction);
