@@ -38,7 +38,7 @@ namespace WorkoutLog.API.Controllers
             return Ok();
         }
 
-        [HttpPost("{id}")]
+        [HttpPatch("{id}")]
         public async Task<IActionResult> Update(int id, User user)
         {
             var existingUser = await _userRepository.GetById(id);
