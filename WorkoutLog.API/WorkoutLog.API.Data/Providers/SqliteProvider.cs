@@ -9,10 +9,10 @@ namespace WorkoutLog.API.Data.Providers
     {
         private const string _insertQuery = "INSERT INTO [{0}]({1}) VALUES(@{2}) RETURNING Id";
         private const string _insertBulkQuery = "INSERT INTO [{0}]({1}) VALUES ({2})\r\n";
-        private const string _updateQuery = "UPDATE [{0}] SET {1} WHERE [{0}].[Id] = @Id";
-        private const string _updateBulkQuery = "UPDATE [{0}] SET {1} WHERE [{0}].[Id] = @Id\r\n";
-        private const string _deleteQuery = "DELETE FROM [{0}] WHERE [{0}].[Id] = @Id";
-        private const string _deleteBulkQuery = "DELETE FROM [{0}] WHERE [{0}].[Id] IN(@Ids)";
+        private const string _updateQuery = "UPDATE [{0}] SET {1} WHERE [Id] = @Id";
+        private const string _updateBulkQuery = "UPDATE [{0}] SET {1} WHERE [Id] = @Id\r\n";
+        private const string _deleteQuery = "DELETE FROM [{0}] WHERE [Id] = @Id";
+        private const string _deleteBulkQuery = "DELETE FROM [{0}] WHERE [Id] IN(@Ids)";
         private const string _selectQuery = "SELECT\r\n {1} FROM [{0}]";
         private const string _selectSingleQuery = "SELECT\r\n {1} FROM [{0}] LIMIT 1";
 
@@ -94,7 +94,7 @@ namespace WorkoutLog.API.Data.Providers
         public string UpdateQuery(string tableName, object entity)
         {
             var columns = GetColumnsWithoutIdentity(entity.GetType());
-            string formattedColumns = string.Join(", ", columns.Select(p => string.Format("[{0}].[{1}] = @{1}", tableName, p)));
+            string formattedColumns = string.Join(", ", columns.Select(p => string.Format("[{0}] = @{0}", p)));
 
             return string.Format(_updateQuery,
                                  tableName,
@@ -116,7 +116,7 @@ namespace WorkoutLog.API.Data.Providers
                 if (i != 0 && i % 100 == 0)
                     stringBuilder.Append("GO\r\n");
 
-                var formattedColumns = columns.Select(p => string.Format("[{0}].[{1}] = @{1}{2}", tableName, p, i + 1));
+                var formattedColumns = columns.Select(p => string.Format("[{0}] = @{0}{1}", p, i + 1));
                 stringBuilder.AppendFormat(_updateBulkQuery,
                                            tableName,
                                            string.Join(", ", formattedColumns));
