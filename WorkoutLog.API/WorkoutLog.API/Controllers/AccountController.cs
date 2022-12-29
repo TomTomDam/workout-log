@@ -31,25 +31,26 @@ namespace WorkoutLog.API.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Create(User user)
+        public async Task<IActionResult> Create([FromBody] User user)
         {
             await _userRepository.Insert(user);
 
             return Ok();
         }
 
-        [HttpPatch("{id}")]
-        public async Task<IActionResult> Update(int id, User user)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] User user)
         {
             var existingUser = await _userRepository.GetById(id);
             if (existingUser == null) return NotFound();
 
+            user.Id = id;
             var updated = await _userRepository.Update(user);
 
             return updated ? Ok() : NotFound();
         }
 
-        [HttpPost("{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var user = await _userRepository.GetById(id);
