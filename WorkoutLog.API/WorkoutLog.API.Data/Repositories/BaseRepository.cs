@@ -56,9 +56,9 @@ namespace WorkoutLog.API.Data.Repositories
 
         public virtual async Task<T> GetById(int id)
         {
-            string commandText = _provider.SelectSingleQuery<T>(typeof(T).Name);
+            string commandText = _provider.SelectByIdQuery<T>(typeof(T).Name);
 
-            return await _connection.QueryFirstAsync<T>(commandText, new { id });
+            return await _connection.QuerySingleAsync<T>(commandText, new { @Id = id });
         }
 
         public virtual async Task Insert(T entity)
@@ -73,7 +73,8 @@ namespace WorkoutLog.API.Data.Repositories
             using var transaction = _connection.BeginTransaction();
             string commandText = _provider.InsertQuery(typeof(T).Name, entity);
 
-            entity.Id = await _connection.ExecuteAsync(commandText, entity, transaction);
+            await _connection.ExecuteAsync(commandText, entity, transaction);
+            transaction.Commit();
         }
 
         public virtual async Task<bool> Update(T entity)
@@ -87,7 +88,9 @@ namespace WorkoutLog.API.Data.Repositories
             _connection.Open();
             using var transaction = _connection.BeginTransaction();
             string commandText = _provider.UpdateQuery(typeof(T).Name, entity);
+
             int rows = await _connection.ExecuteAsync(commandText, entity, transaction);
+            transaction.Commit();
 
             return true ? rows > 0 : rows == 0;
         }
@@ -103,7 +106,9 @@ namespace WorkoutLog.API.Data.Repositories
             _connection.Open();
             using var transaction = _connection.BeginTransaction();
             string commandText = _provider.DeleteQuery(typeof(T).Name);
+
             int rows = await _connection.ExecuteAsync(commandText, new { entity.Id }, transaction);
+            transaction.Commit();
 
             return true ? rows > 0 : rows == 0;
         }

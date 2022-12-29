@@ -6,7 +6,7 @@ namespace WorkoutLog.API.Data.Providers
     {
         IDbConnection CreateConnection(string connectionString);
         string SelectQuery<T>(string tableName);
-        string SelectSingleQuery<T>(string tableName);
+        string SelectByIdQuery<T>(string tableName);
         string InsertQuery(string tableName, object entity);
         string InsertBulkQuery(string tableName, IEnumerable<object> entities);
         string UpdateQuery(string tableName, object entity);

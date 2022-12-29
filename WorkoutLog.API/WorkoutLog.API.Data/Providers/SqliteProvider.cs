@@ -14,7 +14,7 @@ namespace WorkoutLog.API.Data.Providers
         private const string _deleteQuery = "DELETE FROM [{0}] WHERE [Id] = @Id";
         private const string _deleteBulkQuery = "DELETE FROM [{0}] WHERE [Id] IN(@Ids)";
         private const string _selectQuery = "SELECT\r\n {1} FROM [{0}]";
-        private const string _selectSingleQuery = "SELECT\r\n {1} FROM [{0}] LIMIT 1";
+        private const string _selectByIdQuery = "SELECT\r\n {1} FROM [{0}] WHERE [Id] = @Id";
 
         private SqliteConnection _connection = new SqliteConnection();
 
@@ -48,11 +48,11 @@ namespace WorkoutLog.API.Data.Providers
                                 string.Join(",\r\n", columns));
         }
 
-        public string SelectSingleQuery<T>(string tableName)
+        public string SelectByIdQuery<T>(string tableName)
         {
             var columns = GetColumns(typeof(T)).Select(p => string.Format("[{0}].[{1}]", tableName, p));
 
-            return string.Format(_selectSingleQuery,
+            return string.Format(_selectByIdQuery,
                                 tableName,
                                 string.Join(",\r\n", columns));
         }
