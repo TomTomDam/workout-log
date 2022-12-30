@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WorkoutLog.API.Data.Models;
+using WorkoutLog.API.Data.Repositories.Interfaces;
 
 namespace WorkoutLog.API.Controllers
 {
@@ -8,38 +9,56 @@ namespace WorkoutLog.API.Controllers
     [Route("equipment")]
     public class EquipmentController : ControllerBase
     {
+        private readonly IEquipmentRepository _equipmentRepository;
 
-        public EquipmentController()
+        public EquipmentController(IEquipmentRepository equipmentRepository)
         {
+            _equipmentRepository = equipmentRepository;
         }
 
         public async Task<IActionResult> GetAll()
         {
-            return Ok();
+            return Ok(await _equipmentRepository.GetAll());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            return Ok();
+            var equipment = await _equipmentRepository.GetById(id);
+            if (equipment == null) return NotFound();
+
+            return Ok(equipment);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(Equipment equipment)
         {
+            await _equipmentRepository.Insert(equipment);
+
             return Ok();
         }
 
-        [HttpPost("{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, Equipment equipment)
         {
-            return Ok();
+            var existingEquipment = await _equipmentRepository.GetById(id);
+            if (existingEquipment == null) return NotFound();
+
+            equipment.Id = id;
+            var updated = await _equipmentRepository.Update(equipment);
+
+            return updated ? Ok() : NotFound();
         }
 
-        [HttpPost("{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            return Ok();
+            var equipment = await _equipmentRepository.GetById(id);
+            if (equipment == null) return NotFound();
+
+            var deleted = await _equipmentRepository.Delete(equipment);
+
+            return deleted ? Ok() : NotFound();
         }
     }
 }
