@@ -47,7 +47,7 @@ namespace WorkoutLog.API.Controllers
             user.Id = id;
             var updated = await _userRepository.Update(user);
 
-            return updated ? Ok() : NotFound();
+            return updated ? NoContent() : BadRequest();
         }
 
         [HttpDelete("{id}")]
@@ -58,7 +58,7 @@ namespace WorkoutLog.API.Controllers
             
             var deleted = await _userRepository.Delete(user);
 
-            return deleted ? Ok() : NotFound();
+            return deleted ? NoContent() : BadRequest();
         }
     }
 }
