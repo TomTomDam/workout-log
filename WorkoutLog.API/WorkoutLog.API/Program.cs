@@ -12,6 +12,11 @@ var connectionString = databaseSettings.GetConnectionString("DefaultConnection")
 builder.Services.AddTransient((sp) => new SqliteConnection(connectionString));
 
 builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IEquipmentRepository, EquipmentRepository>();
+builder.Services.AddTransient<IExerciseRepository, ExerciseRepository>();
+builder.Services.AddTransient<IGoalRepository, GoalRepository>();
+builder.Services.AddTransient<IWorkoutRepository, WorkoutRepository>();
+builder.Services.AddTransient<IWorkoutExerciseRepository, WorkoutExerciseRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkoutLog.API", "WorkoutLo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkoutLog.API.Data", "WorkoutLog.API.Data\WorkoutLog.API.Data.csproj", "{CB1D4892-FC8A-4C6C-92BD-D502F4A286CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkoutLog.API.Test", "WorkoutLog.API.Test\WorkoutLog.API.Test.csproj", "{E61ABC46-683E-438B-BE17-A0851AAA6C59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkoutLog.API.Tests", "WorkoutLog.API.Test\WorkoutLog.API.Tests.csproj", "{E61ABC46-683E-438B-BE17-A0851AAA6C59}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

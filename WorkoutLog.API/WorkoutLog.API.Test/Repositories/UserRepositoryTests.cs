@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WorkoutLog.API.Test.Repositories
+namespace WorkoutLog.API.Tests.Repositories
 {
     public class UserRepositoryTests
     {
