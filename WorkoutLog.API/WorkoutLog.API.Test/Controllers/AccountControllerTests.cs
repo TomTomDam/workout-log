@@ -82,20 +82,21 @@ namespace WorkoutLog.API.Tests.Controllers
         public async Task Update_NoContentResponse_UpdatesUser()
         {
             var id = 1;
-            var user = new User
-            {
-                Name = "John Shepard"
-            };
             var existingUser = new User
             {
                 Id = id,
                 Name = "Jane Shepard"
             };
+            var newUser = new User
+            {
+                Id = id,
+                Name = "John Shepard"
+            };
 
             _fixture.mockUserRepo.Setup(x => x.GetById(id)).ReturnsAsync(existingUser);
-            _fixture.mockUserRepo.Setup(x => x.Update(existingUser)).ReturnsAsync(true);
+            _fixture.mockUserRepo.Setup(x => x.Update(newUser)).ReturnsAsync(true);
 
-            var result = await _fixture.accountController.Update(id, user);
+            var result = await _fixture.accountController.Update(id, newUser);
 
             _fixture.mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once);
             _fixture.mockUserRepo.Verify(x => x.Update(It.IsAny<User>()), Times.Once);
