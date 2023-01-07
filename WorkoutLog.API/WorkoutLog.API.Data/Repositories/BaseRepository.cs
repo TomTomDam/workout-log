@@ -81,7 +81,7 @@ namespace WorkoutLog.API.Data.Repositories
             catch (Exception ex)
             {
                 transaction.Rollback();
-                throw;
+                //Log exception
             }
         }
 
@@ -107,6 +107,8 @@ namespace WorkoutLog.API.Data.Repositories
             catch (Exception ex)
             {
                 transaction.Rollback();
+                //Log exception
+
                 return false;
             }
         }
@@ -133,6 +135,8 @@ namespace WorkoutLog.API.Data.Repositories
             catch (Exception ex)
             {
                 transaction.Rollback();
+                //Log exception
+
                 return false;
             }
         }
