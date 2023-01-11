@@ -10,10 +10,12 @@ namespace WorkoutLog.API.Controllers
     public class WorkoutExerciseController : ControllerBase
     {
         private readonly IWorkoutExerciseRepository _workoutExerciseRepository;
+        private ILogger<WorkoutExerciseController> _logger;
 
-        public WorkoutExerciseController(IWorkoutExerciseRepository workoutExerciseRepository)
+        public WorkoutExerciseController(IWorkoutExerciseRepository workoutExerciseRepository, ILogger<WorkoutExerciseController> logger)
         {
             _workoutExerciseRepository = workoutExerciseRepository;
+            _logger = logger;
         }
 
         public async Task<IActionResult> GetAll()

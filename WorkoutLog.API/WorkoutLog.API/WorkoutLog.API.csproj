@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
+    <PackageReference Include="Serilog.Sinks.SQLite" Version="5.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\WorkoutLog.API.Data\WorkoutLog.API.Data.csproj" />
   </ItemGroup>
 
