@@ -1,4 +1,5 @@
 using Microsoft.Data.Sqlite;
+using Serilog;
 using WorkoutLog.API.Data;
 using WorkoutLog.API.Data.Repositories;
 using WorkoutLog.API.Data.Repositories.Interfaces;
@@ -10,6 +11,12 @@ builder.Services.Configure<DatabaseSettings>(databaseSettings);
 
 var connectionString = databaseSettings.GetConnectionString("DefaultConnection");
 builder.Services.AddTransient((sp) => new SqliteConnection(connectionString));
+
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.SQLite($@"{Path.GetPathRoot(Environment.SystemDirectory)}\SQLite\WorkoutLog.db", tableName: "Log")
+    .WriteTo.Console()
+    .CreateLogger();
+builder.Host.UseSerilog();
 
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IEquipmentRepository, EquipmentRepository>();

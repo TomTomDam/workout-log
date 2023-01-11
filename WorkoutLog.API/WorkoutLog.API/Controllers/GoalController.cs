@@ -10,10 +10,12 @@ namespace WorkoutLog.API.Controllers
     public class GoalController : ControllerBase
     {
         private readonly IGoalRepository _goalRepository;
+        private ILogger<GoalController> _logger;
 
-        public GoalController(IGoalRepository goalRepository)
+        public GoalController(IGoalRepository goalRepository, ILogger<GoalController> logger)
         {
             _goalRepository = goalRepository;
+            _logger = logger;
         }
 
         public async Task<IActionResult> GetAll()

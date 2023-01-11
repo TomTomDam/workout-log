@@ -10,10 +10,12 @@ namespace WorkoutLog.API.Controllers
     public class EquipmentController : ControllerBase
     {
         private readonly IEquipmentRepository _equipmentRepository;
+        private ILogger<EquipmentController> _logger;
 
-        public EquipmentController(IEquipmentRepository equipmentRepository)
+        public EquipmentController(IEquipmentRepository equipmentRepository, ILogger<EquipmentController> logger)
         {
             _equipmentRepository = equipmentRepository;
+            _logger = logger;
         }
 
         public async Task<IActionResult> GetAll()

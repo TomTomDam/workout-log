@@ -9,10 +9,12 @@ namespace WorkoutLog.API.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
+        private ILogger<AccountController> _logger;
 
-        public AccountController(IUserRepository userRepository)
+        public AccountController(IUserRepository userRepository, ILogger<AccountController> logger)
         {
             _userRepository = userRepository;
+            _logger = logger;
         }
 
         public async Task<IActionResult> GetAll()
