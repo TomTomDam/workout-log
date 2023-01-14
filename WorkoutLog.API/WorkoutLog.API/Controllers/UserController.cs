@@ -5,13 +5,13 @@ using WorkoutLog.API.Data.Repositories.Interfaces;
 
 namespace WorkoutLog.API.Controllers
 {
-    [Route("account")]
-    public class AccountController : ControllerBase
+    [Route("user")]
+    public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
-        private ILogger<AccountController> _logger;
+        private ILogger<UserController> _logger;
 
-        public AccountController(IUserRepository userRepository, ILogger<AccountController> logger)
+        public UserController(IUserRepository userRepository, ILogger<UserController> logger)
         {
             _userRepository = userRepository;
             _logger = logger;
@@ -19,6 +19,7 @@ namespace WorkoutLog.API.Controllers
 
         public async Task<IActionResult> GetAll()
         {
+            _logger.LogInformation("Retrieved a list of Users");
             return Ok(await _userRepository.GetAll());
         }
 

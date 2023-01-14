@@ -6,11 +6,11 @@ using WorkoutLog.API.Tests.Fixtures.Controllers;
 
 namespace WorkoutLog.API.Tests.Controllers
 {
-    public class AccountControllerTests : IClassFixture<AccountControllerFixture>, IDisposable
+    public class UserControllerTests : IClassFixture<UserControllerFixture>, IDisposable
     {
-        AccountControllerFixture _fixture;
+        UserControllerFixture _fixture;
 
-        public AccountControllerTests(AccountControllerFixture fixture)
+        public UserControllerTests(UserControllerFixture fixture)
         {
             _fixture = fixture;
         }
@@ -23,7 +23,7 @@ namespace WorkoutLog.API.Tests.Controllers
 
             _fixture.mockUserRepo.Setup(x => x.GetAll()).ReturnsAsync(userList);
 
-            var result = await _fixture.accountController.GetAll();
+            var result = await _fixture.userController.GetAll();
             var okResult = result as OkObjectResult;
 
             _fixture.mockUserRepo.Verify(x => x.GetAll(), Times.Once);
@@ -41,7 +41,7 @@ namespace WorkoutLog.API.Tests.Controllers
 
             _fixture.mockUserRepo.Setup(x => x.GetById(user.Id)).ReturnsAsync(user);
 
-            var result = await _fixture.accountController.GetById(user.Id);
+            var result = await _fixture.userController.GetById(user.Id);
 
             _fixture.mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once);
 
@@ -51,9 +51,9 @@ namespace WorkoutLog.API.Tests.Controllers
         [Fact]
         public async Task GetById_NotFoundResponse_WhenUserIsNotFound()
         {
-            _fixture.mockUserRepo.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync((User)null);
+            _fixture.mockUserRepo.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync(() => null!);
 
-            var result = await _fixture.accountController.GetById(1);
+            var result = await _fixture.userController.GetById(1);
 
             _fixture.mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once);
 
@@ -69,7 +69,7 @@ namespace WorkoutLog.API.Tests.Controllers
 
             _fixture.mockUserRepo.Setup(x => x.Insert(user));
 
-            var result = await _fixture.accountController.Create(user);
+            var result = await _fixture.userController.Create(user);
 
             _fixture.mockUserRepo.Verify(x => x.Insert(It.IsAny<User>()), Times.Once);
 
@@ -96,7 +96,7 @@ namespace WorkoutLog.API.Tests.Controllers
             _fixture.mockUserRepo.Setup(x => x.GetById(id)).ReturnsAsync(existingUser);
             _fixture.mockUserRepo.Setup(x => x.Update(newUser)).ReturnsAsync(true);
 
-            var result = await _fixture.accountController.Update(id, newUser);
+            var result = await _fixture.userController.Update(id, newUser);
 
             _fixture.mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once);
             _fixture.mockUserRepo.Verify(x => x.Update(It.IsAny<User>()), Times.Once);
@@ -109,9 +109,9 @@ namespace WorkoutLog.API.Tests.Controllers
         {
             var user = _fixture.fixture.Create<User>();
 
-            _fixture.mockUserRepo.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync((User)null);
+            _fixture.mockUserRepo.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync(() => null!);
 
-            var result = await _fixture.accountController.Update(user.Id, user);
+            var result = await _fixture.userController.Update(user.Id, user);
 
             _fixture.mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once);
             _fixture.mockUserRepo.Verify(x => x.Update(It.IsAny<User>()), Times.Never);
@@ -127,7 +127,7 @@ namespace WorkoutLog.API.Tests.Controllers
             _fixture.mockUserRepo.Setup(x => x.GetById(user.Id)).ReturnsAsync(user);
             _fixture.mockUserRepo.Setup(x => x.Update(user)).ReturnsAsync(false);
 
-            var result = await _fixture.accountController.Update(user.Id, user);
+            var result = await _fixture.userController.Update(user.Id, user);
 
             _fixture.mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once);
             _fixture.mockUserRepo.Verify(x => x.Update(It.IsAny<User>()), Times.Once);
@@ -145,7 +145,7 @@ namespace WorkoutLog.API.Tests.Controllers
             _fixture.mockUserRepo.Setup(x => x.GetById(user.Id)).ReturnsAsync(user);
             _fixture.mockUserRepo.Setup(x => x.Delete(user)).ReturnsAsync(true);
 
-            var result = await _fixture.accountController.Delete(user.Id);
+            var result = await _fixture.userController.Delete(user.Id);
 
             _fixture.mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once);
             _fixture.mockUserRepo.Verify(x => x.Delete(It.IsAny<User>()), Times.Once);
@@ -158,9 +158,9 @@ namespace WorkoutLog.API.Tests.Controllers
         {
             var user = _fixture.fixture.Create<User>();
 
-            _fixture.mockUserRepo.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync((User)null);
+            _fixture.mockUserRepo.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync(() => null!);
 
-            var result = await _fixture.accountController.Delete(user.Id);
+            var result = await _fixture.userController.Delete(user.Id);
 
             _fixture.mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once);
             _fixture.mockUserRepo.Verify(x => x.Delete(It.IsAny<User>()), Times.Never);
@@ -176,7 +176,7 @@ namespace WorkoutLog.API.Tests.Controllers
             _fixture.mockUserRepo.Setup(x => x.GetById(user.Id)).ReturnsAsync(user);
             _fixture.mockUserRepo.Setup(x => x.Delete(user)).ReturnsAsync(false);
 
-            var result = await _fixture.accountController.Delete(user.Id);
+            var result = await _fixture.userController.Delete(user.Id);
 
             _fixture.mockUserRepo.Verify(x => x.GetById(It.IsAny<int>()), Times.Once);
             _fixture.mockUserRepo.Verify(x => x.Delete(It.IsAny<User>()), Times.Once);

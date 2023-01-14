@@ -9,7 +9,7 @@
             if (string.Equals(providerName, Sqlite, StringComparison.InvariantCultureIgnoreCase))
                 return new SqliteProvider();
 
-            return null;
+            return null!;
         }
     }
 }

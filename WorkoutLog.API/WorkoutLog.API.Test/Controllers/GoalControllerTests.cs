@@ -51,7 +51,7 @@ namespace WorkoutLog.API.Tests.Controllers
         [Fact]
         public async Task GetById_NotFoundResponse_WhenGoalIsNotFound()
         {
-            _fixture.mockGoalRepo.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync((Goal)null);
+            _fixture.mockGoalRepo.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync(() => null!);
 
             var result = await _fixture.goalController.GetById(1);
 
@@ -109,7 +109,7 @@ namespace WorkoutLog.API.Tests.Controllers
         {
             var goal = _fixture.fixture.Create<Goal>();
 
-            _fixture.mockGoalRepo.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync((Goal)null);
+            _fixture.mockGoalRepo.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync(() => null!);
 
             var result = await _fixture.goalController.Update(goal.Id, goal);
 
@@ -158,7 +158,7 @@ namespace WorkoutLog.API.Tests.Controllers
         {
             var goal = _fixture.fixture.Create<Goal>();
 
-            _fixture.mockGoalRepo.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync((Goal)null);
+            _fixture.mockGoalRepo.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync(() => null!);
 
             var result = await _fixture.goalController.Delete(goal.Id);
 

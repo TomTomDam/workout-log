@@ -28,24 +28,24 @@ namespace WorkoutLog.API.Data.Repositories
             _connection = _provider.CreateConnection(options.Value.ConnectionStrings.DefaultConnection);
         }
 
-        protected virtual IDictionary<string, object> GetParameters<TItem>(IEnumerable<TItem> items)
-        {
-            if (items == null || !items.Any()) return null;
+        //protected virtual IDictionary<string, object> GetParameters<TItem>(IEnumerable<TItem> items)
+        //{
+        //    if (items == null || !items.Any()) return null;
 
-            var parameters = new Dictionary<string, object>();
-            var entityArray = items.ToArray();
-            var entityType = entityArray[0].GetType();
-            for (int i = 0; i < entityArray.Length; i++)
-            {
-                var properties = entityArray[i].GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
-                properties = properties.Where(x => x.Name != "Id").ToArray();
+        //    var parameters = new Dictionary<string, object>();
+        //    var entityArray = items.ToArray();
+        //    var entityType = entityArray[0].GetType();
+        //    for (int i = 0; i < entityArray.Length; i++)
+        //    {
+        //        var properties = entityArray[i].GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+        //        properties = properties.Where(x => x.Name != "Id").ToArray();
 
-                foreach (var property in properties)
-                    parameters.Add(property.Name + (i + 1), entityType.GetProperty(property.Name).GetValue(entityArray[i], null));
-            }
+        //        foreach (var property in properties)
+        //            parameters.Add(property.Name + (i + 1), entityType.GetProperty(property.Name).GetValue(entityArray[i], null));
+        //    }
 
-            return parameters;
-        }
+        //    return parameters;
+        //}
 
         public virtual async Task<IEnumerable<T>> GetAll()
         {
