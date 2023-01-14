@@ -51,7 +51,7 @@ namespace WorkoutLog.API.Tests.Controllers
         [Fact]
         public async Task GetById_NotFoundResponse_WhenEquipmentIsNotFound()
         {
-            _fixture.mockEquipmentRepo.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync((Equipment)null);
+            _fixture.mockEquipmentRepo.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync(() => null!);
 
             var result = await _fixture.equipmentController.GetById(1);
 
@@ -109,7 +109,7 @@ namespace WorkoutLog.API.Tests.Controllers
         {
             var equipment = _fixture.fixture.Create<Equipment>();
 
-            _fixture.mockEquipmentRepo.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync((Equipment)null);
+            _fixture.mockEquipmentRepo.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync(() => null!);
 
             var result = await _fixture.equipmentController.Update(equipment.Id, equipment);
 
@@ -158,7 +158,7 @@ namespace WorkoutLog.API.Tests.Controllers
         {
             var equipment = _fixture.fixture.Create<Equipment>();
 
-            _fixture.mockEquipmentRepo.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync((Equipment)null);
+            _fixture.mockEquipmentRepo.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync(() => null!);
 
             var result = await _fixture.equipmentController.Delete(equipment.Id);
 

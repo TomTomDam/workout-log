@@ -51,7 +51,7 @@ namespace WorkoutLog.API.Tests.Controllers
         [Fact]
         public async Task GetById_NotFoundResponse_WhenWorkoutExerciseIsNotFound()
         {
-            _fixture.mockWorkoutExerciseRepo.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync((WorkoutExercise)null);
+            _fixture.mockWorkoutExerciseRepo.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync(() => null!);
 
             var result = await _fixture.workoutExerciseController.GetById(1);
 
@@ -109,7 +109,7 @@ namespace WorkoutLog.API.Tests.Controllers
         {
             var workoutExercise = _fixture.fixture.Create<WorkoutExercise>();
 
-            _fixture.mockWorkoutExerciseRepo.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync((WorkoutExercise)null);
+            _fixture.mockWorkoutExerciseRepo.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync(() => null!);
 
             var result = await _fixture.workoutExerciseController.Update(workoutExercise.Id, workoutExercise);
 
@@ -158,7 +158,7 @@ namespace WorkoutLog.API.Tests.Controllers
         {
             var workoutExercise = _fixture.fixture.Create<WorkoutExercise>();
 
-            _fixture.mockWorkoutExerciseRepo.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync((WorkoutExercise)null);
+            _fixture.mockWorkoutExerciseRepo.Setup(x => x.GetById(It.IsAny<int>())).ReturnsAsync(() => null!);
 
             var result = await _fixture.workoutExerciseController.Delete(workoutExercise.Id);
 

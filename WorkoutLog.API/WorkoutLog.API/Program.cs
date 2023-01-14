@@ -13,8 +13,7 @@ var connectionString = databaseSettings.GetConnectionString("DefaultConnection")
 builder.Services.AddTransient((sp) => new SqliteConnection(connectionString));
 
 Log.Logger = new LoggerConfiguration()
-    .WriteTo.SQLite($@"{Path.GetPathRoot(Environment.SystemDirectory)}\SQLite\WorkoutLog.db", tableName: "Log")
-    .WriteTo.Console()
+    .ReadFrom.Configuration(builder.Configuration)
     .CreateLogger();
 builder.Host.UseSerilog();
 
