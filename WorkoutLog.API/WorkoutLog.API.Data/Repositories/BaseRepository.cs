@@ -65,7 +65,7 @@ namespace WorkoutLog.API.Data.Repositories
         {
             if (entity == null)
             {
-                await Task.CompletedTask;
+                await Task.FromException(new NullReferenceException());
                 return;
             }
 
@@ -78,10 +78,10 @@ namespace WorkoutLog.API.Data.Repositories
                 await _connection.ExecuteAsync(commandText, entity, transaction);
                 transaction.Commit();
             }
-            catch (Exception ex)
+            catch
             {
                 transaction.Rollback();
-                //Log exception
+                throw;
             }
         }
 
@@ -89,56 +89,48 @@ namespace WorkoutLog.API.Data.Repositories
         {
             if (entity == null)
             {
-                await Task.CompletedTask;
+                await Task.FromException(new NullReferenceException());
                 return false;
             }
 
             _connection.Open();
             using var transaction = _connection.BeginTransaction();
-            try
-            {
-                string commandText = _provider.UpdateQuery(typeof(T).Name, entity);
+            string commandText = _provider.UpdateQuery(typeof(T).Name, entity);
 
-                int rows = await _connection.ExecuteAsync(commandText, entity, transaction);
-                transaction.Commit();
+            int rows = await _connection.ExecuteAsync(commandText, entity, transaction);
+            transaction.Commit();
 
-                return true;
-            }
-            catch (Exception ex)
+            if (rows == 0)
             {
                 transaction.Rollback();
-                //Log exception
-
                 return false;
             }
+
+            return true;
         }
 
         public virtual async Task<bool> Delete(T entity)
         {
             if (entity == null)
             {
-                await Task.CompletedTask;
+                await Task.FromException(new NullReferenceException());
                 return false;
             }
 
             _connection.Open();
             using var transaction = _connection.BeginTransaction();
-            try
-            {
-                string commandText = _provider.DeleteQuery(typeof(T).Name);
+            string commandText = _provider.DeleteQuery(typeof(T).Name);
 
-                int rows = await _connection.ExecuteAsync(commandText, new { entity.Id }, transaction);
-                transaction.Commit();
+            int rows = await _connection.ExecuteAsync(commandText, new { entity.Id }, transaction);
+            transaction.Commit();
 
-                return true;
-            }
-            catch (Exception ex)
+            if (rows == 0)
             {
                 transaction.Rollback();
-                //Log exception
-
                 return false;
             }
+
+            return true;
         }
     }
 }
