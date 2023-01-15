@@ -6,7 +6,7 @@ using WorkoutLog.API.Data.Repositories.Interfaces;
 namespace WorkoutLog.API.Controllers
 {
     [AllowAnonymous]
-    [Route("workoutExercise")]
+    [Route("workoutExercises")]
     public class WorkoutExerciseController : ControllerBase
     {
         private readonly IWorkoutExerciseRepository _workoutExerciseRepository;
