@@ -63,12 +63,6 @@ namespace WorkoutLog.API.Data.Repositories
 
         public virtual async Task Insert(T entity)
         {
-            if (entity == null)
-            {
-                await Task.FromException(new NullReferenceException());
-                return;
-            }
-
             _connection.Open();
             using var transaction = _connection.BeginTransaction();
             try
@@ -87,12 +81,6 @@ namespace WorkoutLog.API.Data.Repositories
 
         public virtual async Task<bool> Update(T entity)
         {
-            if (entity == null)
-            {
-                await Task.FromException(new NullReferenceException());
-                return false;
-            }
-
             _connection.Open();
             using var transaction = _connection.BeginTransaction();
             string commandText = _provider.UpdateQuery(typeof(T).Name, entity);
@@ -111,12 +99,6 @@ namespace WorkoutLog.API.Data.Repositories
 
         public virtual async Task<bool> Delete(T entity)
         {
-            if (entity == null)
-            {
-                await Task.FromException(new NullReferenceException());
-                return false;
-            }
-
             _connection.Open();
             using var transaction = _connection.BeginTransaction();
             string commandText = _provider.DeleteQuery(typeof(T).Name);
