@@ -20,6 +20,7 @@ namespace WorkoutLog.API.Controllers
 
         public async Task<IActionResult> GetAll()
         {
+            _logger.LogInformation("Retrieved list of Workouts");
             return Ok(await _workoutRepository.GetAll());
         }
 
@@ -27,40 +28,90 @@ namespace WorkoutLog.API.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var workout = await _workoutRepository.GetById(id);
-            if (workout == null) return NotFound();
+            if (workout == null)
+            {
+                _logger.LogError("Could not retrieve Workout by Id {id}", id);
+                return NotFound();
+            }
 
+            _logger.LogInformation("Retrieved Workout of Id {id}", id);
             return Ok(workout);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(Workout workout)
         {
-            await _workoutRepository.Insert(workout);
+            if (workout == null)
+            {
+                _logger.LogError("Could not create a Workout");
+                return BadRequest();
+            }
 
+            try
+            {
+                await _workoutRepository.Insert(workout);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Could not create a Workout");
+                return BadRequest();
+            }
+
+            _logger.LogInformation("Created a new Workout of Id {id}", workout.Id);
             return Ok();
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, Workout workout)
         {
+            if (workout == null)
+            {
+                _logger.LogError("Could not update a Workout");
+                return BadRequest();
+            }
+
             var existingWorkout = await _workoutRepository.GetById(id);
-            if (existingWorkout == null) return NotFound();
+            if (existingWorkout == null)
+            {
+                _logger.LogError("Could not retrieve Workout by Id {id}", id);
+                return NotFound();
+            }
 
             workout.Id = id;
             var updated = await _workoutRepository.Update(workout);
-
-            return updated ? Ok() : NotFound();
+            if (updated)
+            {
+                _logger.LogInformation("Updated Workout of Id {id}", id);
+                return NoContent();
+            }
+            else
+            {
+                _logger.LogError("Could not update Workout of Id {id}", id);
+                return BadRequest();
+            }
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var workout = await _workoutRepository.GetById(id);
-            if (workout == null) return NotFound();
+            if (workout == null)
+            {
+                _logger.LogError("Could not retrieve Workout by Id {id}", id);
+                return BadRequest();
+            }
 
             var deleted = await _workoutRepository.Delete(workout);
-
-            return deleted ? Ok() : NotFound();
+            if (deleted)
+            {
+                _logger.LogInformation("Deleted Workout of Id {id}", id);
+                return NoContent();
+            }
+            else
+            {
+                _logger.LogError("Could not delete Workout of Id {id}", id);
+                return BadRequest();
+            }
         }
     }
 }

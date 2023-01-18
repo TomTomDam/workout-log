@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WorkoutLog.API.Data.Models;
 using WorkoutLog.API.Data.Repositories.Interfaces;
+using WorkoutLog.API.Data.Models;
 
 namespace WorkoutLog.API.Controllers
 {
@@ -41,14 +41,15 @@ namespace WorkoutLog.API.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Create([FromBody] User user)
         {
+            if (user == null)
+            {
+                _logger.LogError("Could not create a User");
+                return BadRequest();
+            }
+
             try
             {
                 await _userRepository.Insert(user);
-            }
-            catch (NullReferenceException ex)
-            {
-                _logger.LogError(ex, "Could not create a User - no User was specified in the body");
-                return BadRequest();
             }
             catch (Exception ex)
             {
@@ -63,15 +64,16 @@ namespace WorkoutLog.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] User user)
         {
-            var existingUser = new User();
-
-            try
+            if (user == null) 
             {
-                existingUser = await _userRepository.GetById(id);
+                _logger.LogError("Could not update a User");
+                return BadRequest();
             }
-            catch (Exception ex)
+
+            var existingUser = await _userRepository.GetById(id);
+            if (existingUser == null)
             {
-                _logger.LogError(ex, "Could not retrieve User by Id {id}", id);
+                _logger.LogError("Could not retrieve User by Id {id}", id);
                 return NotFound();
             }
 
@@ -92,16 +94,11 @@ namespace WorkoutLog.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var user = new User();
-
-            try
+            var user = await _userRepository.GetById(id);
+            if (user == null)
             {
-                user = await _userRepository.GetById(id);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Could not retrieve User by Id {id}", id);
-                return NotFound();
+                _logger.LogError("Could not retrieve User by Id {id}", id);
+                return BadRequest();
             }
 
             var deleted = await _userRepository.Delete(user);
