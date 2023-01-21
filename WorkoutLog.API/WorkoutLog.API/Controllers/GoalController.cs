@@ -99,7 +99,7 @@ namespace WorkoutLog.API.Controllers
             if (goal == null)
             {
                 _logger.LogError("Could not retrieve Goal by Id {id}", id);
-                return BadRequest();
+                return NotFound();
             }
 
             var deleted = await _goalRepository.Delete(goal);

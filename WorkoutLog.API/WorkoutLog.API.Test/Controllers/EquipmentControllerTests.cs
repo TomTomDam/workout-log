@@ -75,6 +75,20 @@ namespace WorkoutLog.API.Tests.Controllers
 
             Assert.IsType<OkResult>(result);
         }
+
+        [Fact]
+        public async Task Create_BadRequestResponse_ExceptionThrown()
+        {
+            var equipment = _fixture.fixture.Create<Equipment>();
+
+            _fixture.mockEquipmentRepo.Setup(x => x.Insert(equipment)).ThrowsAsync(new Exception());
+
+            var result = await _fixture.equipmentController.Create(equipment);
+
+            _fixture.mockEquipmentRepo.Verify(x => x.Insert(It.IsAny<Equipment>()), Times.Once);
+
+            Assert.IsType<BadRequestResult>(result);
+        }
         #endregion
 
         #region Update
