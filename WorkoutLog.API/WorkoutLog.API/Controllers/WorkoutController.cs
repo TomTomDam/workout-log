@@ -98,7 +98,7 @@ namespace WorkoutLog.API.Controllers
             if (workout == null)
             {
                 _logger.LogError("Could not retrieve Workout by Id {id}", id);
-                return BadRequest();
+                return NotFound();
             }
 
             var deleted = await _workoutRepository.Delete(workout);

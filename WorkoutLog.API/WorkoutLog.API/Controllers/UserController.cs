@@ -41,9 +41,8 @@ namespace WorkoutLog.API.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Create([FromBody] User user)
         {
-            if (user == null)
+            if (!ModelState.IsValid)
             {
-                _logger.LogError("Could not create a User");
                 return BadRequest();
             }
 
@@ -64,12 +63,6 @@ namespace WorkoutLog.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] User user)
         {
-            if (user == null) 
-            {
-                _logger.LogError("Could not update a User");
-                return BadRequest();
-            }
-
             var existingUser = await _userRepository.GetById(id);
             if (existingUser == null)
             {
@@ -98,7 +91,7 @@ namespace WorkoutLog.API.Controllers
             if (user == null)
             {
                 _logger.LogError("Could not retrieve User by Id {id}", id);
-                return BadRequest();
+                return NotFound();
             }
 
             var deleted = await _userRepository.Delete(user);
