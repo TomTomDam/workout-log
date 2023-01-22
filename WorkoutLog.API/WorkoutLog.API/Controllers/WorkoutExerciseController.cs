@@ -5,8 +5,9 @@ using WorkoutLog.API.Data.Repositories.Interfaces;
 
 namespace WorkoutLog.API.Controllers
 {
-    [AllowAnonymous]
+    [ApiController]
     [Route("workoutExercises")]
+    [AllowAnonymous]
     public class WorkoutExerciseController : ControllerBase
     {
         private readonly IWorkoutExerciseRepository _workoutExerciseRepository;
@@ -41,12 +42,6 @@ namespace WorkoutLog.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(WorkoutExercise workoutExercise)
         {
-            if (workoutExercise == null)
-            {
-                _logger.LogError("Could not create a WorkoutExercise");
-                return BadRequest();
-            }
-
             try
             {
                 await _workoutExerciseRepository.Insert(workoutExercise);
@@ -62,14 +57,8 @@ namespace WorkoutLog.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, WorkoutExercise workoutExercise)
+        public async Task<IActionResult> Update(int id, [FromBody] WorkoutExercise workoutExercise)
         {
-            if (workoutExercise == null)
-            {
-                _logger.LogError("Could not update a WorkoutExercise");
-                return BadRequest();
-            }
-
             var existingWorkoutExercise = await _workoutExerciseRepository.GetById(id);
             if (existingWorkoutExercise == null)
             {

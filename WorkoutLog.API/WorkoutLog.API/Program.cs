@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Data.Sqlite;
 using Serilog;
+using WorkoutLog.API;
 using WorkoutLog.API.Data;
 using WorkoutLog.API.Data.Repositories;
 using WorkoutLog.API.Data.Repositories.Interfaces;
@@ -24,21 +26,37 @@ builder.Services.AddTransient<IGoalRepository, GoalRepository>();
 builder.Services.AddTransient<IWorkoutRepository, WorkoutRepository>();
 builder.Services.AddTransient<IWorkoutExerciseRepository, WorkoutExerciseRepository>();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(opts =>
+{
+    opts.Filters.Add<LoggingActionFilter>();
+});
 builder.Services.AddEndpointsApiExplorer();
 
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+try
 {
+    Log.Information("Application started");
+    var app = builder.Build();
+
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
+    {
+    }
+
+    app.UseHttpsRedirection();
+
+    app.UseAuthentication();
+    app.UseAuthorization();
+
+    app.MapControllers();
+
+    app.Run();
+
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Application startup failed");
+}
+finally
+{
+    Log.CloseAndFlush();
+}

@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WorkoutLog.API.Data.Models;
-using WorkoutLog.API.Data.Repositories;
 using WorkoutLog.API.Data.Repositories.Interfaces;
 
 namespace WorkoutLog.API.Controllers
 {
-    [AllowAnonymous]
+    [ApiController]
     [Route("goals")]
+    [AllowAnonymous]
     public class GoalController : ControllerBase
     {
         private readonly IGoalRepository _goalRepository;
@@ -42,12 +42,6 @@ namespace WorkoutLog.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Goal goal)
         {
-            if (goal == null)
-            {
-                _logger.LogError("Could not create a Goal");
-                return BadRequest();
-            }
-
             try
             {
                 await _goalRepository.Insert(goal);
@@ -63,14 +57,8 @@ namespace WorkoutLog.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, Goal goal)
+        public async Task<IActionResult> Update(int id, [FromBody] Goal goal)
         {
-            if (goal == null)
-            {
-                _logger.LogError("Could not update a Goal");
-                return BadRequest();
-            }
-
             var existingGoal = await _goalRepository.GetById(id);
             if (existingGoal == null)
             {
