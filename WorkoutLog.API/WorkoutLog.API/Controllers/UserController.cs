@@ -5,6 +5,7 @@ using WorkoutLog.API.Data.Models;
 
 namespace WorkoutLog.API.Controllers
 {
+    [ApiController]
     [Route("users")]
     public class UserController : ControllerBase
     {
@@ -39,13 +40,8 @@ namespace WorkoutLog.API.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Create([FromBody] User user)
+        public async Task<IActionResult> Create(User user)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
             try
             {
                 await _userRepository.Insert(user);

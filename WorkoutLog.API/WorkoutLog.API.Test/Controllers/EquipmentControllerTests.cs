@@ -1,6 +1,8 @@
 ﻿using AutoFixture;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 using WorkoutLog.API.Data.Models;
 using WorkoutLog.API.Tests.Fixtures.Controllers;
 
