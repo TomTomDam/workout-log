@@ -42,6 +42,8 @@ try
     {
     }
 
+    app.UseSerilogRequestLogging();
+
     app.UseHttpsRedirection();
 
     app.UseAuthentication();
