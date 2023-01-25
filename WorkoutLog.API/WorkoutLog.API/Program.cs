@@ -1,6 +1,6 @@
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Data.Sqlite;
 using Serilog;
+using Serilog.Events;
 using WorkoutLog.API;
 using WorkoutLog.API.Data;
 using WorkoutLog.API.Data.Repositories;
@@ -14,8 +14,17 @@ builder.Services.Configure<DatabaseSettings>(databaseSettings);
 var connectionString = databaseSettings.GetConnectionString("DefaultConnection");
 builder.Services.AddTransient((sp) => new SqliteConnection(connectionString));
 
+var configuration = new ConfigurationBuilder()
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json")
+    .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", true)
+    .Build();
 Log.Logger = new LoggerConfiguration()
-    .ReadFrom.Configuration(builder.Configuration)
+    .ReadFrom.Configuration(configuration)
+    .WriteTo.SQLite(
+        sqliteDbPath: "D:\\SQLite\\WorkoutLog.db",
+        tableName: "Logs"
+    )
     .CreateLogger();
 builder.Host.UseSerilog();
 
@@ -26,15 +35,11 @@ builder.Services.AddTransient<IGoalRepository, GoalRepository>();
 builder.Services.AddTransient<IWorkoutRepository, WorkoutRepository>();
 builder.Services.AddTransient<IWorkoutExerciseRepository, WorkoutExerciseRepository>();
 
-builder.Services.AddControllers(opts =>
-{
-    opts.Filters.Add<LoggingActionFilter>();
-});
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 try
 {
-    Log.Information("Application started");
     var app = builder.Build();
 
     // Configure the HTTP request pipeline.

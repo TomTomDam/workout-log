@@ -19,7 +19,6 @@ namespace WorkoutLog.API
             _diagnosticContext.Set("ValidationState", context.ModelState.IsValid);
         }
 
-        // Required by the interface
         public void OnActionExecuted(ActionExecutedContext context) { }
     }
 }
