@@ -47,7 +47,7 @@ try
     {
     }
 
-    app.UseSerilogRequestLogging();
+    app.UseSerilogRequestLogging(options => options.EnrichDiagnosticContext = LoggingHelper.EnrichFromRequest);
 
     app.UseHttpsRedirection();
 
