@@ -11,17 +11,14 @@ namespace WorkoutLog.API.Controllers
     public class ExerciseController : ControllerBase
     {
         private readonly IExerciseRepository _exerciseRepository;
-        private ILogger<ExerciseController> _logger;
 
-        public ExerciseController(IExerciseRepository exerciseRepository, ILogger<ExerciseController> logger)
+        public ExerciseController(IExerciseRepository exerciseRepository)
         {
             _exerciseRepository = exerciseRepository;
-            _logger = logger;
         }
 
         public async Task<IActionResult> GetAll()
         {
-            _logger.LogInformation("Retrieved list of Exercises");
             return Ok(await _exerciseRepository.GetAll());
         }
 
@@ -30,10 +27,7 @@ namespace WorkoutLog.API.Controllers
         {
             var exercise = await _exerciseRepository.GetById(id);
             if (exercise == null)
-            {
-                _logger.LogError("Could not retrieve Exercise by Id {id}", id);
                 return NotFound();
-            }
 
             return Ok(exercise);
         }
@@ -45,13 +39,11 @@ namespace WorkoutLog.API.Controllers
             {
                 await _exerciseRepository.Insert(exercise);
             }
-            catch (Exception ex)
+            catch
             {
-                _logger.LogError(ex, "Could not create an Exercise");
                 return BadRequest();
             }
 
-            _logger.LogInformation("Created a new Exercise of Id {id}", exercise.Id);
             return Ok();
         }
 
@@ -60,23 +52,14 @@ namespace WorkoutLog.API.Controllers
         {
             var existingExercise = await _exerciseRepository.GetById(id);
             if (existingExercise == null)
-            {
-                _logger.LogError("Could not retrieve Exercise by Id {id}", id);
                 return NotFound();
-            }
 
             exercise.Id = id;
             var updated = await _exerciseRepository.Update(exercise);
             if (updated)
-            {
-                _logger.LogInformation("Updated Exercise of Id {id}", id);
                 return NoContent();
-            }
             else
-            {
-                _logger.LogError("Could not update Exercise of Id {id}", id);
                 return BadRequest();
-            }
         }
 
         [HttpDelete("{id}")]
@@ -84,22 +67,13 @@ namespace WorkoutLog.API.Controllers
         {
             var exercise = await _exerciseRepository.GetById(id);
             if (exercise == null)
-            {
-                _logger.LogError("Could not retrieve Exercise by Id {id}", id);
                 return NotFound();
-            }
 
             var deleted = await _exerciseRepository.Delete(exercise);
             if (deleted)
-            {
-                _logger.LogInformation("Deleted Exercise of Id {id}", id);
                 return NoContent();
-            }
             else
-            {
-                _logger.LogError("Could not delete Exercise of Id {id}", id);
                 return BadRequest();
-            }
         }
     }
 }
