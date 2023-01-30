@@ -1,6 +1,5 @@
 using Microsoft.Data.Sqlite;
 using Serilog;
-using Serilog.Events;
 using WorkoutLog.API;
 using WorkoutLog.API.Data;
 using WorkoutLog.API.Data.Repositories;

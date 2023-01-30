@@ -10,17 +10,14 @@ namespace WorkoutLog.API.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
-        private ILogger<UserController> _logger;
 
-        public UserController(IUserRepository userRepository, ILogger<UserController> logger)
+        public UserController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
-            _logger = logger;
         }
 
         public async Task<IActionResult> GetAll()
         {
-            _logger.LogInformation("Retrieved list of Users");
             return Ok(await _userRepository.GetAll());
         }
 
@@ -29,12 +26,8 @@ namespace WorkoutLog.API.Controllers
         {
             var user = await _userRepository.GetById(id);
             if (user == null)
-            {
-                _logger.LogError("Could not retrieve User by Id {id}", id);
                 return NotFound();
-            }
 
-            _logger.LogInformation("Retrieved User of Id {id}", id);
             return Ok(user);
         }
 
@@ -46,13 +39,11 @@ namespace WorkoutLog.API.Controllers
             {
                 await _userRepository.Insert(user);
             }
-            catch (Exception ex)
+            catch
             {
-                _logger.LogError(ex, "Could not create a User");
                 return BadRequest();
             }
 
-            _logger.LogInformation("Created a new User of Id {id}", user.Id);
             return Ok();
         }
 
@@ -61,23 +52,14 @@ namespace WorkoutLog.API.Controllers
         {
             var existingUser = await _userRepository.GetById(id);
             if (existingUser == null)
-            {
-                _logger.LogError("Could not retrieve User by Id {id}", id);
                 return NotFound();
-            }
 
             user.Id = id;
             var updated = await _userRepository.Update(user);
             if (updated)
-            {
-                _logger.LogInformation("Updated User of Id {id}", id);
                 return NoContent();
-            }
             else
-            {
-                _logger.LogError("Could not update User of Id {id}", id);
                 return BadRequest();
-            }
         }
 
         [HttpDelete("{id}")]
@@ -85,22 +67,13 @@ namespace WorkoutLog.API.Controllers
         {
             var user = await _userRepository.GetById(id);
             if (user == null)
-            {
-                _logger.LogError("Could not retrieve User by Id {id}", id);
                 return NotFound();
-            }
 
             var deleted = await _userRepository.Delete(user);
             if (deleted)
-            {
-                _logger.LogInformation("Deleted User of Id {id}", id);
                 return NoContent();
-            }
             else
-            {
-                _logger.LogError("Could not delete User of Id {id}", id);
                 return BadRequest();
-            }
         }
     }
 }
