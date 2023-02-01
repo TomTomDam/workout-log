@@ -5,6 +5,7 @@ A personal mobile app used to track workouts and other fitness-related data. Dev
 Client:
 - Developed using **Flutter** and **Dart** language.
 - **Cross-platform** - runs on major platforms such as iOS, Android, Windows, Mac, and Linux.
+
 API:
 - ASP.NET Core Web API, NET 7
 - Dapper
