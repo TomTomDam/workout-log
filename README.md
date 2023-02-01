@@ -2,8 +2,15 @@
 A personal mobile app used to track workouts and other fitness-related data. Developed using Flutter.
 
 ## Technologies
+Client:
 - Developed using **Flutter** and **Dart** language.
 - **Cross-platform** - runs on major platforms such as iOS, Android, Windows, Mac, and Linux.
+API:
+- ASP.NET Core Web API, NET 7
+- Dapper
+- SQLite
+- Serilog
+- XUnit, AutoFixture and Moq for testing
 
 ## Features of the app
 - **Track your workouts** - you can select exercises, rep ranges, and an RPE/RIR to hit for each exercise. You can also select a goal to hit for subsequent weeks, for example, you can add 2.5kg, or add one rep to a set.
