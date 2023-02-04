@@ -1,14 +1,44 @@
+import 'package:workout_log/enums/equipment_enum.dart';
+import 'package:workout_log/enums/muscle_group_enum.dart';
+
 class ExerciseModel {
+  final int exerciseId;
   final String name;
   final String musclesWorked;
+  final int muscleGroupWorked;
+  final int equipmentId;
 
-  const ExerciseModel({required this.name, required this.musclesWorked});
+  const ExerciseModel(
+      {required this.exerciseId,
+      required this.name,
+      required this.musclesWorked,
+      required this.muscleGroupWorked,
+      required this.equipmentId});
 }
 
-const exerciseList = [
-  ExerciseModel(name: "Arnold Press", musclesWorked: "Front Delts, Triceps"),
-  ExerciseModel(name: "Ab Wheel", musclesWorked: "Abdominals"),
+final exerciseList = [
   ExerciseModel(
+      exerciseId: 1,
+      name: "Arnold Press",
+      musclesWorked: "Front Delts, Triceps",
+      muscleGroupWorked: MuscleGroupEnum.chest.index,
+      equipmentId: EquipmentEnum.dumbbell.index),
+  ExerciseModel(
+      exerciseId: 2,
+      name: "Shoulder Press",
+      musclesWorked: "Front Delts, Triceps",
+      muscleGroupWorked: MuscleGroupEnum.chest.index,
+      equipmentId: EquipmentEnum.dumbbell.index),
+  ExerciseModel(
+      exerciseId: 3,
       name: "Bench Press (Barbell)",
-      musclesWorked: "Chest, Front Delts, Triceps")
+      musclesWorked: "Chest, Front Delts, Triceps",
+      muscleGroupWorked: MuscleGroupEnum.chest.index,
+      equipmentId: EquipmentEnum.barbell.index),
+  ExerciseModel(
+      exerciseId: 4,
+      name: "Ab Wheel",
+      musclesWorked: "Abdominals",
+      muscleGroupWorked: MuscleGroupEnum.abs.index,
+      equipmentId: EquipmentEnum.other.index),
 ];
