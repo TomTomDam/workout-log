@@ -17,6 +17,10 @@ class _AddExercisesState extends State<AddExercises> {
   EdgeInsets rowMargin = const EdgeInsets.fromLTRB(20, 20, 20, 0);
   List<ExerciseModel> resultsList = exerciseList;
 
+  //TODO Move ListTile into ExerciseListItem widget and pass in isSelected parameter
+  bool isSelected = false;
+  List<ExerciseModel> selectedResults = [];
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -74,20 +78,60 @@ class _AddExercisesState extends State<AddExercises> {
             return Column(
               children: [
                 ListTile(
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ExerciseInformation(
-                                exerciseId: resultsList[index].exerciseId,
-                              ))),
-                  leading: Container(
-                    margin: const EdgeInsets.all(5.0),
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                        color: Colors.grey.shade400, shape: BoxShape.circle),
-                    child: const Icon(Icons.fitness_center,
-                        color: Colors.black, size: 25),
+                  onTap: () {
+                    setState(() {
+                      resultsList[index].isSelected =
+                          !resultsList[index].isSelected;
+                      if (resultsList[index].isSelected) {
+                        selectedResults.add(resultsList[index]);
+                      } else {
+                        selectedResults.remove(resultsList[index]);
+                      }
+                    });
+                  },
+                  leading: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      isSelected
+                          ? Container(
+                              height: 120,
+                              width: 10,
+                              decoration: const BoxDecoration(
+                                  color: Colors.blue,
+                                  shape: BoxShape.rectangle),
+                            )
+                          : Container(),
+                      Container(
+                        height: 120,
+                        width: 60,
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade400,
+                            shape: BoxShape.circle),
+                        child: const Icon(Icons.fitness_center,
+                            color: Colors.black, size: 40),
+                      ),
+                    ],
+                  ),
+                  trailing: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              //TODO => ExerciseSummary
+                              builder: (context) => ExerciseInformation(
+                                    exerciseId: resultsList[index].exerciseId,
+                                  )));
+                    },
+                    child: Container(
+                        height: 30,
+                        width: 30,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(
+                                width: 2, color: Colors.grey.shade400),
+                            shape: BoxShape.circle),
+                        child: const Icon(Icons.show_chart,
+                            color: Colors.grey, size: 25)),
                   ),
                   title: Text(resultsList[index].name),
                   subtitle: Text(resultsList[index].musclesWorked),

@@ -2,14 +2,16 @@ import 'package:workout_log/enums/equipment_enum.dart';
 import 'package:workout_log/enums/muscle_group_enum.dart';
 
 class ExerciseModel {
+  bool isSelected;
   final int exerciseId;
   final String name;
   final String musclesWorked;
   final int muscleGroupWorked;
   final int equipmentId;
 
-  const ExerciseModel(
-      {required this.exerciseId,
+  ExerciseModel(
+      {this.isSelected = false,
+      required this.exerciseId,
       required this.name,
       required this.musclesWorked,
       required this.muscleGroupWorked,
