@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:workout_log/enums/muscle_group_enum.dart';
+import 'package:workout_log/screens/exercise_detail/exercise_detail.dart';
 import '../../enums/equipment_enum.dart';
 import '../../models/exercise_model.dart';
 import '../../widgets/header/header.dart';
-import '../exercise_information/exercise_information.dart';
 import 'create_exercise.dart';
 
 class AddExercises extends StatefulWidget {
@@ -117,8 +117,7 @@ class _AddExercisesState extends State<AddExercises> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              //TODO => ExerciseSummary
-                              builder: (context) => ExerciseInformation(
+                              builder: (context) => ExerciseDetail(
                                     exerciseId: resultsList[index].exerciseId,
                                   )));
                     },

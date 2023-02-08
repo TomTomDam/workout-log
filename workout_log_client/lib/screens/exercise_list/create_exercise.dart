@@ -46,18 +46,19 @@ class CreateExercise extends StatelessWidget {
                 child: const TextField(
                     decoration: InputDecoration(labelText: "Name of Exercise")),
               ),
-              const ExerciseDetail(title: "Exercise Type"),
-              const ExerciseDetail(title: "Equipment"),
-              const ExerciseDetail(title: "Primary Muscle Group"),
-              const ExerciseDetail(title: "Other Muscles"),
+              const ExerciseColumn(title: "Exercise Type"),
+              const ExerciseColumn(title: "Equipment"),
+              const ExerciseColumn(title: "Primary Muscle Group"),
+              const ExerciseColumn(title: "Other Muscles"),
             ],
           ))),
     );
   }
 }
 
-class ExerciseDetail extends StatelessWidget {
-  const ExerciseDetail({Key? key, required this.title}) : super(key: key);
+//TODO Make a ExerciseColumn screen for each column
+class ExerciseColumn extends StatelessWidget {
+  const ExerciseColumn({Key? key, required this.title}) : super(key: key);
   final String title;
 
   @override

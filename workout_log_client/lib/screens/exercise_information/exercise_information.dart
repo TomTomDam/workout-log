@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:workout_log/screens/exercise_information/equipment_page.dart';
+import 'package:workout_log/screens/exercise_information/muscles_worked_page.dart';
 import '../../widgets/header/header.dart';
 import '../../widgets/page/pane_button.dart';
 import 'instructions_page.dart';
@@ -17,7 +18,7 @@ class ExerciseInformation extends StatefulWidget {
 
 class _ExerciseInformationState extends State<ExerciseInformation> {
   EdgeInsets padding = const EdgeInsets.all(25);
-  bool instructionsIsActive = false;
+  bool instructionsIsActive = true;
   bool musclesWorkedIsActive = false;
   bool equipmentIsActive = false;
 
@@ -75,7 +76,7 @@ class _ExerciseInformationState extends State<ExerciseInformation> {
               child: InkWell(
                   onTap: () => {
                         setState(() {
-                          pageSection = const InstructionsPage();
+                          pageSection = const MusclesWorkedPage();
                           musclesWorkedIsActive = true;
                           instructionsIsActive = false;
                           equipmentIsActive = false;
