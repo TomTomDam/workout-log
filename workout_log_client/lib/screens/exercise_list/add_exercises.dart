@@ -82,6 +82,7 @@ class _AddExercisesState extends State<AddExercises> {
                     setState(() {
                       resultsList[index].isSelected =
                           !resultsList[index].isSelected;
+
                       if (resultsList[index].isSelected) {
                         selectedResults.add(resultsList[index]);
                       } else {
@@ -92,15 +93,12 @@ class _AddExercisesState extends State<AddExercises> {
                   leading: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      isSelected
-                          ? Container(
-                              height: 120,
-                              width: 10,
-                              decoration: const BoxDecoration(
-                                  color: Colors.blue,
-                                  shape: BoxShape.rectangle),
-                            )
-                          : Container(),
+                      //TODO Position the Selected bar more to the left
+                      Container(
+                          width: 10,
+                          color: selectedResults.contains(resultsList[index])
+                              ? Colors.blue
+                              : Colors.transparent),
                       Container(
                         height: 120,
                         width: 60,
