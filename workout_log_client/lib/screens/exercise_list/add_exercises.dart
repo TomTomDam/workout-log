@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sticky_headers/sticky_headers/widget.dart';
 import 'package:workout_log/enums/muscle_group_enum.dart';
 import 'package:workout_log/screens/exercise_detail/exercise_detail.dart';
 import '../../enums/equipment_enum.dart';
@@ -61,11 +62,16 @@ class _AddExercisesState extends State<AddExercises> {
                 ),
                 searchExercisesBar(),
                 filterRow(context),
-                exercisesList()
+                exercisesList(),
+                exercisesSelectedText()
               ],
             )),
           )),
     );
+  }
+
+  Container exercisesSelectedText() {
+    return Container();
   }
 
   Container exercisesList() {
