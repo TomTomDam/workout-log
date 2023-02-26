@@ -25,47 +25,58 @@ class _AddExercisesState extends State<AddExercises> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: Scaffold(
-          backgroundColor: Colors.white,
-          body: SingleChildScrollView(
-            child: SafeArea(
-                child: Column(
-              children: [
-                Header(
-                  title: "Add Exercises",
-                  navigationButton: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(40, 40), primary: Colors.white),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Icon(
-                      Icons.navigate_before,
-                      color: Colors.black,
+      child: Stack(children: [
+        Scaffold(
+            backgroundColor: Colors.white,
+            body: SingleChildScrollView(
+              child: SafeArea(
+                  child: Column(
+                children: [
+                  Header(
+                    title: "Add Exercises",
+                    navigationButton: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(40, 40),
+                          primary: Colors.white),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Icon(
+                        Icons.navigate_before,
+                        color: Colors.black,
+                      ),
+                    ),
+                    secondaryButton: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(40, 40),
+                          primary: Colors.white),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const CreateExercise()));
+                      },
+                      child: const Text(
+                        "Create",
+                        style: TextStyle(color: Colors.black, fontSize: 12),
+                      ),
                     ),
                   ),
-                  secondaryButton: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(40, 40), primary: Colors.white),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const CreateExercise()));
-                    },
-                    child: const Text(
-                      "Create",
-                      style: TextStyle(color: Colors.black, fontSize: 12),
-                    ),
-                  ),
-                ),
-                searchExercisesBar(),
-                filterRow(context),
-                exercisesList()
-              ],
-            )),
-          )),
+                  searchExercisesBar(),
+                  filterRow(context),
+                  exercisesList(),
+                  exercisesSelectedText()
+                ],
+              )),
+            ))
+      ]),
     );
+  }
+
+  Widget exercisesSelectedText() {
+    return Align(
+        alignment: Alignment.bottomCenter,
+        child: Text("${getSelectedExercisesCount()} items selected"));
   }
 
   Container exercisesList() {
@@ -73,70 +84,71 @@ class _AddExercisesState extends State<AddExercises> {
       height: 500,
       margin: rowMargin,
       child: ListView.builder(
+          shrinkWrap: true,
           itemCount: resultsList.length,
           itemBuilder: (context, index) {
             return Column(
               children: [
-                ListTile(
-                  onTap: () {
-                    setState(() {
-                      resultsList[index].isSelected =
-                          !resultsList[index].isSelected;
-
-                      if (resultsList[index].isSelected) {
-                        selectedResults.add(resultsList[index]);
-                      } else {
-                        selectedResults.remove(resultsList[index]);
-                      }
-                    });
-                  },
-                  leading: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      //TODO Position the Selected bar more to the left
-                      Container(
-                          width: 10,
-                          color: selectedResults.contains(resultsList[index])
-                              ? Colors.blue
-                              : Colors.transparent),
-                      Container(
-                        height: 120,
-                        width: 60,
-                        decoration: BoxDecoration(
-                            color: Colors.grey.shade400,
-                            shape: BoxShape.circle),
-                        child: const Icon(Icons.fitness_center,
-                            color: Colors.black, size: 40),
-                      ),
-                    ],
-                  ),
-                  trailing: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ExerciseDetail(
-                                    exerciseId: resultsList[index].exerciseId,
-                                  )));
-                    },
-                    child: Container(
-                        height: 30,
-                        width: 30,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(
-                                width: 2, color: Colors.grey.shade400),
-                            shape: BoxShape.circle),
-                        child: const Icon(Icons.show_chart,
-                            color: Colors.grey, size: 25)),
-                  ),
-                  title: Text(resultsList[index].name),
-                  subtitle: Text(resultsList[index].musclesWorked),
-                ),
+                exerciseListItem(index, context),
                 const Divider(thickness: 2)
               ],
             );
           }),
+    );
+  }
+
+  ListTile exerciseListItem(int index, BuildContext context) {
+    return ListTile(
+      onTap: () {
+        setState(() {
+          resultsList[index].isSelected = !resultsList[index].isSelected;
+
+          if (resultsList[index].isSelected) {
+            selectedResults.add(resultsList[index]);
+          } else {
+            selectedResults.remove(resultsList[index]);
+          }
+        });
+      },
+      leading: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          //TODO Position the Selected bar more to the left
+          Container(
+              width: 10,
+              color: selectedResults.contains(resultsList[index])
+                  ? Colors.blue
+                  : Colors.transparent),
+          Container(
+            height: 120,
+            width: 60,
+            decoration: BoxDecoration(
+                color: Colors.grey.shade400, shape: BoxShape.circle),
+            child:
+                const Icon(Icons.fitness_center, color: Colors.black, size: 40),
+          ),
+        ],
+      ),
+      trailing: InkWell(
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ExerciseDetail(
+                        exerciseId: resultsList[index].exerciseId,
+                      )));
+        },
+        child: Container(
+            height: 30,
+            width: 30,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(width: 2, color: Colors.grey.shade400),
+                shape: BoxShape.circle),
+            child: const Icon(Icons.show_chart, color: Colors.grey, size: 25)),
+      ),
+      title: Text(resultsList[index].name),
+      subtitle: Text(resultsList[index].musclesWorked),
     );
   }
 
@@ -332,5 +344,17 @@ class _AddExercisesState extends State<AddExercises> {
     }).toList();
 
     setState(() => resultsList = searchResults);
+  }
+
+  int getSelectedExercisesCount() {
+    var count = 0;
+
+    for (var element in resultsList) {
+      if (element.isSelected) {
+        count += 1;
+      }
+    }
+
+    return count;
   }
 }
