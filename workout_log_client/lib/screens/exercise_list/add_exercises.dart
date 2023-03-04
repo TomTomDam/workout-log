@@ -16,13 +16,19 @@ class AddExercises extends StatefulWidget {
 class _AddExercisesState extends State<AddExercises> {
   EdgeInsets rowMargin = const EdgeInsets.fromLTRB(20, 20, 20, 0);
   List<ExerciseModel> resultsList = exerciseList;
-
-  //TODO Move ListTile into ExerciseListItem widget and pass in isSelected parameter
-  bool isSelected = false;
   List<ExerciseModel> selectedResults = [];
 
   @override
   Widget build(BuildContext context) {
+    bool isSelected = false;
+    setState(() {
+      for (var result in selectedResults) {
+        if (result.isSelected) {
+          isSelected = true;
+        }
+      }
+    });
+
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Stack(children: [
@@ -65,23 +71,25 @@ class _AddExercisesState extends State<AddExercises> {
                   searchExercisesBar(),
                   filterRow(context),
                   exercisesList(),
-                  exercisesSelectedText()
+                  SizedBox(
+                    height: 100,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        isSelected ? exercisesSelectedText() : Container()
+                      ],
+                    ),
+                  )
                 ],
               )),
-            ))
+            )),
       ]),
     );
   }
 
-  Widget exercisesSelectedText() {
-    return Align(
-        alignment: Alignment.bottomCenter,
-        child: Text("${getSelectedExercisesCount()} items selected"));
-  }
-
   Container exercisesList() {
     return Container(
-      height: 500,
+      height: 350,
       margin: rowMargin,
       child: ListView.builder(
           shrinkWrap: true,
@@ -149,6 +157,23 @@ class _AddExercisesState extends State<AddExercises> {
       ),
       title: Text(resultsList[index].name),
       subtitle: Text(resultsList[index].musclesWorked),
+    );
+  }
+
+  Widget exercisesSelectedText() {
+    return Container(
+      height: 50,
+      width: 200,
+      decoration: const BoxDecoration(
+          color: Colors.blue,
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.all(Radius.circular(12))),
+      child: Align(
+          alignment: Alignment.center,
+          child: Text(
+            "${getSelectedExercisesCount()} items selected",
+            style: const TextStyle(color: Colors.white, fontSize: 20),
+          )),
     );
   }
 
