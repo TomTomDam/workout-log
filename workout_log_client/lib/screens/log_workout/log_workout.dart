@@ -17,7 +17,7 @@ class LogWorkout extends StatefulWidget {
 
 class _LogWorkoutState extends State<LogWorkout> {
   EdgeInsets padding = const EdgeInsets.all(25);
-  bool overviewIsActive = false;
+  bool overviewIsActive = true;
   bool exercisesIsActive = false;
   bool musclesIsActive = false;
 
