@@ -15,9 +15,6 @@ jobs:
       with:
         dotnet-version: 7.0.x
  
-    - name: Restore
-      run: dotnet restore
- 
     - name: Build
       run: dotnet build --configuration Release --no-restore
  
