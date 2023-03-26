@@ -1,4 +1,6 @@
 # workout_log
+[![API Build](https://github.com/TomTomDam/workout-log/actions/workflows/api_build.yaml/badge.svg)](https://github.com/TomTomDam/workout-log/actions/workflows/api_build.yaml)
+
 A personal mobile app used to track workouts and other fitness-related data. Developed using Flutter.
 
 ## Technologies
