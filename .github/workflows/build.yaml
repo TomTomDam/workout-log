@@ -14,9 +14,12 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 7.0.x
+        working-directory: ./WorkoutLog.API
  
     - name: Build
+      working-directory: ./WorkoutLog.API
       run: dotnet build --configuration Release --no-restore
  
     - name: Run tests
+      working-directory: ./WorkoutLog.API
       run: dotnet test --no-restore
