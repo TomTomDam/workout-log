@@ -16,6 +16,10 @@ jobs:
         dotnet-version: 7.0.x
         working-directory: ./WorkoutLog.API
  
+    - name: Restore
+      working-directory: ./WorkoutLog.API
+      run: dotnet restore
+    
     - name: Build
       working-directory: ./WorkoutLog.API
       run: dotnet build --configuration Release --no-restore
