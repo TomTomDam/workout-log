@@ -1,0 +1,10 @@
+D:/developer-projects/workout_log/workout_log_client/build/windows/runner/Debug/data/icudtl.dat
+D:/developer-projects/workout_log/workout_log_client/build/windows/runner/Debug/flutter_windows.dll
+D:/developer-projects/workout_log/workout_log_client/build/windows/runner/Debug/data/flutter_assets/AssetManifest.json
+D:/developer-projects/workout_log/workout_log_client/build/windows/runner/Debug/data/flutter_assets/assets/images/pull-up.png
+D:/developer-projects/workout_log/workout_log_client/build/windows/runner/Debug/data/flutter_assets/FontManifest.json
+D:/developer-projects/workout_log/workout_log_client/build/windows/runner/Debug/data/flutter_assets/fonts/MaterialIcons-Regular.otf
+D:/developer-projects/workout_log/workout_log_client/build/windows/runner/Debug/data/flutter_assets/kernel_blob.bin
+D:/developer-projects/workout_log/workout_log_client/build/windows/runner/Debug/data/flutter_assets/NOTICES
+D:/developer-projects/workout_log/workout_log_client/build/windows/runner/Debug/data/flutter_assets/NOTICES.Z
+D:/developer-projects/workout_log/workout_log_client/build/windows/runner/Debug/data/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf
