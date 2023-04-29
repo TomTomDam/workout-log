@@ -2,19 +2,57 @@ import 'package:flutter/material.dart';
 import 'package:workout_log/screens/log_workout/muscles_heatmap_diagram.dart';
 import 'muscles_table_view.dart';
 
-Widget pageSection = const MusclesTableView();
+final GlobalKey<_ButtonState> _buttonKey = GlobalKey<_ButtonState>();
 
-class MusclesPage extends StatefulWidget {
-  const MusclesPage({Key? key}) : super(key: key);
-
+class Button extends StatefulWidget {
   @override
-  State<MusclesPage> createState() => _MusclesPageState();
+  _ButtonState createState() => _ButtonState();
 }
 
-class _MusclesPageState extends State<MusclesPage> {
+class _ButtonState extends State<Button> {
+  bool _isSelected = false;
+
+  void _updateSelection(bool isSelected) {
+    setState(() {
+      _isSelected = isSelected;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      key: _buttonKey,
+      onPressed: () {
+        _updateSelection(true);
+        _buttonKey.currentState?._updateSelection(_isSelected);
+      },
+      child: Text('Button'),
+      style: ElevatedButton.styleFrom(
+        primary: _isSelected ? Colors.green : Colors.red,
+      ),
+    );
+  }
+}
+
+class MusclesPane extends StatefulWidget {
+  const MusclesPane({Key? key}) : super(key: key);
+
+  @override
+  State<MusclesPane> createState() => _MusclesPaneState();
+}
+
+class _MusclesPaneState extends State<MusclesPane> {
   EdgeInsets padding = const EdgeInsets.all(25);
-  bool tableViewIsActive = true;
-  bool heatmapDiagramIsActive = false;
+  Widget pageSection = const MusclesTableView();
+  // bool tableViewIsActive = true;
+  // bool heatmapDiagramIsActive = false;
+
+  bool _isSelected = false;
+  void _updateButtonState(bool isSelected) {
+    setState(() {
+      _isSelected = isSelected;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,27 +61,45 @@ class _MusclesPageState extends State<MusclesPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            InkWell(
-                onTap: () => {
-                      setState(() {
-                        pageSection = const MusclesTableView();
-                        tableViewIsActive = true;
-                        heatmapDiagramIsActive = false;
-                      })
-                    },
-                child: ViewTypeButton(
-                    title: "Table view", isActive: tableViewIsActive)),
-            InkWell(
-                onTap: () => {
-                      setState(() {
-                        pageSection = const MusclesHeatmapDiagram();
-                        heatmapDiagramIsActive = true;
-                        tableViewIsActive = false;
-                      }),
-                    },
-                child: ViewTypeButton(
-                    title: "Heatmap diagram",
-                    isActive: heatmapDiagramIsActive)),
+            ElevatedButton(
+                onPressed: () {
+                  _updateButtonState(true);
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: _isSelected ? Colors.blue : Colors.grey,
+                ),
+                child: const Text("Table view")),
+            ElevatedButton(
+                onPressed: () {
+                  _updateButtonState(true);
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: _isSelected ? Colors.blue : Colors.grey,
+                ),
+                child: const Text("Heatmap diagram")),
+            // InkWell(
+            //     onTap: () => {
+            //           setState(() {
+            //             pageSection = const MusclesTableView();
+
+            //             tableViewIsActive = true;
+            //             heatmapDiagramIsActive = false;
+            //           })
+            //         },
+            //     child: ViewTypeButton(
+            //         title: "Table view", isActive: tableViewIsActive)),
+            // InkWell(
+            //     onTap: () => {
+            //           setState(() {
+            //             pageSection = const MusclesHeatmapDiagram();
+
+            //             heatmapDiagramIsActive = true;
+            //             tableViewIsActive = false;
+            //           })
+            //         },
+            //     child: ViewTypeButton(
+            //         title: "Heatmap diagram",
+            //         isActive: heatmapDiagramIsActive)),
           ],
         ),
         Padding(padding: padding, child: pageSection),

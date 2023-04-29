@@ -6,7 +6,7 @@ import 'exercises_pane.dart';
 import 'muscles_pane.dart';
 import 'overview_pane.dart';
 
-Widget pageSection = const OverviewPage();
+Widget pageSection = const OverviewPane();
 
 class LogWorkout extends StatefulWidget {
   const LogWorkout({Key? key}) : super(key: key);
@@ -31,27 +31,8 @@ class _LogWorkoutState extends State<LogWorkout> {
             child: SafeArea(
                 child: Center(
               child: Column(children: [
+                const LogWorkoutNavBar(),
                 const LogWorkoutHeader(),
-                Container(
-                  margin:
-                      const EdgeInsets.only(top: 24.0, left: 24.0, right: 24.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Pull Hypertrophy",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: Theme.of(context)
-                                  .textTheme
-                                  .headline2
-                                  ?.fontSize)),
-                      Container(
-                          margin: const EdgeInsets.only(top: 5),
-                          child: const Text("21 October 2022 - 5:30PM"))
-                    ],
-                  ),
-                ),
                 Container(
                     width: double.infinity,
                     height: 50,
@@ -73,7 +54,7 @@ class _LogWorkoutState extends State<LogWorkout> {
                     InkWell(
                       onTap: () => {
                         setState(() {
-                          pageSection = const OverviewPage();
+                          pageSection = const OverviewPane();
                           overviewIsActive = true;
                           exercisesIsActive = false;
                           musclesIsActive = false;
@@ -85,7 +66,7 @@ class _LogWorkoutState extends State<LogWorkout> {
                     InkWell(
                         onTap: () => {
                               setState(() {
-                                pageSection = const ExercisesPage();
+                                pageSection = const ExercisesPane();
                                 exercisesIsActive = true;
                                 overviewIsActive = false;
                                 musclesIsActive = false;
@@ -96,7 +77,7 @@ class _LogWorkoutState extends State<LogWorkout> {
                     InkWell(
                         onTap: () => {
                               setState(() {
-                                pageSection = const MusclesPage();
+                                pageSection = const MusclesPane();
                                 musclesIsActive = true;
                                 exercisesIsActive = false;
                                 overviewIsActive = false;
@@ -115,7 +96,33 @@ class _LogWorkoutState extends State<LogWorkout> {
 }
 
 class LogWorkoutHeader extends StatelessWidget {
-  const LogWorkoutHeader({Key? key}) : super(key: key);
+  const LogWorkoutHeader({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(top: 24.0, left: 24.0, right: 24.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("Pull Hypertrophy",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: Theme.of(context).textTheme.headline2?.fontSize)),
+          Container(
+              margin: const EdgeInsets.only(top: 5),
+              child: const Text("21 October 2022 - 5:30PM"))
+        ],
+      ),
+    );
+  }
+}
+
+class LogWorkoutNavBar extends StatelessWidget {
+  const LogWorkoutNavBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

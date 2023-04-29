@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:workout_log/screens/exercise_information/equipment_page.dart';
-import 'package:workout_log/screens/exercise_information/muscles_worked_page.dart';
+import 'package:workout_log/screens/exercise_information/equipment_pane.dart';
+import 'package:workout_log/screens/exercise_information/muscles_worked_pane.dart';
 import '../../widgets/header/header.dart';
 import '../../widgets/page/pane_button.dart';
-import 'instructions_page.dart';
+import 'instructions_pane.dart';
 
-Widget pageSection = const InstructionsPage();
+Widget pageSection = const InstructionsPane();
 
 class ExerciseInformation extends StatefulWidget {
   const ExerciseInformation({Key? key, required this.exerciseId})
@@ -62,7 +62,7 @@ class _ExerciseInformationState extends State<ExerciseInformation> {
               child: InkWell(
                 onTap: () => {
                   setState(() {
-                    pageSection = const InstructionsPage();
+                    pageSection = const InstructionsPane();
                     instructionsIsActive = true;
                     musclesWorkedIsActive = false;
                     equipmentIsActive = false;
@@ -76,7 +76,7 @@ class _ExerciseInformationState extends State<ExerciseInformation> {
               child: InkWell(
                   onTap: () => {
                         setState(() {
-                          pageSection = const MusclesWorkedPage();
+                          pageSection = const MusclesWorkedPane();
                           musclesWorkedIsActive = true;
                           instructionsIsActive = false;
                           equipmentIsActive = false;
@@ -90,7 +90,7 @@ class _ExerciseInformationState extends State<ExerciseInformation> {
               child: InkWell(
                   onTap: () => {
                         setState(() {
-                          pageSection = const EquipmentPage();
+                          pageSection = const EquipmentPane();
                           equipmentIsActive = true;
                           instructionsIsActive = false;
                           musclesWorkedIsActive = false;

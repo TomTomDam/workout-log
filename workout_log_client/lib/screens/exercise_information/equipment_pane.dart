@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class EquipmentPage extends StatelessWidget {
-  const EquipmentPage({Key? key}) : super(key: key);
+class EquipmentPane extends StatelessWidget {
+  const EquipmentPane({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class MusclesWorkedPage extends StatelessWidget {
-  const MusclesWorkedPage({Key? key}) : super(key: key);
+class MusclesWorkedPane extends StatelessWidget {
+  const MusclesWorkedPane({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

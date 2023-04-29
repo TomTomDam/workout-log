@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class InstructionsPage extends StatelessWidget {
-  const InstructionsPage({Key? key}) : super(key: key);
+class InstructionsPane extends StatelessWidget {
+  const InstructionsPane({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
