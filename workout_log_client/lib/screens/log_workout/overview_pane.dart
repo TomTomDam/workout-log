@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class OverviewPage extends StatelessWidget {
-  const OverviewPage({Key? key}) : super(key: key);
+class OverviewPane extends StatelessWidget {
+  const OverviewPane({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

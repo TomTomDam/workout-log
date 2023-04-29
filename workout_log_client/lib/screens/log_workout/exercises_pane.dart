@@ -4,8 +4,10 @@ import '../../widgets/add_exercise_button.dart';
 import '../../widgets/table/table_data_cell.dart';
 import '../../widgets/table/table_header_cell.dart';
 
-class ExercisesPage extends StatelessWidget {
-  const ExercisesPage({Key? key}) : super(key: key);
+const expansionTileHeaderColour = Colors.black;
+
+class ExercisesPane extends StatelessWidget {
+  const ExercisesPane({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +75,8 @@ class _ExerciseItemState extends State<ExerciseItem> {
           contentPadding: const EdgeInsets.symmetric(horizontal: 10),
           child: ExpansionTile(
             title: const ExerciseItemHeader(),
+            collapsedIconColor: expansionTileHeaderColour,
+            iconColor: expansionTileHeaderColour,
             children: [
               Column(
                 children: [
@@ -278,13 +282,16 @@ class _ExerciseItemHeaderState extends State<ExerciseItemHeader> {
     return Row(children: [
       Container(
           margin: const EdgeInsets.only(right: 8.0),
-          child: const Icon(Icons.fitness_center, size: 30)),
-      Text(
-        "Pull up",
-        style: TextStyle(
-            fontSize: Theme.of(context).textTheme.headline2?.fontSize,
-            fontWeight: Theme.of(context).textTheme.headline2?.fontWeight),
-      ),
+          child: const Icon(
+            Icons.fitness_center,
+            size: 30,
+            color: expansionTileHeaderColour,
+          )),
+      Text("Pull up",
+          style: TextStyle(
+              color: expansionTileHeaderColour,
+              fontSize: Theme.of(context).textTheme.headline2?.fontSize,
+              fontWeight: Theme.of(context).textTheme.headline2?.fontWeight)),
       const Spacer(),
       InkWell(
         onTap: () {
@@ -298,6 +305,7 @@ class _ExerciseItemHeaderState extends State<ExerciseItemHeader> {
         child: const Icon(
           Icons.help_outline,
           size: 30,
+          color: expansionTileHeaderColour,
         ),
       ),
       InkWell(
@@ -308,7 +316,8 @@ class _ExerciseItemHeaderState extends State<ExerciseItemHeader> {
                   return const ExerciseMenuModal();
                 });
           },
-          child: const Icon(Icons.more_vert, size: 30))
+          child: const Icon(Icons.more_vert,
+              size: 30, color: expansionTileHeaderColour))
     ]);
   }
 }
@@ -320,34 +329,38 @@ class ExerciseMenuModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const textColour = Colors.black;
+
     return Wrap(
       children: [
         InkWell(
           onTap: () {},
           child: const ListTile(
             leading: Icon(Icons.electric_bolt),
-            title: Text('Change exercise'),
+            title: Text('Change exercise', style: TextStyle(color: textColour)),
           ),
         ),
         InkWell(
           onTap: () {},
           child: const ListTile(
             leading: Icon(Icons.loop),
-            title: Text('Reset sets and weight'),
+            title: Text('Reset sets and weight',
+                style: TextStyle(color: textColour)),
           ),
         ),
         InkWell(
           onTap: () {},
           child: const ListTile(
             leading: Icon(Icons.menu),
-            title: Text('Reorder exercise'),
+            title:
+                Text('Reorder exercise', style: TextStyle(color: textColour)),
           ),
         ),
         InkWell(
           onTap: () {},
           child: const ListTile(
             leading: Icon(Icons.close),
-            title: Text('Delete exercise'),
+            title: Text('Delete exercise', style: TextStyle(color: textColour)),
           ),
         ),
       ],
