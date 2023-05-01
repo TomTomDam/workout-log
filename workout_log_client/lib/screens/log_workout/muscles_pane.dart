@@ -15,6 +15,22 @@ class _MusclesPaneState extends State<MusclesPane> {
   bool tableViewIsActive = true;
   bool heatmapDiagramIsActive = false;
 
+  selectTableView() {
+    setState(() {
+      pageSection = const MusclesTableView();
+      tableViewIsActive = true;
+      heatmapDiagramIsActive = false;
+    });
+  }
+
+  selectHeatmapView() {
+    setState(() {
+      pageSection = const MusclesHeatmapDiagram();
+      tableViewIsActive = false;
+      heatmapDiagramIsActive = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -22,29 +38,14 @@ class _MusclesPaneState extends State<MusclesPane> {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            InkWell(
-                onTap: () => {
-                      setState(() {
-                        pageSection = const MusclesTableView();
-
-                        tableViewIsActive = true;
-                        heatmapDiagramIsActive = false;
-                      })
-                    },
-                child: ViewTypeButton(
-                    title: "Table view", isActive: tableViewIsActive)),
-            InkWell(
-                onTap: () => {
-                      setState(() {
-                        pageSection = const MusclesHeatmapDiagram();
-
-                        heatmapDiagramIsActive = true;
-                        tableViewIsActive = false;
-                      })
-                    },
-                child: ViewTypeButton(
-                    title: "Heatmap diagram",
-                    isActive: heatmapDiagramIsActive)),
+            ViewTypeButton(
+                title: "Table view",
+                isActive: tableViewIsActive,
+                callback: selectTableView),
+            ViewTypeButton(
+                title: "Heatmap diagram",
+                isActive: heatmapDiagramIsActive,
+                callback: selectHeatmapView)
           ],
         ),
         Padding(padding: padding, child: pageSection),
@@ -54,17 +55,22 @@ class _MusclesPaneState extends State<MusclesPane> {
 }
 
 class ViewTypeButton extends StatelessWidget {
-  const ViewTypeButton({Key? key, required this.title, required this.isActive})
+  const ViewTypeButton(
+      {Key? key,
+      required this.title,
+      required this.isActive,
+      required this.callback})
       : super(key: key);
   final String title;
   final bool isActive;
+  final Function callback;
 
   @override
   Widget build(BuildContext context) {
     return Container(
         margin: const EdgeInsets.symmetric(horizontal: 4.0),
         child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () => callback(),
             style: ElevatedButton.styleFrom(
                 primary: isActive ? Colors.blue : Colors.grey),
             child: Text(title)));
