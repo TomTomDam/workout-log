@@ -4,10 +4,7 @@ List<String> trainingStylesList = ['Strength', 'Hypertrophy', 'Powerbuilding'];
 bool isSelected = false;
 
 class StaticFilterList extends StatelessWidget {
-  StaticFilterList({Key? key}) : super(key: key);
-
-  final ButtonStyle buttonStyle =
-      ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 16));
+  const StaticFilterList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +30,8 @@ class _FilterListChipState extends State<FilterListChip> {
   @override
   Widget build(BuildContext context) {
     return Chip(
-      labelPadding: const EdgeInsets.all(2.0),
+      labelPadding: const EdgeInsets.all(4.0),
+      backgroundColor: Colors.blue,
       label: Text(
         widget.data,
         style: Theme.of(context)

@@ -248,7 +248,8 @@ class _DashboardState extends State<Dashboard> {
               ),
             ),
           ),
-          StaticFilterList(),
+          const Padding(
+              padding: EdgeInsets.only(top: 5), child: StaticFilterList()),
           Padding(
               padding: const EdgeInsets.only(
                   top: sectionPadding,
