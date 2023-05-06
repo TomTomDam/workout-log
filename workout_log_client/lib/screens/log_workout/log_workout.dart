@@ -3,7 +3,7 @@ import 'package:workout_log/screens/select_workout.dart';
 import 'package:workout_log/screens/settings/settings.dart';
 import '../../widgets/page/pane_button.dart';
 import 'exercises_pane.dart';
-import 'muscles_pane.dart';
+import 'muscles/muscles_pane.dart';
 import 'overview_pane.dart';
 
 Widget pageSection = const OverviewPane();
@@ -15,11 +15,20 @@ class LogWorkout extends StatefulWidget {
   State<LogWorkout> createState() => _LogWorkoutState();
 }
 
+enum LogWorkoutPanes { overview, exercises, muscles }
+
+enum MuscleViewType { table, heatmapDiagram }
+
 class _LogWorkoutState extends State<LogWorkout> {
   EdgeInsets padding = const EdgeInsets.all(25);
-  bool overviewIsActive = true;
-  bool exercisesIsActive = false;
-  bool musclesIsActive = false;
+  LogWorkoutPanes selectedPane = LogWorkoutPanes.overview;
+
+  MuscleViewType muscleViewType = MuscleViewType.table;
+  updateMuscleViewType(newViewType) {
+    setState(() {
+      muscleViewType = newViewType;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,36 +64,36 @@ class _LogWorkoutState extends State<LogWorkout> {
                       onTap: () => {
                         setState(() {
                           pageSection = const OverviewPane();
-                          overviewIsActive = true;
-                          exercisesIsActive = false;
-                          musclesIsActive = false;
+                          selectedPane = LogWorkoutPanes.overview;
                         })
                       },
                       child: PaneButton(
-                          title: "Overview", isActive: overviewIsActive),
+                          title: "Overview",
+                          isActive: selectedPane == LogWorkoutPanes.overview),
                     ),
                     InkWell(
                         onTap: () => {
                               setState(() {
                                 pageSection = const ExercisesPane();
-                                exercisesIsActive = true;
-                                overviewIsActive = false;
-                                musclesIsActive = false;
+                                selectedPane = LogWorkoutPanes.exercises;
                               })
                             },
                         child: PaneButton(
-                            title: "Exercises", isActive: exercisesIsActive)),
+                            title: "Exercises",
+                            isActive:
+                                selectedPane == LogWorkoutPanes.exercises)),
                     InkWell(
                         onTap: () => {
                               setState(() {
-                                pageSection = const MusclesPane();
-                                musclesIsActive = true;
-                                exercisesIsActive = false;
-                                overviewIsActive = false;
+                                pageSection = MusclesPane(
+                                    updateViewType: updateMuscleViewType,
+                                    viewType: muscleViewType);
+                                selectedPane = LogWorkoutPanes.muscles;
                               })
                             },
                         child: PaneButton(
-                            title: "Muscles", isActive: musclesIsActive)),
+                            title: "Muscles",
+                            isActive: selectedPane == LogWorkoutPanes.muscles)),
                   ],
                 ),
                 Padding(padding: padding, child: pageSection),

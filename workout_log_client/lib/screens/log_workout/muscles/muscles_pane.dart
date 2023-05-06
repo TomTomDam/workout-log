@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import '../log_workout.dart';
 import 'muscles_heatmap_diagram.dart';
 import 'muscles_table_view.dart';
 
 class MusclesPane extends StatefulWidget {
-  const MusclesPane({Key? key}) : super(key: key);
+  const MusclesPane(
+      {Key? key, required this.updateViewType, required this.viewType})
+      : super(key: key);
+  final Function updateViewType;
+  final MuscleViewType viewType;
 
   @override
   State<MusclesPane> createState() => _MusclesPaneState();
@@ -12,22 +17,18 @@ class MusclesPane extends StatefulWidget {
 class _MusclesPaneState extends State<MusclesPane> {
   EdgeInsets padding = const EdgeInsets.all(25);
   Widget pageSection = const MusclesTableView();
-  bool tableViewIsActive = true;
-  bool heatmapDiagramIsActive = false;
 
   selectTableView() {
     setState(() {
       pageSection = const MusclesTableView();
-      tableViewIsActive = true;
-      heatmapDiagramIsActive = false;
+      widget.updateViewType(MuscleViewType.table);
     });
   }
 
   selectHeatmapView() {
     setState(() {
       pageSection = const MusclesHeatmapDiagram();
-      tableViewIsActive = false;
-      heatmapDiagramIsActive = true;
+      widget.updateViewType(MuscleViewType.heatmapDiagram);
     });
   }
 
@@ -40,11 +41,11 @@ class _MusclesPaneState extends State<MusclesPane> {
           children: [
             ViewTypeButton(
                 title: "Table view",
-                isActive: tableViewIsActive,
+                isActive: widget.viewType == MuscleViewType.table,
                 callback: selectTableView),
             ViewTypeButton(
                 title: "Heatmap diagram",
-                isActive: heatmapDiagramIsActive,
+                isActive: widget.viewType == MuscleViewType.heatmapDiagram,
                 callback: selectHeatmapView)
           ],
         ),
