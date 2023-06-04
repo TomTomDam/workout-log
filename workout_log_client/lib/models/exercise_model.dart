@@ -16,6 +16,15 @@ class ExerciseModel {
       required this.musclesWorked,
       required this.muscleGroupWorked,
       required this.equipmentId});
+
+  factory ExerciseModel.fromJson(Map<String, dynamic> json) {
+    return ExerciseModel(
+        exerciseId: json['exerciseId'],
+        name: json['name'],
+        musclesWorked: json['musclesWorked'],
+        muscleGroupWorked: json['muscleGroupWorked'],
+        equipmentId: json['equipmentId']);
+  }
 }
 
 final exerciseList = [
