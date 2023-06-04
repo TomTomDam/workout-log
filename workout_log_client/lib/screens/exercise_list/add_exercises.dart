@@ -1,10 +1,24 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:workout_log/enums/muscle_group_enum.dart';
 import 'package:workout_log/screens/exercise_detail/exercise_detail.dart';
+import '../../constants.dart';
 import '../../enums/equipment_enum.dart';
 import '../../models/exercise_model.dart';
 import '../../widgets/header/header.dart';
 import 'create_exercise.dart';
+import 'package:http/http.dart' as http;
+
+Future<ExerciseModel> getExercises() async {
+  final response = await http.get(Uri.parse("$apiUrl/exercises"));
+
+  if (response.statusCode == 200) {
+    return ExerciseModel.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to load Exercises');
+  }
+}
 
 class AddExercises extends StatefulWidget {
   const AddExercises({Key? key}) : super(key: key);
@@ -15,10 +29,16 @@ class AddExercises extends StatefulWidget {
 
 class _AddExercisesState extends State<AddExercises> {
   EdgeInsets rowMargin = const EdgeInsets.fromLTRB(20, 20, 20, 0);
-  List<ExerciseModel> resultsList = exerciseList;
+  List<ExerciseModel> resultsList = exerciseList; //TODO to remove
+  late Future<ExerciseModel> futureExercises;
   List<ExerciseModel> selectedResults = [];
 
   @override
+  void initState() {
+    super.initState();
+    futureExercises = getExercises();
+  }
+
   Widget build(BuildContext context) {
     bool isSelected = false;
     setState(() {
