@@ -3,8 +3,12 @@ import 'package:workout_log/screens/dashboard/dashboard.dart';
 import 'package:workout_log/themes/theme_constants.dart';
 import '../themes/theme_manager.dart';
 import '../widgets/page/nav_bar.dart';
+import 'dart:io';
 
 void main() {
+  //DEVELOPMENT ONLY - REPLACE THIS IF GOING INTO PRODUCTION
+  HttpOverrides.global = MyHttpOverrides();
+
   runApp(const MyApp());
 }
 
@@ -72,5 +76,15 @@ class _MainState extends State<Main> {
     return const Scaffold(
         body: Dashboard(title: 'Workout Log'),
         bottomNavigationBar: NavBar(currentPage: 0));
+  }
+}
+
+//DEVELOPMENT ONLY - REPLACE THIS IF GOING INTO PRODUCTION
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }

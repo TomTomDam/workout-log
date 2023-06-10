@@ -8,7 +8,7 @@ Widget pageSection = const ExerciseSummary();
 
 class ExerciseDetail extends StatefulWidget {
   const ExerciseDetail({Key? key, required this.exerciseId}) : super(key: key);
-  final int exerciseId;
+  final int? exerciseId;
 
   @override
   State<ExerciseDetail> createState() => _ExerciseDetailState();

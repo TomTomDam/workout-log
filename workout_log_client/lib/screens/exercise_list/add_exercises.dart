@@ -10,11 +10,12 @@ import '../../widgets/header/header.dart';
 import 'create_exercise.dart';
 import 'package:http/http.dart' as http;
 
-Future<ExerciseModel> getExercises() async {
+Future<List<ExerciseModel>> getExercises() async {
   final response = await http.get(Uri.parse("$apiUrl/exercises"));
 
   if (response.statusCode == 200) {
-    return ExerciseModel.fromJson(jsonDecode(response.body));
+    List jsonResponse = json.decode(response.body);
+    return jsonResponse.map((e) => ExerciseModel.fromJson(e)).toList();
   } else {
     throw Exception('Failed to load Exercises');
   }
@@ -36,7 +37,8 @@ class _AddExercisesState extends State<AddExercises> {
   @override
   void initState() {
     super.initState();
-    futureExercises = getExercises();
+    //futureExercises = getExercises();
+    var futureExercises = getExercises();
   }
 
   Widget build(BuildContext context) {
@@ -127,57 +129,59 @@ class _AddExercisesState extends State<AddExercises> {
 
   ListTile exerciseListItem(int index, BuildContext context) {
     return ListTile(
-      onTap: () {
-        setState(() {
-          resultsList[index].isSelected = !resultsList[index].isSelected;
-
-          if (resultsList[index].isSelected) {
-            selectedResults.add(resultsList[index]);
-          } else {
-            selectedResults.remove(resultsList[index]);
-          }
-        });
-      },
-      leading: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          //TODO Position the Selected bar more to the left
-          Container(
-              width: 10,
-              color: selectedResults.contains(resultsList[index])
-                  ? Colors.blue
-                  : Colors.transparent),
-          Container(
-            height: 120,
-            width: 60,
-            decoration: BoxDecoration(
-                color: Colors.grey.shade400, shape: BoxShape.circle),
-            child:
-                const Icon(Icons.fitness_center, color: Colors.black, size: 40),
-          ),
-        ],
-      ),
-      trailing: InkWell(
         onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ExerciseDetail(
-                        exerciseId: resultsList[index].exerciseId,
-                      )));
+          setState(() {
+            resultsList[index].isSelected = !resultsList[index].isSelected;
+
+            if (resultsList[index].isSelected) {
+              selectedResults.add(resultsList[index]);
+            } else {
+              selectedResults.remove(resultsList[index]);
+            }
+          });
         },
-        child: Container(
-            height: 30,
-            width: 30,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(width: 2, color: Colors.grey.shade400),
-                shape: BoxShape.circle),
-            child: const Icon(Icons.show_chart, color: Colors.grey, size: 25)),
-      ),
-      title: Text(resultsList[index].name),
-      subtitle: Text(resultsList[index].musclesWorked),
-    );
+        leading: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            //TODO Position the Selected bar more to the left
+            Container(
+                width: 10,
+                color: selectedResults.contains(resultsList[index])
+                    ? Colors.blue
+                    : Colors.transparent),
+            Container(
+              height: 120,
+              width: 60,
+              decoration: BoxDecoration(
+                  color: Colors.grey.shade400, shape: BoxShape.circle),
+              child: const Icon(Icons.fitness_center,
+                  color: Colors.black, size: 40),
+            ),
+          ],
+        ),
+        trailing: InkWell(
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ExerciseDetail(
+                          exerciseId: resultsList[index].exerciseId,
+                        )));
+          },
+          child: Container(
+              height: 30,
+              width: 30,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(width: 2, color: Colors.grey.shade400),
+                  shape: BoxShape.circle),
+              child:
+                  const Icon(Icons.show_chart, color: Colors.grey, size: 25)),
+        ),
+        title: Text(resultsList[index].name),
+        subtitle: const Text(
+            "Muscles worked goes here") //Text(resultsList[index].musclesWorked),
+        );
   }
 
   Widget exercisesSelectedText() {
@@ -293,7 +297,7 @@ class _AddExercisesState extends State<AddExercises> {
                               setState(() => {
                                     resultsList = exerciseList
                                         .where((result) =>
-                                            result.muscleGroupWorked != 0)
+                                            result.primaryMusclesWorkedId != 0)
                                         .toList()
                                   });
                             },
@@ -306,7 +310,7 @@ class _AddExercisesState extends State<AddExercises> {
                               setState(() => {
                                     resultsList = exerciseList
                                         .where((result) =>
-                                            result.muscleGroupWorked ==
+                                            result.primaryMusclesWorkedId ==
                                             MuscleGroupEnum.chest.index)
                                         .toList()
                                   });
@@ -320,7 +324,7 @@ class _AddExercisesState extends State<AddExercises> {
                               setState(() => {
                                     resultsList = exerciseList
                                         .where((result) =>
-                                            result.muscleGroupWorked ==
+                                            result.primaryMusclesWorkedId ==
                                             MuscleGroupEnum.back.index)
                                         .toList()
                                   });
