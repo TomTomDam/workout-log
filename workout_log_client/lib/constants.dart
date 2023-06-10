@@ -1,1 +1,1 @@
-const apiUrl = "https://localhost:7215";
+const apiUrl = "https://10.0.2.2:7215";

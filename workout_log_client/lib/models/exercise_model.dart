@@ -3,27 +3,33 @@ import 'package:workout_log/enums/muscle_group_enum.dart';
 
 class ExerciseModel {
   bool isSelected;
-  final int exerciseId;
+  final int? exerciseId;
   final String name;
-  final String musclesWorked;
-  final int muscleGroupWorked;
+  final bool isCustom;
+  final String? instructions;
+  final int exerciseTypeId;
   final int equipmentId;
+  final int primaryMusclesWorkedId;
 
   ExerciseModel(
       {this.isSelected = false,
       required this.exerciseId,
       required this.name,
-      required this.musclesWorked,
-      required this.muscleGroupWorked,
-      required this.equipmentId});
+      required this.isCustom,
+      required this.instructions,
+      required this.exerciseTypeId,
+      required this.equipmentId,
+      required this.primaryMusclesWorkedId});
 
   factory ExerciseModel.fromJson(Map<String, dynamic> json) {
     return ExerciseModel(
         exerciseId: json['exerciseId'],
         name: json['name'],
-        musclesWorked: json['musclesWorked'],
-        muscleGroupWorked: json['muscleGroupWorked'],
-        equipmentId: json['equipmentId']);
+        isCustom: json['isCustom'],
+        instructions: json['instructions'],
+        exerciseTypeId: json['exerciseTypeId'],
+        equipmentId: json['equipmentId'],
+        primaryMusclesWorkedId: json['primaryMusclesWorkedId']);
   }
 }
 
@@ -31,25 +37,9 @@ final exerciseList = [
   ExerciseModel(
       exerciseId: 1,
       name: "Arnold Press",
-      musclesWorked: "Front Delts, Triceps",
-      muscleGroupWorked: MuscleGroupEnum.chest.index,
-      equipmentId: EquipmentEnum.dumbbell.index),
-  ExerciseModel(
-      exerciseId: 2,
-      name: "Shoulder Press",
-      musclesWorked: "Front Delts, Triceps",
-      muscleGroupWorked: MuscleGroupEnum.chest.index,
-      equipmentId: EquipmentEnum.dumbbell.index),
-  ExerciseModel(
-      exerciseId: 3,
-      name: "Bench Press (Barbell)",
-      musclesWorked: "Chest, Front Delts, Triceps",
-      muscleGroupWorked: MuscleGroupEnum.chest.index,
-      equipmentId: EquipmentEnum.barbell.index),
-  ExerciseModel(
-      exerciseId: 4,
-      name: "Ab Wheel",
-      musclesWorked: "Abdominals",
-      muscleGroupWorked: MuscleGroupEnum.abs.index,
-      equipmentId: EquipmentEnum.other.index),
+      isCustom: false,
+      instructions: '',
+      exerciseTypeId: 0,
+      equipmentId: 0,
+      primaryMusclesWorkedId: 0)
 ];
