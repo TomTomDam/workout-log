@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:workout_log/enums/muscle_group_enum.dart';
 import 'package:workout_log/screens/exercise_detail/exercise_detail.dart';
@@ -30,17 +29,25 @@ class AddExercises extends StatefulWidget {
 
 class _AddExercisesState extends State<AddExercises> {
   EdgeInsets rowMargin = const EdgeInsets.fromLTRB(20, 20, 20, 0);
-  List<ExerciseModel> resultsList = exerciseList; //TODO to remove
-  late Future<ExerciseModel> futureExercises;
+  late Future<List<ExerciseModel>> futureExercises;
+  List<ExerciseModel> resultsList = [];
   List<ExerciseModel> selectedResults = [];
 
   @override
   void initState() {
     super.initState();
-    //futureExercises = getExercises();
-    var futureExercises = getExercises();
+    futureExercises = getExercises();
+
+    setState(() {
+      getExercises().then((result) {
+        setState(() {
+          resultsList = exerciseList;
+        });
+      });
+    });
   }
 
+  @override
   Widget build(BuildContext context) {
     bool isSelected = false;
     setState(() {
@@ -92,7 +99,7 @@ class _AddExercisesState extends State<AddExercises> {
                   ),
                   searchExercisesBar(),
                   filterRow(context),
-                  exercisesList(),
+                  exerciseListView(),
                   SizedBox(
                     height: 100,
                     child: Stack(
@@ -109,63 +116,71 @@ class _AddExercisesState extends State<AddExercises> {
     );
   }
 
-  Container exercisesList() {
+  Container exerciseListView() {
     return Container(
       height: 350,
       margin: rowMargin,
-      child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: resultsList.length,
-          itemBuilder: (context, index) {
-            return Column(
-              children: [
-                exerciseListItem(index, context),
-                const Divider(thickness: 2)
-              ],
-            );
-          }),
+      child: FutureBuilder<List<ExerciseModel>>(
+          future: futureExercises,
+          builder: ((context, snapshot) {
+            if (snapshot.hasData) {
+              return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: ((context, index) {
+                    return Column(
+                      children: [
+                        exerciseListViewItem(index, context, snapshot.data),
+                        const Divider(thickness: 2)
+                      ],
+                    );
+                  }));
+            } else if (snapshot.hasError) {
+              return Text('${snapshot.error}');
+            }
+
+            return const CircularProgressIndicator();
+          })),
     );
   }
 
-  ListTile exerciseListItem(int index, BuildContext context) {
+  ListTile exerciseListViewItem(
+      int index, BuildContext context, List<ExerciseModel>? exerciseList) {
     return ListTile(
         onTap: () {
           setState(() {
-            resultsList[index].isSelected = !resultsList[index].isSelected;
+            exerciseList?[index].isSelected = !exerciseList[index].isSelected;
 
-            if (resultsList[index].isSelected) {
-              selectedResults.add(resultsList[index]);
+            if (exerciseList![index].isSelected) {
+              selectedResults.add(exerciseList[index]);
             } else {
-              selectedResults.remove(resultsList[index]);
+              selectedResults.remove(exerciseList[index]);
             }
           });
         },
-        leading: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            //TODO Position the Selected bar more to the left
-            Container(
-                width: 10,
-                color: selectedResults.contains(resultsList[index])
-                    ? Colors.blue
-                    : Colors.transparent),
-            Container(
-              height: 120,
-              width: 60,
-              decoration: BoxDecoration(
-                  color: Colors.grey.shade400, shape: BoxShape.circle),
-              child: const Icon(Icons.fitness_center,
-                  color: Colors.black, size: 40),
-            ),
-          ],
-        ),
+        leading: Row(mainAxisSize: MainAxisSize.min, children: [
+          //TODO Position the Selected bar more to the left
+          Container(
+              width: 10,
+              color: selectedResults.contains(exerciseList?[index])
+                  ? Colors.blue
+                  : Colors.transparent),
+          Container(
+            height: 120,
+            width: 60,
+            decoration: BoxDecoration(
+                color: Colors.grey.shade400, shape: BoxShape.circle),
+            child:
+                const Icon(Icons.fitness_center, color: Colors.black, size: 40),
+          ),
+        ]),
         trailing: InkWell(
           onTap: () {
             Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => ExerciseDetail(
-                          exerciseId: resultsList[index].exerciseId,
+                          exerciseId: exerciseList?[index].exerciseId,
                         )));
           },
           child: Container(
@@ -178,9 +193,9 @@ class _AddExercisesState extends State<AddExercises> {
               child:
                   const Icon(Icons.show_chart, color: Colors.grey, size: 25)),
         ),
-        title: Text(resultsList[index].name),
+        title: Text(exerciseList![index].name),
         subtitle: const Text(
-            "Muscles worked goes here") //Text(resultsList[index].musclesWorked),
+            "Muscles worked goes here") //TODO Text(exerciseList[index].musclesWorked),
         );
   }
 
@@ -405,5 +420,20 @@ class _AddExercisesState extends State<AddExercises> {
     }
 
     return count;
+  }
+
+  Future<String> getPrimaryMusclesWorked(int primaryMusclesWorkedId) async {
+    //TODO Text(exerciseList[index].musclesWorked),
+    final response = await http
+        .get(Uri.parse("$apiUrl/muscleGroup/$primaryMusclesWorkedId"));
+
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+      var primaryMusclesWorked = ExerciseModel.fromJson(jsonResponse[0]).name;
+
+      return "";
+    } else {
+      throw Exception('Failed to load Exercises');
+    }
   }
 }
