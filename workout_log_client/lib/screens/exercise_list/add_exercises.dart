@@ -5,6 +5,7 @@ import 'package:workout_log/screens/exercise_detail/exercise_detail.dart';
 import '../../constants.dart';
 import '../../enums/equipment_enum.dart';
 import '../../models/exercise_model.dart';
+import '../../models/muscle_group_model.dart';
 import '../../widgets/header/header.dart';
 import 'create_exercise.dart';
 import 'package:http/http.dart' as http;
@@ -30,6 +31,7 @@ class AddExercises extends StatefulWidget {
 class _AddExercisesState extends State<AddExercises> {
   EdgeInsets rowMargin = const EdgeInsets.fromLTRB(20, 20, 20, 0);
   late Future<List<ExerciseModel>> futureExercises;
+  late Future<String> futureMusclesWorked;
   List<ExerciseModel> resultsList = [];
   List<ExerciseModel> selectedResults = [];
 
@@ -139,7 +141,10 @@ class _AddExercisesState extends State<AddExercises> {
               return Text('${snapshot.error}');
             }
 
-            return const CircularProgressIndicator();
+            return const SizedBox(
+                height: 50,
+                width: 50,
+                child: Center(child: CircularProgressIndicator()));
           })),
     );
   }
@@ -194,9 +199,18 @@ class _AddExercisesState extends State<AddExercises> {
                   const Icon(Icons.show_chart, color: Colors.grey, size: 25)),
         ),
         title: Text(exerciseList![index].name),
-        subtitle: const Text(
-            "Muscles worked goes here") //TODO Text(exerciseList[index].musclesWorked),
-        );
+        subtitle: FutureBuilder<String>(
+            future: getPrimaryMusclesWorked(
+                exerciseList[index].primaryMusclesWorkedId),
+            builder: ((context, snapshot) {
+              if (snapshot.hasData) {
+                return Text(snapshot.data!);
+              } else if (snapshot.hasError) {
+                return Text('${snapshot.error}');
+              }
+
+              return const Text("");
+            })));
   }
 
   Widget exercisesSelectedText() {
@@ -423,15 +437,15 @@ class _AddExercisesState extends State<AddExercises> {
   }
 
   Future<String> getPrimaryMusclesWorked(int primaryMusclesWorkedId) async {
-    //TODO Text(exerciseList[index].musclesWorked),
     final response = await http
-        .get(Uri.parse("$apiUrl/muscleGroup/$primaryMusclesWorkedId"));
+        .get(Uri.parse("$apiUrl/muscleGroups/$primaryMusclesWorkedId"));
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
-      var primaryMusclesWorked = ExerciseModel.fromJson(jsonResponse[0]).name;
+      var primaryMusclesWorked =
+          MuscleGroupModel.fromJson(jsonResponse[0]).name;
 
-      return "";
+      return primaryMusclesWorked;
     } else {
       throw Exception('Failed to load Exercises');
     }
