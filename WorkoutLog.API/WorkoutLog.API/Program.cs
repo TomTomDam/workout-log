@@ -33,6 +33,7 @@ builder.Services.AddTransient<IExerciseRepository, ExerciseRepository>();
 builder.Services.AddTransient<IGoalRepository, GoalRepository>();
 builder.Services.AddTransient<IWorkoutRepository, WorkoutRepository>();
 builder.Services.AddTransient<IWorkoutExerciseRepository, WorkoutExerciseRepository>();
+builder.Services.AddTransient<IMuscleGroupRepository, MuscleGroupRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
