@@ -1,9 +1,6 @@
-import 'package:workout_log/enums/equipment_enum.dart';
-import 'package:workout_log/enums/muscle_group_enum.dart';
-
 class ExerciseModel {
   bool isSelected;
-  final int? exerciseId;
+  final int? id;
   final String name;
   final bool isCustom;
   final String? instructions;
@@ -13,7 +10,7 @@ class ExerciseModel {
 
   ExerciseModel(
       {this.isSelected = false,
-      required this.exerciseId,
+      required this.id,
       required this.name,
       required this.isCustom,
       required this.instructions,
@@ -23,7 +20,7 @@ class ExerciseModel {
 
   factory ExerciseModel.fromJson(Map<String, dynamic> json) {
     return ExerciseModel(
-        exerciseId: json['exerciseId'],
+        id: json['id'],
         name: json['name'],
         isCustom: json['isCustom'],
         instructions: json['instructions'],
@@ -32,14 +29,3 @@ class ExerciseModel {
         primaryMusclesWorkedId: json['primaryMusclesWorkedId']);
   }
 }
-
-final exerciseList = [
-  ExerciseModel(
-      exerciseId: 1,
-      name: "Arnold Press",
-      isCustom: false,
-      instructions: '',
-      exerciseTypeId: 0,
-      equipmentId: 0,
-      primaryMusclesWorkedId: 0)
-];

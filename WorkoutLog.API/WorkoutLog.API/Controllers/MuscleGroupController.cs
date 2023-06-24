@@ -8,11 +8,11 @@ namespace WorkoutLog.API.Controllers
     [ApiController]
     [Route("muscleGroups")]
     [AllowAnonymous]
-    public class MuscleGroupGroupController : ControllerBase
+    public class MuscleGroupController : ControllerBase
     {
         private readonly IMuscleGroupRepository _muscleGroupRepository;
 
-        public MuscleGroupGroupController(IMuscleGroupRepository muscleGroupRepository)
+        public MuscleGroupController(IMuscleGroupRepository muscleGroupRepository)
         {
             _muscleGroupRepository = muscleGroupRepository;
         }
@@ -23,13 +23,13 @@ namespace WorkoutLog.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<MuscleGroup?> GetById(int id)
         {
             var muscleGroup = await _muscleGroupRepository.GetById(id);
             if (muscleGroup == null)
-                return NotFound();
+                return null;
 
-            return Ok(muscleGroup);
+            return muscleGroup;
         }
 
         [HttpPost]

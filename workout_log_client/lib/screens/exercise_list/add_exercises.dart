@@ -39,14 +39,6 @@ class _AddExercisesState extends State<AddExercises> {
   void initState() {
     super.initState();
     futureExercises = getExercises();
-
-    setState(() {
-      getExercises().then((result) {
-        setState(() {
-          resultsList = exerciseList;
-        });
-      });
-    });
   }
 
   @override
@@ -126,6 +118,8 @@ class _AddExercisesState extends State<AddExercises> {
           future: futureExercises,
           builder: ((context, snapshot) {
             if (snapshot.hasData) {
+              resultsList = snapshot.data!;
+
               return ListView.builder(
                   shrinkWrap: true,
                   itemCount: snapshot.data!.length,
@@ -185,7 +179,7 @@ class _AddExercisesState extends State<AddExercises> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => ExerciseDetail(
-                          exerciseId: exerciseList?[index].exerciseId,
+                          exerciseId: exerciseList?[index].id,
                         )));
           },
           child: Container(
@@ -253,7 +247,7 @@ class _AddExercisesState extends State<AddExercises> {
                           InkWell(
                             onTap: () {
                               setState(() => {
-                                    resultsList = exerciseList
+                                    resultsList = resultsList
                                         .where(
                                             (result) => result.equipmentId != 0)
                                         .toList()
@@ -266,7 +260,7 @@ class _AddExercisesState extends State<AddExercises> {
                           InkWell(
                             onTap: () {
                               setState(() => {
-                                    resultsList = exerciseList
+                                    resultsList = resultsList
                                         .where((result) =>
                                             result.equipmentId ==
                                             EquipmentEnum.dumbbell.index)
@@ -280,10 +274,10 @@ class _AddExercisesState extends State<AddExercises> {
                           InkWell(
                             onTap: () {
                               setState(() => {
-                                    resultsList = exerciseList
+                                    resultsList = resultsList
                                         .where((result) =>
                                             result.equipmentId ==
-                                            EquipmentEnum.other.index)
+                                            EquipmentEnum.machine.index)
                                         .toList()
                                   });
                             },
@@ -324,7 +318,7 @@ class _AddExercisesState extends State<AddExercises> {
                           InkWell(
                             onTap: () {
                               setState(() => {
-                                    resultsList = exerciseList
+                                    resultsList = resultsList
                                         .where((result) =>
                                             result.primaryMusclesWorkedId != 0)
                                         .toList()
@@ -337,7 +331,7 @@ class _AddExercisesState extends State<AddExercises> {
                           InkWell(
                             onTap: () {
                               setState(() => {
-                                    resultsList = exerciseList
+                                    resultsList = resultsList
                                         .where((result) =>
                                             result.primaryMusclesWorkedId ==
                                             MuscleGroupEnum.chest.index)
@@ -351,7 +345,7 @@ class _AddExercisesState extends State<AddExercises> {
                           InkWell(
                             onTap: () {
                               setState(() => {
-                                    resultsList = exerciseList
+                                    resultsList = resultsList
                                         .where((result) =>
                                             result.primaryMusclesWorkedId ==
                                             MuscleGroupEnum.back.index)
@@ -414,7 +408,7 @@ class _AddExercisesState extends State<AddExercises> {
   }
 
   void searchExercise(String query) {
-    final searchResults = exerciseList.where((exercise) {
+    final searchResults = resultsList.where((exercise) {
       final exerciseName = exercise.name.toLowerCase();
       final searchInput = query.toLowerCase();
 
@@ -441,9 +435,8 @@ class _AddExercisesState extends State<AddExercises> {
         .get(Uri.parse("$apiUrl/muscleGroups/$primaryMusclesWorkedId"));
 
     if (response.statusCode == 200) {
-      List jsonResponse = json.decode(response.body);
-      var primaryMusclesWorked =
-          MuscleGroupModel.fromJson(jsonResponse[0]).name;
+      var jsonResponse = json.decode(response.body);
+      var primaryMusclesWorked = MuscleGroupModel.fromJson(jsonResponse).name;
 
       return primaryMusclesWorked;
     } else {
