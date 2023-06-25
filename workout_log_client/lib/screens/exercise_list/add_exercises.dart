@@ -122,11 +122,11 @@ class _AddExercisesState extends State<AddExercises> {
 
               return ListView.builder(
                   shrinkWrap: true,
-                  itemCount: snapshot.data!.length,
+                  itemCount: resultsList.length,
                   itemBuilder: ((context, index) {
                     return Column(
                       children: [
-                        exerciseListViewItem(index, context, snapshot.data),
+                        exerciseListViewItem(index, context),
                         const Divider(thickness: 2)
                       ],
                     );
@@ -143,17 +143,16 @@ class _AddExercisesState extends State<AddExercises> {
     );
   }
 
-  ListTile exerciseListViewItem(
-      int index, BuildContext context, List<ExerciseModel>? exerciseList) {
+  ListTile exerciseListViewItem(int index, BuildContext context) {
     return ListTile(
         onTap: () {
           setState(() {
-            exerciseList?[index].isSelected = !exerciseList[index].isSelected;
+            resultsList[index].isSelected = !resultsList[index].isSelected;
 
-            if (exerciseList![index].isSelected) {
-              selectedResults.add(exerciseList[index]);
+            if (resultsList[index].isSelected) {
+              selectedResults.add(resultsList[index]);
             } else {
-              selectedResults.remove(exerciseList[index]);
+              selectedResults.remove(resultsList[index]);
             }
           });
         },
@@ -161,7 +160,7 @@ class _AddExercisesState extends State<AddExercises> {
           //TODO Position the Selected bar more to the left
           Container(
               width: 10,
-              color: selectedResults.contains(exerciseList?[index])
+              color: selectedResults.contains(resultsList[index])
                   ? Colors.blue
                   : Colors.transparent),
           Container(
@@ -179,7 +178,7 @@ class _AddExercisesState extends State<AddExercises> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => ExerciseDetail(
-                          exerciseId: exerciseList?[index].id,
+                          exerciseId: resultsList[index].id,
                         )));
           },
           child: Container(
@@ -192,10 +191,10 @@ class _AddExercisesState extends State<AddExercises> {
               child:
                   const Icon(Icons.show_chart, color: Colors.grey, size: 25)),
         ),
-        title: Text(exerciseList![index].name),
+        title: Text(resultsList[index].name),
         subtitle: FutureBuilder<String>(
             future: getPrimaryMusclesWorked(
-                exerciseList[index].primaryMusclesWorkedId),
+                resultsList[index].primaryMusclesWorkedId),
             builder: ((context, snapshot) {
               if (snapshot.hasData) {
                 return Text(snapshot.data!);
