@@ -114,6 +114,19 @@ class _AddExercisesState extends State<AddExercises> {
     return Container(
       height: 350,
       margin: rowMargin,
+      // child: ListView.builder(
+      //     shrinkWrap: true,
+      //     itemCount: resultsList.length,
+      //     itemBuilder: ((context, index) {
+      //       return Column(
+      //         children: [
+      //           exerciseListViewItem(index, context),
+      //           const Divider(thickness: 2)
+      //         ],
+      //       );
+      //     }))
+      //TODO setState on FutureBuilder not updating the list,
+      //but without FutureBuilder + hardcoded data, it works again
       child: FutureBuilder<List<ExerciseModel>>(
           future: futureExercises,
           builder: ((context, snapshot) {
@@ -246,7 +259,7 @@ class _AddExercisesState extends State<AddExercises> {
                           InkWell(
                             onTap: () {
                               setState(() => {
-                                    resultsList = resultsList
+                                    resultsList = exerciseList
                                         .where(
                                             (result) => result.equipmentId != 0)
                                         .toList()
@@ -259,7 +272,7 @@ class _AddExercisesState extends State<AddExercises> {
                           InkWell(
                             onTap: () {
                               setState(() => {
-                                    resultsList = resultsList
+                                    resultsList = exerciseList
                                         .where((result) =>
                                             result.equipmentId ==
                                             EquipmentEnum.dumbbell.index)
@@ -273,7 +286,7 @@ class _AddExercisesState extends State<AddExercises> {
                           InkWell(
                             onTap: () {
                               setState(() => {
-                                    resultsList = resultsList
+                                    resultsList = exerciseList
                                         .where((result) =>
                                             result.equipmentId ==
                                             EquipmentEnum.machine.index)
@@ -317,7 +330,7 @@ class _AddExercisesState extends State<AddExercises> {
                           InkWell(
                             onTap: () {
                               setState(() => {
-                                    resultsList = resultsList
+                                    resultsList = exerciseList
                                         .where((result) =>
                                             result.primaryMusclesWorkedId != 0)
                                         .toList()
@@ -330,7 +343,7 @@ class _AddExercisesState extends State<AddExercises> {
                           InkWell(
                             onTap: () {
                               setState(() => {
-                                    resultsList = resultsList
+                                    resultsList = exerciseList
                                         .where((result) =>
                                             result.primaryMusclesWorkedId ==
                                             MuscleGroupEnum.chest.index)
@@ -344,7 +357,7 @@ class _AddExercisesState extends State<AddExercises> {
                           InkWell(
                             onTap: () {
                               setState(() => {
-                                    resultsList = resultsList
+                                    resultsList = exerciseList
                                         .where((result) =>
                                             result.primaryMusclesWorkedId ==
                                             MuscleGroupEnum.back.index)
@@ -407,7 +420,7 @@ class _AddExercisesState extends State<AddExercises> {
   }
 
   void searchExercise(String query) {
-    final searchResults = resultsList.where((exercise) {
+    final searchResults = exerciseList.where((exercise) {
       final exerciseName = exercise.name.toLowerCase();
       final searchInput = query.toLowerCase();
 

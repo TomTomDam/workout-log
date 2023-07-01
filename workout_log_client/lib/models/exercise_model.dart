@@ -1,3 +1,6 @@
+import 'package:workout_log/enums/muscle_group_enum.dart';
+import '../enums/equipment_enum.dart';
+
 class ExerciseModel {
   bool isSelected;
   final int? id;
@@ -29,3 +32,38 @@ class ExerciseModel {
         primaryMusclesWorkedId: json['primaryMusclesWorkedId']);
   }
 }
+
+final exerciseList = [
+  ExerciseModel(
+      id: 1,
+      name: "Arnold Press",
+      isCustom: false,
+      instructions: "",
+      exerciseTypeId: 1,
+      equipmentId: EquipmentEnum.dumbbell.index,
+      primaryMusclesWorkedId: MuscleGroupEnum.shoulders.index),
+  ExerciseModel(
+      id: 2,
+      name: "Bench Press (Barbell)",
+      isCustom: false,
+      instructions: "",
+      exerciseTypeId: 1,
+      equipmentId: EquipmentEnum.barbell.index,
+      primaryMusclesWorkedId: MuscleGroupEnum.chest.index),
+  ExerciseModel(
+      id: 3,
+      name: "Ab Wheel",
+      isCustom: false,
+      instructions: "",
+      exerciseTypeId: 1,
+      equipmentId: EquipmentEnum.machine.index,
+      primaryMusclesWorkedId: MuscleGroupEnum.back.index),
+  ExerciseModel(
+      id: 4,
+      name: "Bicep Curl (Machine)",
+      isCustom: false,
+      instructions: "",
+      exerciseTypeId: 1,
+      equipmentId: EquipmentEnum.machine.index,
+      primaryMusclesWorkedId: MuscleGroupEnum.biceps.index),
+];
