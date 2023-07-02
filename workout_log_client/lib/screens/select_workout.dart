@@ -1,9 +1,26 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:workout_log/screens/workout_details.dart';
+import '../constants.dart';
+import '../models/workout_model.dart';
 import '../widgets/page/sub_header.dart';
 import '../widgets/header/header.dart';
 import '../widgets/page/nav_bar.dart';
 import 'log_workout/log_workout.dart';
+import 'package:http/http.dart' as http;
+import 'package:intl/date_symbol_data_local.dart';
+
+Future<List<WorkoutModel>> getWorkouts() async {
+  final response = await http.get(Uri.parse("$apiUrl/workouts"));
+
+  if (response.statusCode == 200) {
+    List jsonResponse = json.decode(response.body);
+    return jsonResponse.map((e) => WorkoutModel.fromJson(e)).toList();
+  } else {
+    throw Exception('Failed to load Workouts');
+  }
+}
 
 class SelectWorkout extends StatefulWidget {
   const SelectWorkout({Key? key}) : super(key: key);
@@ -13,6 +30,15 @@ class SelectWorkout extends StatefulWidget {
 }
 
 class _SelectWorkoutState extends State<SelectWorkout> {
+  late Future<List<WorkoutModel>> futureWorkouts;
+  List<WorkoutModel> resultsList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    futureWorkouts = getWorkouts();
+  }
+
   @override
   Widget build(BuildContext context) {
     const double sideMargin = 20;
@@ -134,129 +160,146 @@ class _SelectWorkoutState extends State<SelectWorkout> {
                 ],
               ),
               Container(
-                margin: const EdgeInsets.only(
-                    top: 10, bottom: 25, left: sideMargin, right: sideMargin),
-                child: Container(
-                  width: width - sideMargin,
-                  height: 275,
-                  padding: const EdgeInsets.all(10),
-                  decoration: const BoxDecoration(
-                    color: Colors.grey,
-                  ),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Push Hypertrophy",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: Theme.of(context)
-                                        .textTheme
-                                        .headline2
-                                        ?.fontSize)),
-                            InkWell(
-                                onTap: () {
-                                  showModalBottomSheet(
-                                      context: context,
-                                      builder: (context) {
-                                        return Wrap(
-                                          children: [
-                                            InkWell(
-                                              onTap: () {},
-                                              child: const ListTile(
-                                                leading:
-                                                    Icon(Icons.electric_bolt),
-                                                title: Text('Start workout'),
-                                              ),
-                                            ),
-                                            InkWell(
-                                              onTap: () {},
-                                              child: const ListTile(
-                                                leading: Icon(Icons.edit),
-                                                title: Text('Edit workout'),
-                                              ),
-                                            ),
-                                            InkWell(
-                                              onTap: () {},
-                                              child: const ListTile(
-                                                leading: Icon(Icons.close),
-                                                title: Text('Delete workout'),
-                                              ),
-                                            )
-                                          ],
-                                        );
-                                      });
-                                },
-                                child: const Icon(Icons.more_vert,
-                                    color: Colors.black))
-                          ],
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(top: 5.0),
-                          child: Text(
-                            "Yesterday (18/09/2022)",
-                            style: TextStyle(color: Colors.grey.shade200),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 50,
-                          child: GridView.count(
-                            primary: false,
-                            padding: const EdgeInsets.only(top: 10.0),
-                            crossAxisSpacing: 0,
-                            mainAxisSpacing: 0,
-                            crossAxisCount: 2,
-                            childAspectRatio: (1 / .12),
-                            children: <Widget>[
-                              Text("Duration",
-                                  style:
-                                      TextStyle(color: Colors.grey.shade200)),
-                              Text("Volume",
-                                  style:
-                                      TextStyle(color: Colors.grey.shade200)),
-                              const Text("1 hr 30 mins"),
-                              const Text("1000kg")
-                            ],
-                          ),
-                        ),
-                        const Divider(
-                          color: Colors.black,
-                          thickness: 1,
-                        ),
-                        Text(
-                          "Exercises",
-                          style: TextStyle(color: Colors.grey.shade200),
-                        ),
-                        Container(
-                          margin:
-                              const EdgeInsets.only(top: 5, bottom: 5, left: 5),
-                          child: Row(
-                            children: const [
-                              ExerciseImage(),
-                              ExerciseText(text: "3 sets - Bench Press")
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin:
-                              const EdgeInsets.only(top: 5, bottom: 5, left: 5),
-                          child: Row(
-                            children: const [
-                              ExerciseImage(),
-                              ExerciseText(
-                                  text: "3 sets - Chest Press (Machine)")
-                            ],
-                          ),
-                        )
-                      ]),
-                ),
-              )
+                  margin: const EdgeInsets.only(
+                      top: 10, bottom: 25, left: sideMargin, right: sideMargin),
+                  child: Container(
+                    width: width - sideMargin,
+                    height: 275,
+                    padding: const EdgeInsets.all(10),
+                    decoration: const BoxDecoration(
+                      color: Colors.grey,
+                    ),
+                    child: FutureBuilder<List<WorkoutModel>>(
+                      future: futureWorkouts,
+                      builder: ((context, snapshot) {
+                        if (snapshot.hasData) {
+                          resultsList = snapshot.data!;
+
+                          return ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: resultsList.length,
+                              itemBuilder: ((context, index) {
+                                return Column(
+                                  children: [
+                                    workoutHistoryListItem(index, context)
+                                  ],
+                                );
+                              }));
+                        } else if (snapshot.hasError) {
+                          return Text('${snapshot.error}');
+                        }
+
+                        return const SizedBox(
+                            height: 50,
+                            width: 50,
+                            child: Center(child: CircularProgressIndicator()));
+                      }),
+                    ),
+                  ))
             ]),
           )),
         ));
+  }
+
+  Column workoutHistoryListItem(int index, BuildContext context) {
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(resultsList[index].name,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize:
+                          Theme.of(context).textTheme.headline2?.fontSize)),
+              InkWell(
+                  onTap: () {
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return Wrap(
+                            children: [
+                              InkWell(
+                                onTap: () {},
+                                child: const ListTile(
+                                  leading: Icon(Icons.electric_bolt),
+                                  title: Text('Start workout'),
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {},
+                                child: const ListTile(
+                                  leading: Icon(Icons.edit),
+                                  title: Text('Edit workout'),
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {},
+                                child: const ListTile(
+                                  leading: Icon(Icons.close),
+                                  title: Text('Delete workout'),
+                                ),
+                              )
+                            ],
+                          );
+                        });
+                  },
+                  child: const Icon(Icons.more_vert, color: Colors.black))
+            ],
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 5.0),
+            child: Text(
+              "Yesterday (${DateFormat.yMMMd().format(resultsList[index].dateCreated)}))",
+              style: TextStyle(color: Colors.grey.shade200),
+            ),
+          ),
+          SizedBox(
+            height: 50,
+            child: GridView.count(
+              primary: false,
+              padding: const EdgeInsets.only(top: 10.0),
+              crossAxisSpacing: 0,
+              mainAxisSpacing: 0,
+              crossAxisCount: 2,
+              childAspectRatio: (1 / .12),
+              children: <Widget>[
+                Text("Duration", style: TextStyle(color: Colors.grey.shade200)),
+                Text("Volume", style: TextStyle(color: Colors.grey.shade200)),
+                Text('${resultsList[index].duration.toString()}m'),
+                Text('${resultsList[index].totalVolume}kg')
+              ],
+            ),
+          ),
+          const Divider(
+            color: Colors.black,
+            thickness: 1,
+          ),
+          Text(
+            "Exercises",
+            style: TextStyle(color: Colors.grey.shade200),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 5, bottom: 5, left: 5),
+            child: Row(
+              children: const [
+                ExerciseImage(),
+                ExerciseText(text: "3 sets - Bench Press")
+              ],
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 5, bottom: 5, left: 5),
+            child: Row(
+              children: const [
+                ExerciseImage(),
+                ExerciseText(text: "3 sets - Chest Press (Machine)")
+              ],
+            ),
+          )
+        ]);
   }
 }
 

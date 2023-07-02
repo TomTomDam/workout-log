@@ -3,7 +3,7 @@ import '../enums/equipment_enum.dart';
 
 class ExerciseModel {
   bool isSelected;
-  final int? id;
+  final int id;
   final String name;
   final bool isCustom;
   final String? instructions;
