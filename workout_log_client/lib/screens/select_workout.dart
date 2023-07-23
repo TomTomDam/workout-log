@@ -9,7 +9,8 @@ import '../widgets/header/header.dart';
 import '../widgets/page/nav_bar.dart';
 import 'log_workout/log_workout.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/date_symbol_data_local.dart';
+
+const expansionTileHeaderColour = Colors.black;
 
 Future<List<WorkoutModel>> getWorkouts() async {
   final response = await http.get(Uri.parse("$apiUrl/workouts"));
@@ -147,21 +148,21 @@ class _SelectWorkoutState extends State<SelectWorkout> {
                   ),
                 ]),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const SubHeader(title: "Workout history"),
-                  Container(
-                    margin: const EdgeInsets.only(
-                        top: 10, left: sideMargin, right: sideMargin),
-                    child: const Icon(Icons.keyboard_arrow_down,
-                        color: Colors.black),
-                  )
-                ],
-              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     const SubHeader(title: "Workout history"),
+              //     Container(
+              //       margin: const EdgeInsets.only(
+              //           top: 20, left: sideMargin, right: sideMargin),
+              //       child: const Icon(Icons.keyboard_arrow_down,
+              //           color: Colors.black),
+              //     )
+              //   ],
+              // ),
               Container(
                   margin: const EdgeInsets.only(
-                      top: 10, bottom: 25, left: sideMargin, right: sideMargin),
+                      top: 20, bottom: 25, left: sideMargin, right: sideMargin),
                   child: Container(
                     width: width - sideMargin,
                     height: 275,
@@ -175,16 +176,26 @@ class _SelectWorkoutState extends State<SelectWorkout> {
                         if (snapshot.hasData) {
                           resultsList = snapshot.data!;
 
-                          return ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: resultsList.length,
-                              itemBuilder: ((context, index) {
-                                return Column(
+                          return ListTileTheme(
+                              contentPadding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: ExpansionTile(
+                                  title: const WorkoutHistoryHeader(),
+                                  collapsedIconColor: expansionTileHeaderColour,
+                                  iconColor: expansionTileHeaderColour,
                                   children: [
-                                    workoutHistoryListItem(index, context)
-                                  ],
-                                );
-                              }));
+                                    ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: resultsList.length,
+                                        itemBuilder: ((context, index) {
+                                          return Column(
+                                            children: [
+                                              workoutHistoryListItem(
+                                                  index, context)
+                                            ],
+                                          );
+                                        }))
+                                  ]));
                         } else if (snapshot.hasError) {
                           return Text('${snapshot.error}');
                         }
@@ -252,7 +263,7 @@ class _SelectWorkoutState extends State<SelectWorkout> {
           Container(
             margin: const EdgeInsets.only(top: 5.0),
             child: Text(
-              "Yesterday (${DateFormat.yMMMd().format(resultsList[index].dateCreated)}))",
+              "Yesterday (${DateFormat.yMMMd().format(resultsList[index].dateCreated)})",
               style: TextStyle(color: Colors.grey.shade200),
             ),
           ),
@@ -420,5 +431,25 @@ class SearchWorkoutDelegate extends SearchDelegate {
                 Navigator.pop(context);
               });
         });
+  }
+}
+
+class WorkoutHistoryHeader extends StatefulWidget {
+  const WorkoutHistoryHeader({Key? key}) : super(key: key);
+
+  @override
+  State<WorkoutHistoryHeader> createState() => _WorkoutHistoryHeaderState();
+}
+
+class _WorkoutHistoryHeaderState extends State<WorkoutHistoryHeader> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(children: [
+      Text("Workout history",
+          style: TextStyle(
+              color: expansionTileHeaderColour,
+              fontSize: Theme.of(context).textTheme.headline2?.fontSize,
+              fontWeight: Theme.of(context).textTheme.headline2?.fontWeight))
+    ]);
   }
 }
