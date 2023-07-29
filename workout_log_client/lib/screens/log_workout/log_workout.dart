@@ -1,12 +1,26 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:workout_log/screens/select_workout.dart';
 import 'package:workout_log/screens/settings/settings.dart';
+import '../../constants.dart';
+import '../../models/workout_model.dart';
 import '../../widgets/page/pane_button.dart';
 import 'exercises_pane.dart';
 import 'muscles/muscles_pane.dart';
 import 'overview_pane.dart';
+import 'package:http/http.dart' as http;
 
 Widget pageSection = const OverviewPane();
+
+Future<WorkoutModel> getWorkout(id) async {
+  final response = await http.get(Uri.parse("$apiUrl/workouts/$id"));
+
+  if (response.statusCode == 200) {
+    return WorkoutModel.fromJson(json.decode(response.body));
+  } else {
+    throw Exception('Failed to load Workout');
+  }
+}
 
 class LogWorkout extends StatefulWidget {
   const LogWorkout({Key? key}) : super(key: key);
@@ -22,12 +36,21 @@ enum MuscleViewType { table, heatmapDiagram }
 class _LogWorkoutState extends State<LogWorkout> {
   EdgeInsets padding = const EdgeInsets.all(25);
   LogWorkoutPanes selectedPane = LogWorkoutPanes.overview;
-
   MuscleViewType muscleViewType = MuscleViewType.table;
+  late Future<WorkoutModel> futureWorkout;
+
   updateMuscleViewType(newViewType) {
     setState(() {
       muscleViewType = newViewType;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    int workoutId = 1;
+    futureWorkout = getWorkout(workoutId);
   }
 
   @override
@@ -41,7 +64,7 @@ class _LogWorkoutState extends State<LogWorkout> {
                 child: Center(
               child: Column(children: [
                 const LogWorkoutNavBar(),
-                const LogWorkoutHeader(),
+                LogWorkoutHeader(futureWorkout: futureWorkout),
                 Container(
                     width: double.infinity,
                     height: 50,
@@ -105,28 +128,44 @@ class _LogWorkoutState extends State<LogWorkout> {
 }
 
 class LogWorkoutHeader extends StatelessWidget {
-  const LogWorkoutHeader({
-    Key? key,
-  }) : super(key: key);
+  final Future<WorkoutModel> futureWorkout;
+
+  const LogWorkoutHeader({Key? key, required this.futureWorkout})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 24.0, left: 24.0, right: 24.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text("Pull Hypertrophy",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: Theme.of(context).textTheme.headline2?.fontSize)),
-          Container(
-              margin: const EdgeInsets.only(top: 5),
-              child: const Text("21 October 2022 - 5:30PM"))
-        ],
-      ),
-    );
+    return FutureBuilder<WorkoutModel>(
+        future: futureWorkout,
+        builder: ((context, snapshot) {
+          if (snapshot.hasData) {
+            return Container(
+              margin: const EdgeInsets.only(top: 24.0, left: 24.0, right: 24.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(snapshot.data!.name,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize:
+                              Theme.of(context).textTheme.headline2?.fontSize)),
+                  //TODO format should look like this: 21 October 2022 - 5:30PM
+                  Container(
+                      margin: const EdgeInsets.only(top: 5),
+                      child: Text(snapshot.data!.dateCreated.toString()))
+                ],
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return Text('${snapshot.error}');
+          }
+
+          return const SizedBox(
+              height: 50,
+              width: 50,
+              child: Center(child: CircularProgressIndicator()));
+        }));
   }
 }
 
