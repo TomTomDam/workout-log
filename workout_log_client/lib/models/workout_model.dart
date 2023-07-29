@@ -3,8 +3,8 @@ class WorkoutModel {
   final String name;
   final int totalVolume;
   final int duration;
-  final String dateCreated;
-  final String dateNextScheduled;
+  final DateTime dateCreated;
+  final DateTime dateNextScheduled;
   final bool isFavourited;
   final int userId;
 
@@ -24,8 +24,8 @@ class WorkoutModel {
         name: json['name'],
         totalVolume: json['totalVolume'],
         duration: json['duration'],
-        dateCreated: json['dateCreated'],
-        dateNextScheduled: json['dateNextScheduled'],
+        dateCreated: DateTime.parse(json['dateCreated']),
+        dateNextScheduled: DateTime.parse(json['dateNextScheduled']),
         isFavourited: json['isFavourited'],
         userId: json['userId']);
   }
