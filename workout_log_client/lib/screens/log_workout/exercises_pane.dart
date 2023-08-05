@@ -1,18 +1,38 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:workout_log/models/workout_exercise_model.dart';
 import 'package:workout_log/screens/exercise_information/exercise_information.dart';
+import '../../constants.dart';
 import '../../widgets/add_exercise_button.dart';
 import '../../widgets/table/table_data_cell.dart';
 import '../../widgets/table/table_header_cell.dart';
+import 'package:http/http.dart' as http;
 
 const expansionTileHeaderColour = Colors.black;
 
-class ExercisesPane extends StatelessWidget {
+Future<List<WorkoutExerciseModel>> getWorkoutExercises() async {
+  final response = await http.get(Uri.parse("$apiUrl/workoutExercises"));
+
+  if (response.statusCode == 200) {
+    List jsonResponse = json.decode(response.body);
+    return jsonResponse.map((e) => WorkoutExerciseModel.fromJson(e)).toList();
+  } else {
+    throw Exception('Failed to load Workout Exercises');
+  }
+}
+
+class ExercisesPane extends StatefulWidget {
   const ExercisesPane({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    List<Widget> exerciseItems = [const ExerciseItem()];
+  State<ExercisesPane> createState() => _ExercisesPaneState();
+}
 
+class _ExercisesPaneState extends State<ExercisesPane> {
+  List<Widget> exerciseItems = [const ExerciseItem()];
+
+  @override
+  Widget build(BuildContext context) {
     return Column(children: [
       (() {
         if (exerciseItems.isNotEmpty) {
@@ -25,16 +45,16 @@ class ExercisesPane extends StatelessWidget {
               const AddExerciseButton(width: double.infinity)
             ],
           );
+        } else {
+          return Column(
+            children: [
+              const EmptyExercisePage(),
+              Container(
+                  margin: const EdgeInsets.fromLTRB(10, 20, 10, 0),
+                  child: const AddExerciseButton(width: 150))
+            ],
+          );
         }
-
-        return Column(
-          children: [
-            const EmptyExercisePage(),
-            Container(
-                margin: const EdgeInsets.fromLTRB(10, 20, 10, 0),
-                child: const AddExerciseButton(width: 150))
-          ],
-        );
       }())
     ]);
   }
@@ -64,133 +84,166 @@ class ExerciseItem extends StatefulWidget {
 }
 
 class _ExerciseItemState extends State<ExerciseItem> {
+  late Future<List<WorkoutExerciseModel>> futureWorkoutExercises;
+  List<WorkoutExerciseModel> resultsList = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    futureWorkoutExercises = getWorkoutExercises();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.grey,
-      margin: const EdgeInsets.only(bottom: 10),
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: ListTileTheme(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-          child: ExpansionTile(
-            title: const ExerciseItemHeader(),
-            collapsedIconColor: expansionTileHeaderColour,
-            iconColor: expansionTileHeaderColour,
-            children: [
-              Column(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(color: Colors.black)),
-                    child: const PersonalRecord(),
-                  ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    margin:
-                        const EdgeInsets.only(bottom: 10, left: 5, right: 5),
-                    child: const TextField(
-                        decoration: InputDecoration(labelText: "Notes")),
-                  ),
-                  DataTable(
-                    columnSpacing: 35,
-                    columns: const <DataColumn>[
-                      DataColumn(label: TableHeaderCell(value: "Set")),
-                      DataColumn(label: TableHeaderCell(value: "Previous")),
-                      DataColumn(label: TableHeaderCell(value: "Weight")),
-                      DataColumn(label: TableHeaderCell(value: "Reps"))
-                    ],
-                    rows: <DataRow>[
-                      DataRow(cells: <DataCell>[
-                        DataCell(Center(
-                            child: InkWell(
-                          onTap: () {
-                            showModalBottomSheet(
-                                context: context,
-                                builder: (context) {
-                                  return const ExerciseSetMenuModal();
-                                });
-                          },
-                          child: const Text("W",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20)),
-                        ))),
-                        const DataCell(TableDataCell(value: "20 x 8")),
-                        const DataCell(TableDataCell(value: "20kg")),
-                        const DataCell(TableDataCell(value: "8")),
-                      ])
-                    ],
-                  ),
-                  const Divider(thickness: 2),
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 10),
-                    child: Row(
-                      children: [
-                        Expanded(
-                            child: Column(
-                          children: [
-                            Container(
-                                margin:
-                                    const EdgeInsets.symmetric(vertical: 10),
-                                child: const Text(
-                                  "Total sets",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+    return FutureBuilder<List<WorkoutExerciseModel>>(
+        future: futureWorkoutExercises,
+        builder: ((context, snapshot) {
+          if (snapshot.hasData) {
+            resultsList = snapshot.data!;
+
+            return Card(
+              color: Colors.grey,
+              margin: const EdgeInsets.only(bottom: 10),
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: ListTileTheme(
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: ExpansionTile(
+                    title: const ExerciseItemHeader(),
+                    collapsedIconColor: expansionTileHeaderColour,
+                    iconColor: expansionTileHeaderColour,
+                    children: [
+                      Column(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(color: Colors.black)),
+                            child: const PersonalRecord(),
+                          ),
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            margin: const EdgeInsets.only(
+                                bottom: 10, left: 5, right: 5),
+                            child: const TextField(
+                                decoration:
+                                    InputDecoration(labelText: "Notes")),
+                          ),
+                          DataTable(
+                            columnSpacing: 35,
+                            columns: const <DataColumn>[
+                              DataColumn(label: TableHeaderCell(value: "Set")),
+                              DataColumn(
+                                  label: TableHeaderCell(value: "Previous")),
+                              DataColumn(
+                                  label: TableHeaderCell(value: "Weight")),
+                              DataColumn(label: TableHeaderCell(value: "Reps"))
+                            ],
+                            rows: <DataRow>[
+                              DataRow(cells: <DataCell>[
+                                DataCell(Center(
+                                    child: InkWell(
+                                  onTap: () {
+                                    showModalBottomSheet(
+                                        context: context,
+                                        builder: (context) {
+                                          return const ExerciseSetMenuModal();
+                                        });
+                                  },
+                                  child: const Text("W",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20)),
+                                ))),
+                                const DataCell(TableDataCell(value: "20 x 8")),
+                                const DataCell(TableDataCell(value: "20kg")),
+                                const DataCell(TableDataCell(value: "8")),
+                              ])
+                            ],
+                          ),
+                          const Divider(thickness: 2),
+                          Container(
+                            margin: const EdgeInsets.symmetric(vertical: 10),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                    child: Column(
+                                  children: [
+                                    Container(
+                                        margin: const EdgeInsets.symmetric(
+                                            vertical: 10),
+                                        child: const Text(
+                                          "Total sets",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        )),
+                                    const Text("8")
+                                  ],
                                 )),
-                            const Text("8")
-                          ],
-                        )),
-                        Expanded(
-                            child: Column(
-                          children: [
-                            Container(
-                                margin:
-                                    const EdgeInsets.symmetric(vertical: 10),
-                                child: const Text("Average weight",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold))),
-                            const Text("18.67kg")
-                          ],
-                        )),
-                        Expanded(
-                            child: Column(
-                          children: [
-                            Container(
-                                margin:
-                                    const EdgeInsets.symmetric(vertical: 10),
-                                child: const Text("Total reps",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold))),
-                            const Text("30")
-                          ],
-                        )),
-                      ],
-                    ),
-                  ),
-                  Container(
-                      margin: const EdgeInsets.only(top: 10, bottom: 20),
-                      child: Row(children: [
-                        Expanded(
-                          child: Column(children: [
-                            Container(
-                              margin: const EdgeInsets.symmetric(vertical: 10),
-                              child: const Text(
-                                "Total volume (sets x reps x weight)",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
+                                Expanded(
+                                    child: Column(
+                                  children: [
+                                    Container(
+                                        margin: const EdgeInsets.symmetric(
+                                            vertical: 10),
+                                        child: const Text("Average weight",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold))),
+                                    const Text("18.67kg")
+                                  ],
+                                )),
+                                Expanded(
+                                    child: Column(
+                                  children: [
+                                    Container(
+                                        margin: const EdgeInsets.symmetric(
+                                            vertical: 10),
+                                        child: const Text("Total reps",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold))),
+                                    const Text("30")
+                                  ],
+                                )),
+                              ],
                             ),
-                            const Text("1680.3")
-                          ]),
-                        )
-                      ]))
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+                          ),
+                          Container(
+                              margin:
+                                  const EdgeInsets.only(top: 10, bottom: 20),
+                              child: Row(children: [
+                                Expanded(
+                                  child: Column(children: [
+                                    Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 10),
+                                      child: const Text(
+                                        "Total volume (sets x reps x weight)",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    const Text("1680.3")
+                                  ]),
+                                )
+                              ]))
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return Text('${snapshot.error}');
+          }
+
+          return const SizedBox(
+              height: 50,
+              width: 50,
+              child: Center(child: CircularProgressIndicator()));
+        }));
   }
 }
 
